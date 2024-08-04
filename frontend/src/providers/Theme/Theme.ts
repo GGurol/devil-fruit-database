@@ -6,7 +6,7 @@ import {
   IThemeFonts,
   IThemeModes,
   IThemeTypography,
-} from "./theme.types";
+} from "./Theme.types";
 import { ButtonStyles } from "../../components/Button/Button.variants";
 
 const modes: IThemeModes = {
@@ -99,4 +99,5 @@ export const themeVars: ITheme = {
   },
   typography,
   components: { buttons: ButtonStyles },
+  palettes: { ...palettes },
 };

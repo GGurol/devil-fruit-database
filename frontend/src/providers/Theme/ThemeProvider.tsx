@@ -1,12 +1,16 @@
 import { FC, PropsWithChildren, useEffect, useState } from "react";
 import { ThemeProvider as StyledComponentsThemeProvider } from "styled-components";
 
-import { themeVars } from "./theme";
-import { TModes } from "./theme.types";
-import GlobalStyles from "./theme.globals";
-import { ThemeContext } from "./theme.context";
+import GlobalStyles from "./Theme.globals";
+import { ITheme, TModes } from "./Theme.types";
+import { ThemeContext } from "./Theme.context";
 
-export const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
+export const ThemeProvider: FC<PropsWithChildren<ITheme>> = ({
+  children,
+  ...props
+}) => {
+  const { palettes, modes, common, typography, components } = props;
+
   // initialize state with a default value or retrieve from localStorage
   const [mode, setMode] = useState<TModes>(() => {
     const savedMode = localStorage.getItem("mode");
@@ -28,6 +32,7 @@ export const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
   };
 
   const value = {
+    palettes,
     mode,
     toggleMode,
   };
@@ -36,10 +41,11 @@ export const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
     <ThemeContext.Provider value={value}>
       <StyledComponentsThemeProvider
         theme={{
-          ...themeVars.common,
-          ...themeVars.typography,
-          ...(mode === "light" ? themeVars.modes.light : themeVars.modes.dark),
-          ...themeVars.components,
+          ...palettes,
+          ...common,
+          ...typography,
+          ...(mode === "light" ? modes.light : modes.dark),
+          ...components,
         }}
       >
         <GlobalStyles />

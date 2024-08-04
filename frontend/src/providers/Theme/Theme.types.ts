@@ -1,5 +1,8 @@
 import { CSSProp, DefaultTheme } from "styled-components";
 import { ButtonStyles } from "../../components/Button/Button.variants";
+import { palettes } from "../../App.constants";
+
+export type IThemePalettes = typeof palettes
 
 export interface IThemeModes {
   light: DefaultTheme;
@@ -23,6 +26,7 @@ export interface IThemeComponents {
 }
 
 export interface ITheme {
+  palettes: IThemePalettes;
   modes: IThemeModes;
   common: DefaultTheme;
   typography: IThemeTypography;
@@ -32,6 +36,7 @@ export interface ITheme {
 export type TModes = "light" | "dark";
 
 export interface IThemeState {
+  palettes: IThemePalettes;
   mode: TModes;
   toggleMode: () => void;
 }
