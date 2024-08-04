@@ -19,7 +19,7 @@ const Button = forwardRef<HTMLButtonElement, PropsWithChildren<IButtonProps>>(
                 ? $variant.staticColors.fgColor
                 : $icon.iconStyle.color
             }
-          ></Icon>
+          />
         )}
       </ButtonWrapper>
     );

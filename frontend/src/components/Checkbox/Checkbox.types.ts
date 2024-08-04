@@ -1,12 +1,17 @@
 import { InputHTMLAttributes } from "react";
 import { CSSProp } from "styled-components";
 
-export type TCheckboxVariants = "AccentPrimary" | "AccentSecondary";
-
 export interface ICheckboxStyles {
-  AccentPrimary: CSSProp;
-  AccentSecondary: CSSProp;
+  AccentPrimary: {
+    unchecked: CSSProp;
+    checked: CSSProp;
+  };
+  AccentSecondary: {
+    unchecked: CSSProp;
+    checked: CSSProp;
+  };
 }
+export type TCheckboxVariants = keyof ICheckboxStyles;
 
 interface ICheckboxBaseLabelConfig {
   hasLabel?: false;
@@ -20,7 +25,9 @@ interface ICheckboxLabelConfig {
 
 type TCheckboxLabel = ICheckboxBaseLabelConfig | ICheckboxLabelConfig;
 
-export interface ICheckboxProps extends InputHTMLAttributes<HTMLInputElement> {
+export interface ICheckboxWrapperProps extends InputHTMLAttributes<HTMLInputElement> {
   $variant: TCheckboxVariants;
-  $label: TCheckboxLabel;
+  $label?: TCheckboxLabel;
 }
+
+export type TCheckboxProps = Omit<ICheckboxWrapperProps, "$label"> {}

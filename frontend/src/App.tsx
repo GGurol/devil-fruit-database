@@ -1,4 +1,4 @@
-import { FC, useEffect } from "react";
+import { FC } from "react";
 
 import { useThemeContext } from "./providers/Theme/Theme.context";
 
@@ -13,8 +13,9 @@ import logo from "./assets/one-piece.png";
 import BodyWrapper from "./components/Wrappers/BodyWrapper";
 import ContentWrapper from "./components/Wrappers/ContentWrapper";
 import BodyActionsWrapper from "./components/Wrappers/BodyActionsWrapper";
-import { Checkbox } from "./components/Checkbox/Checkbox";
 import ToggleWrapper from "./components/Wrappers/ToggleWrapper";
+import Checkbox from "./components/Checkbox/Checkbox";
+import BodyContentWrapper from "./components/Wrappers/BodyContentWrapper";
 
 export const App: FC = () => {
   const { palettes, mode, toggleMode } = useThemeContext();
@@ -58,12 +59,20 @@ export const App: FC = () => {
         <BodyWrapper>
           <BodyActionsWrapper>
             <ToggleWrapper>
-              <Checkbox width={"20px"} height={"20px"} />
-              <Checkbox width={"20px"} height={"20px"} />
+              <Checkbox
+                $variant="AccentSecondary"
+                $label={{ hasLabel: true, labelText: "Show Spoilers" }}
+              />
+              <Checkbox
+                $variant="AccentSecondary"
+                $label={{ hasLabel: true, labelText: "Show Non-Canon" }}
+              />
             </ToggleWrapper>
             <div>search</div>
           </BodyActionsWrapper>
-          <div>body</div>
+          <BodyContentWrapper>
+            <div>body</div>
+          </BodyContentWrapper>
         </BodyWrapper>
       </ContentWrapper>
     </PageWrapper>

@@ -1,8 +1,9 @@
 import { CSSProp, DefaultTheme } from "styled-components";
 import { ButtonStyles } from "../../components/Button/Button.variants";
 import { palettes } from "../../App.constants";
+import { CheckboxStyles } from "../../components/Checkbox/Checkbox.variants";
 
-export type IThemePalettes = typeof palettes
+export type IThemePalettes = typeof palettes;
 
 export interface IThemeModes {
   light: DefaultTheme;
@@ -21,8 +22,10 @@ export interface IThemeTypography {
   label: CSSProp;
 }
 
+// dont forget to update the themeVars const, when adding a new component
 export interface IThemeComponents {
   buttons: typeof ButtonStyles;
+  checkboxes: typeof CheckboxStyles;
 }
 
 export interface ITheme {

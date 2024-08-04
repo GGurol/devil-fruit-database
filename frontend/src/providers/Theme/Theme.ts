@@ -8,6 +8,7 @@ import {
   IThemeTypography,
 } from "./Theme.types";
 import { ButtonStyles } from "../../components/Button/Button.variants";
+import { CheckboxStyles } from "../../components/Checkbox/Checkbox.variants";
 
 const modes: IThemeModes = {
   light: {
@@ -98,6 +99,6 @@ export const themeVars: ITheme = {
     accentSecondary: palettes.secondary[500],
   },
   typography,
-  components: { buttons: ButtonStyles },
+  components: { buttons: ButtonStyles, checkboxes: CheckboxStyles },
   palettes: { ...palettes },
 };
