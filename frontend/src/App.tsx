@@ -16,6 +16,8 @@ import BodyActionsWrapper from "./components/Wrappers/BodyActionsWrapper";
 import ToggleWrapper from "./components/Wrappers/ToggleWrapper";
 import Checkbox from "./components/Checkbox/Checkbox";
 import BodyContentWrapper from "./components/Wrappers/BodyContentWrapper";
+import Textfield from "./components/Textfield/Textfield";
+import SearchActionsWrapper from "./components/Wrappers/SearchActionsWrapper";
 
 export const App: FC = () => {
   const { palettes, mode, toggleMode } = useThemeContext();
@@ -60,15 +62,27 @@ export const App: FC = () => {
           <BodyActionsWrapper>
             <ToggleWrapper>
               <Checkbox
+                name="show-spoilers"
                 $variant="AccentSecondary"
                 $label={{ hasLabel: true, labelText: "Show Spoilers" }}
               />
               <Checkbox
+                name="show-noncanon "
                 $variant="AccentSecondary"
                 $label={{ hasLabel: true, labelText: "Show Non-Canon" }}
               />
             </ToggleWrapper>
-            <div>search</div>
+            <SearchActionsWrapper>
+              <Textfield
+                $icon={{
+                  hasIcon: true,
+                  iconStyle: {
+                    iconName: "Search",
+                    fontSize: "20px",
+                  },
+                }}
+              />
+            </SearchActionsWrapper>
           </BodyActionsWrapper>
           <BodyContentWrapper>
             <div>body</div>

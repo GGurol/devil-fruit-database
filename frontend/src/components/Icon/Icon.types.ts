@@ -2,7 +2,7 @@ import { ComponentType, SVGProps } from "react";
 
 import * as Icons from "./src/index";
 
-export type TIconComponents = "Check" | "Download" | "Moon" | "Sun";
+export type TIconComponents = "Check" | "Download" | "Moon" | "Search" | "Sun";
 
 export const IconComponentMap: Record<
   string,
@@ -13,6 +13,5 @@ export const IconComponentMap: Record<
 
 export interface IIconProps extends Omit<SVGProps<SVGSVGElement>, "onClick"> {
   iconName: TIconComponents;
-  fontSize?: number;
-  color?: string;
+  fontSize?: string | number;
 }

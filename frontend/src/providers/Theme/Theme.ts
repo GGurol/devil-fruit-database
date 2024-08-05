@@ -97,6 +97,7 @@ export const themeVars: ITheme = {
     shadowsSoft: `${palettes.base.black}1A` as const, // ##0000001A
     accentPrimary: palettes.tertiary[500],
     accentSecondary: palettes.secondary[500],
+    focusShadow: `${palettes.secondary[700]}33`,
   },
   typography,
   components: { buttons: ButtonStyles, checkboxes: CheckboxStyles },

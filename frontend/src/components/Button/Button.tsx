@@ -15,9 +15,7 @@ const Button = forwardRef<HTMLButtonElement, PropsWithChildren<IButtonProps>>(
             iconName={$icon.iconStyle.iconName}
             fontSize={$icon.iconStyle.fontSize}
             fill={
-              $variant.staticColors
-                ? $variant.staticColors.fgColor
-                : $icon.iconStyle.color
+              $variant.staticColors ? $variant.staticColors.fgColor : " " // since this is undefined it'll default to the IconWrapper styles
             }
           />
         )}

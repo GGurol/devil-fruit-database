@@ -7,8 +7,6 @@ const BodyActionsWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   align-self: stretch;
-
-  background-color: darkgrey;
 `;
 
 export default BodyActionsWrapper;

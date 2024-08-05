@@ -57,16 +57,6 @@ export const CheckIconOverlay = styled.div`
   pointer-events: none;
 `;
 
-export const CheckboxInputCustom = styled.div`
-  display: flex;
-
-  justify-content: center;
-  align-items: center;
-
-  width: 20px;
-  height: 20px;
-`;
-
 export const CheckboxLabel = styled.label`
   color: ${({ theme }) => theme.fgRegular};
 

@@ -25,9 +25,10 @@ interface ICheckboxLabelConfig {
 
 type TCheckboxLabel = ICheckboxBaseLabelConfig | ICheckboxLabelConfig;
 
-export interface ICheckboxWrapperProps extends InputHTMLAttributes<HTMLInputElement> {
+export interface ICheckboxWrapperProps
+  extends InputHTMLAttributes<HTMLInputElement> {
   $variant: TCheckboxVariants;
   $label?: TCheckboxLabel;
 }
 
-export type TCheckboxProps = Omit<ICheckboxWrapperProps, "$label"> {}
+export type TCheckboxProps = Omit<ICheckboxWrapperProps, "$label">;

@@ -11,7 +11,14 @@ import { useThemeContext } from "../../providers/Theme/Theme.context";
 
 const Checkbox = forwardRef<HTMLInputElement, ICheckboxWrapperProps>(
   (props, ref) => {
-    const { $variant = "AccentSecondary", $label, ...rest } = props;
+    const {
+      $variant = "AccentSecondary",
+      $label,
+      name,
+      width = "20px",
+      height = "20px",
+      ...rest
+    } = props;
 
     const { palettes } = useThemeContext();
 
@@ -24,7 +31,7 @@ const Checkbox = forwardRef<HTMLInputElement, ICheckboxWrapperProps>(
     return (
       <CheckboxWrapper $variant={$variant} ref={ref}>
         {$label?.hasLabel && (
-          <CheckboxLabel htmlFor="thisCheckbox">
+          <CheckboxLabel htmlFor={`checkbox-${name}-label`}>
             {$label.labelText}
           </CheckboxLabel>
         )}
@@ -32,16 +39,16 @@ const Checkbox = forwardRef<HTMLInputElement, ICheckboxWrapperProps>(
           <CheckboxInput
             {...rest}
             $variant={$variant}
-            width={"20px"}
-            height={"20px"}
-            id="thisCheckbox"
+            width={width}
+            height={height}
+            id={`checkbox-${name}-label`}
             onChange={handleChange}
           />
           {isChecked && (
             <CheckIconOverlay>
               <Icon
                 iconName="Check"
-                fontSize={20}
+                fontSize={width ? width : "20px"}
                 fill={palettes.grayscale["50"]}
               />
             </CheckIconOverlay>
