@@ -74,6 +74,7 @@ export const App: FC = () => {
             </ToggleWrapper>
             <SearchActionsWrapper>
               <Textfield
+                placeholder="Search"
                 $icon={{
                   hasIcon: true,
                   iconStyle: {

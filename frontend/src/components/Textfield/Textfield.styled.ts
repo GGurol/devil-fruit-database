@@ -1,4 +1,5 @@
-import { styled } from "styled-components";
+import { css, styled } from "styled-components";
+import { ITextfieldProps } from "./Textfield.types";
 
 export const TextfieldContainer = styled.div`
   position: relative;
@@ -15,12 +16,19 @@ export const TextfieldIconContainer = styled.span`
   left: 16px;
 `;
 
-const TextfieldInput = styled.input.attrs({ type: "text" })`
+const TextfieldInput = styled.input.attrs({ type: "text" })<ITextfieldProps>`
   background-color: ${({ theme }) => theme.bgSurface};
 
   width: 100%;
 
-  padding: 8px 16px 8px 42px;
+  ${({ $icon }) =>
+    $icon?.hasIcon
+      ? css`
+          padding: 8px 16px 8px 42px;
+        `
+      : css`
+          padding: 8px 16px;
+        `}
 
   box-sizing: border-box;
 

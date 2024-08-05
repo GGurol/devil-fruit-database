@@ -37,9 +37,9 @@ const Textfield = forwardRef<HTMLInputElement, ITextfieldProps>(
         <TextfieldInput
           {...rest}
           ref={ref}
-          placeholder="Search"
           onFocus={handleFieldFocus}
           onBlur={handleFieldBlur}
+          $icon={$icon}
         />
       </TextfieldContainer>
     );
