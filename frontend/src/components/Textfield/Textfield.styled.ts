@@ -4,6 +4,8 @@ import { ITextfieldProps } from "./Textfield.types";
 export const TextfieldContainer = styled.div`
   position: relative;
 
+  width: 100%;
+
   cursor: text;
 `;
 

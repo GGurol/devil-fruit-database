@@ -18,6 +18,7 @@ import Checkbox from "./components/Checkbox/Checkbox";
 import BodyContentWrapper from "./components/Wrappers/BodyContentWrapper";
 import Textfield from "./components/Textfield/Textfield";
 import SearchActionsWrapper from "./components/Wrappers/SearchActionsWrapper";
+import Table from "./components/Table/Table";
 
 export const App: FC = () => {
   const { palettes, mode, toggleMode } = useThemeContext();
@@ -86,7 +87,7 @@ export const App: FC = () => {
             </SearchActionsWrapper>
           </BodyActionsWrapper>
           <BodyContentWrapper>
-            <div>body</div>
+            <Table />
           </BodyContentWrapper>
         </BodyWrapper>
       </ContentWrapper>
