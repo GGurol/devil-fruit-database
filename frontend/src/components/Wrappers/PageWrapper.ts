@@ -7,7 +7,7 @@ const PageWrapper = styled.div`
   height: 100vh;
 
   box-sizing: border-box;
-  overflow: auto;
+  overflow: hidden;
 `;
 
 export default PageWrapper;
