@@ -7,8 +7,6 @@ const BodyWrapper = styled.div`
 
   width: 100%;
 
-  max-height: 100%;
-
   flex-direction: column;
   align-items: flex-start;
   gap: 16px;

@@ -7,29 +7,42 @@ import CheckboxWrapper, {
   CheckIconOverlay,
 } from "./Checkbox.styled";
 import { Icon } from "../Icon/Icon";
-import { useThemeContext } from "../../providers/Theme/Theme.context";
+import { useTheme } from "styled-components";
 
 const Checkbox = forwardRef<HTMLInputElement, ICheckboxWrapperProps>(
   (props, ref) => {
     const {
       $variant = "AccentSecondary",
       $label,
+      $handleState,
       name,
       width = "20px",
       height = "20px",
+      checked,
       ...rest
     } = props;
 
-    const { palettes } = useThemeContext();
+    const theme = useTheme();
 
-    const [isChecked, setIsChecked] = useState<boolean>(false);
+    const [isChecked, setIsChecked] = useState<boolean>(() => {
+      if (checked) {
+        return checked;
+      }
+
+      return false;
+    });
 
     const handleChange = () => {
       setIsChecked(!isChecked);
+      $handleState();
     };
 
     return (
-      <CheckboxWrapper $variant={$variant} ref={ref}>
+      <CheckboxWrapper
+        $variant={$variant}
+        $handleState={$handleState}
+        ref={ref}
+      >
         {$label?.hasLabel && (
           <CheckboxLabel htmlFor={`checkbox-${name}-label`}>
             {$label.labelText}
@@ -42,6 +55,7 @@ const Checkbox = forwardRef<HTMLInputElement, ICheckboxWrapperProps>(
             width={width}
             height={height}
             id={`checkbox-${name}-label`}
+            checked={isChecked}
             onChange={handleChange}
           />
           {isChecked && (
@@ -49,7 +63,7 @@ const Checkbox = forwardRef<HTMLInputElement, ICheckboxWrapperProps>(
               <Icon
                 iconName="Check"
                 fontSize={width ? width : "20px"}
-                fill={palettes.grayscale["50"]}
+                fill={theme.grayscale["50"]}
               />
             </CheckIconOverlay>
           )}

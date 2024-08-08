@@ -67,6 +67,11 @@ export const CheckboxLabel = styled.label`
   overflow: hidden;
 
   cursor: pointer;
+
+  /* prevent text highlight */
+  user-select: none; // chrome, edge, opera, firefox
+  -webkit-user-select: none; // safari
+  -webkit-touch-callout: none; // ios
 `;
 
 export default CheckboxWrapper;

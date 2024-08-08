@@ -17,6 +17,12 @@ const Header = styled.h1`
   white-space: nowrap;
 
   ${({ theme }) => theme.sectionTitle}
+
+
+  /* prevent text highlight */
+  user-select: none; // chrome, edge, opera, firefox
+  -webkit-user-select: none; // safari
+  -webkit-touch-callout: none; // ios
 `;
 
 export default Header;

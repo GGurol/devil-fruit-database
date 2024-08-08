@@ -29,6 +29,10 @@ export interface ICheckboxWrapperProps
   extends InputHTMLAttributes<HTMLInputElement> {
   $variant: TCheckboxVariants;
   $label?: TCheckboxLabel;
+  $handleState: () => void;
 }
 
-export type TCheckboxProps = Omit<ICheckboxWrapperProps, "$label">;
+export type TCheckboxProps = Omit<
+  ICheckboxWrapperProps,
+  "$label" | "$handleState"
+>;

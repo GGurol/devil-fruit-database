@@ -39,7 +39,6 @@ export interface ITheme {
 export type TModes = "light" | "dark";
 
 export interface IThemeState {
-  palettes: IThemePalettes;
   mode: TModes;
   toggleMode: () => void;
 }

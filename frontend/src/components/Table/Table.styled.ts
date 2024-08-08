@@ -1,4 +1,5 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
+import { ISpoilerProps } from "./Table.types";
 
 export const TableContainer = styled.div`
   display: inline-block;
@@ -94,5 +95,38 @@ export const TableData = styled.td`
     border-right: none;
   }
 `;
+
+export const UserList = styled.ul`
+  list-style-type: none;
+
+  margin: 0;
+  padding: 0;
+`;
+
+export const UserItem = styled.li``;
+
+export const SpoilerContainer = styled.div<ISpoilerProps>`
+  ${(props) =>
+    props.$showSpoilers === false &&
+    css`
+      cursor: pointer;
+
+      .spoiler-content {
+        background-color: ${({ theme }) => theme.borderRegular};
+
+        color: transparent;
+      }
+
+      &:hover .spoiler-content {
+        background-color: transparent;
+
+        color: ${({ theme }) => theme.fgRegular};
+
+        transition: background-color 0.1s ease-out;
+      }
+    `}
+`;
+
+export const SpoilerContent = styled.span``;
 
 export default TableWrapper;

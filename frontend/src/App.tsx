@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 
 import { useThemeContext } from "./providers/Theme/Theme.context";
 
@@ -19,9 +19,14 @@ import BodyContentWrapper from "./components/Wrappers/BodyContentWrapper";
 import Textfield from "./components/Textfield/Textfield";
 import SearchActionsWrapper from "./components/Wrappers/SearchActionsWrapper";
 import Table from "./components/Table/Table";
+import { useTheme } from "styled-components";
+import { useDataContext } from "./providers/Data/Data.context";
 
 export const App: FC = () => {
-  const { palettes, mode, toggleMode } = useThemeContext();
+  const theme = useTheme();
+  const { mode, toggleMode } = useThemeContext();
+  const { showSpoilers, showNonCanon, handleShowSpoilers, handleShowNonCanon } =
+    useDataContext();
 
   return (
     <PageWrapper>
@@ -46,7 +51,7 @@ export const App: FC = () => {
             <Button
               $variant={{
                 variantName: "Solid",
-                staticColors: { fgColor: palettes.grayscale["50"] },
+                staticColors: { fgColor: theme.grayscale["50"] },
               }}
               $icon={{
                 hasIcon: true,
@@ -59,6 +64,7 @@ export const App: FC = () => {
             </Button>
           </ActionsWrapper>
         </HeaderWrapper>
+
         <BodyWrapper>
           <BodyActionsWrapper>
             <ToggleWrapper>
@@ -66,11 +72,15 @@ export const App: FC = () => {
                 name="show-spoilers"
                 $variant="AccentSecondary"
                 $label={{ hasLabel: true, labelText: "Show Spoilers" }}
+                $handleState={handleShowSpoilers}
+                checked={showSpoilers}
               />
               <Checkbox
                 name="show-noncanon "
                 $variant="AccentSecondary"
                 $label={{ hasLabel: true, labelText: "Show Non-Canon" }}
+                $handleState={handleShowNonCanon}
+                checked={showNonCanon}
               />
             </ToggleWrapper>
             <SearchActionsWrapper>

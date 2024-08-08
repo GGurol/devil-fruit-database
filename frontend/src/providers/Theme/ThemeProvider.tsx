@@ -32,7 +32,6 @@ export const ThemeProvider: FC<PropsWithChildren<ITheme>> = ({
   };
 
   const value = {
-    palettes,
     mode,
     toggleMode,
   };
