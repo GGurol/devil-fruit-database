@@ -3,7 +3,7 @@ import { DataContext } from "./Data.context";
 
 export const DataProvider: FC<PropsWithChildren> = ({ children }) => {
   const [showSpoilers, setShowSpoilers] = useState<boolean>(false);
-  const [showNonCanon, setShowNonCanon] = useState<boolean>(false);
+  const [showNonCanon, setShowNonCanon] = useState<boolean>(true);
 
   const handleShowSpoilers = () => {
     setShowSpoilers(!showSpoilers);

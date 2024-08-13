@@ -1,0 +1,8 @@
+Create a single wrapper component file and export all the other wrappers
+
+1. create a parent wrapper 
+2. the other wrappers will extend the parent wrapper 
+
+
+ex.
+

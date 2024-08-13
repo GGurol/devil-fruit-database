@@ -15,7 +15,7 @@ const ButtonWrapper = styled.button<IButtonProps>`
 
   color: ${({ theme }) => theme.fgRegular};
 
-  ${({ theme }) => theme.bodySmall};
+  ${({ theme }) => theme.buttonSmall};
 
   cursor: pointer;
 

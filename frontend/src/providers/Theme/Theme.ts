@@ -43,48 +43,57 @@ const typography: IThemeTypography = {
   headerNormal: css`
     /* Headers/headerNormal */
     ${fonts.Rubik}
-    font-size: 28px;
+    font-size: 1.75rem;
     font-style: normal;
     font-weight: 500;
-    line-height: 32px;
-    letter-spacing: -0.5px;
+    line-height: 2rem; /* 114.286% */
+    letter-spacing: -0.03125rem;
   `,
   sectionTitle: css`
     /* Headers/sectionTitle */
     ${fonts.Rubik}
-    font-size: 24px;
+    font-size: 1.5rem;
     font-style: normal;
     font-weight: 500;
-    line-height: 28px;
-    letter-spacing: -0.25px;
+    line-height: 1.75rem; /* 116.667% */
+    letter-spacing: -0.01563rem;
   `,
   bodyLarge: css`
     /* Body/bodyLarge */
     ${fonts.Rubik}
-    font-size: 16px;
+    font-size: 1rem;
     font-style: normal;
     font-weight: 400;
-    line-height: 22px;
-    letter-spacing: 0.051px;
+    line-height: 1.375rem; /* 137.5% */
+    letter-spacing: 0.00319rem;
   `,
   bodySmall: css`
     /* Body/bodySmall */
     ${fonts.Rubik}
-    font-size: 13px;
+    font-size: 0.8125rem;
     font-style: normal;
     font-weight: 400;
-    line-height: 20px;
-    letter-spacing: 0.02px;
+    line-height: 1.25rem; /* 153.846% */
+    letter-spacing: 0.00125rem;
   `,
   label: css`
     /* Supporting/label */
     ${fonts.Rubik}
-    font-size: 11px;
+    font-size: 0.6875rem;
     font-style: normal;
     font-weight: 700;
-    line-height: 20px;
-    letter-spacing: 0.15px;
+    line-height: 1.25rem; /* 181.818% */
+    letter-spacing: 0.00938rem;
     text-transform: uppercase;
+  `,
+  buttonSmall: css`
+    /* Interactive/buttonSmall */
+    ${fonts.Rubik}
+    font-size: 0.8125rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.25rem; /* 153.846% */
+    letter-spacing: 0.00938rem;
   `,
 };
 

@@ -20,6 +20,7 @@ export interface IThemeTypography {
   bodyLarge: CSSProp;
   bodySmall: CSSProp;
   label: CSSProp;
+  buttonSmall: CSSProp;
 }
 
 // dont forget to update the themeVars const, when adding a new component

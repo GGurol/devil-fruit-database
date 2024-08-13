@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { ISpoilerProps } from "./Table.types";
+import { IDataTextProps } from "./Table.types";
 
 export const TableContainer = styled.div`
   display: inline-block;
@@ -52,7 +52,7 @@ export const TableThread = styled.thead`
 
 export const TableBody = styled.tbody`
   tr:nth-child(odd) {
-    background-color: ${({ theme }) => theme.bgSubdued};
+    /* background-color: ${({ theme }) => theme.bgSubdued}; */
   }
 
   tr:last-of-type {
@@ -85,6 +85,7 @@ export const TableData = styled.td`
 
   padding: 8px 16px;
   text-align: left;
+  vertical-align: top;
 
   ${({ theme }) => theme.bodySmall}
 
@@ -96,37 +97,86 @@ export const TableData = styled.td`
   }
 `;
 
-export const UserList = styled.ul`
+export const DataList = styled.ul`
   list-style-type: none;
 
   margin: 0;
   padding: 0;
 `;
 
-export const UserItem = styled.li``;
-
-export const SpoilerContainer = styled.div<ISpoilerProps>`
-  ${(props) =>
-    props.$showSpoilers === false &&
-    css`
-      cursor: pointer;
-
-      .spoiler-content {
-        background-color: ${({ theme }) => theme.borderRegular};
-
-        color: transparent;
-      }
-
-      &:hover .spoiler-content {
-        background-color: transparent;
-
-        color: ${({ theme }) => theme.fgRegular};
-
-        transition: background-color 0.1s ease-out;
-      }
-    `}
+export const DataItem = styled.li`
+  &:not(:last-child) {
+    margin-bottom: 4px;
+  }
 `;
 
-export const SpoilerContent = styled.span``;
+export const DataText = styled.p<IDataTextProps>`
+  ${DataItem} & {
+    ${({
+      theme,
+      $showSpoilers,
+      $useSpoilerBlock,
+      $awakening,
+      $isArtifical,
+    }) => css`
+      --color: ${theme.fgRegular};
+      --font-weight: 400;
+
+      color: var(--color);
+      font-weight: var(--font-weight);
+
+      ${$isArtifical &&
+      css`
+        --color: ${theme.primary[700]};
+        --font-weight: 500;
+
+        text-decoration: underline;
+        text-decoration-style: dotted;
+
+        ${!$showSpoilers &&
+        !$useSpoilerBlock &&
+        css`
+          --color: theme.fgRegular;
+          --font-weight: 400;
+
+          text-decoration: none;
+        `}
+      `}
+
+      ${$awakening?.$isAwakend &&
+      css`
+        --color: ${theme.tertiary[400]};
+        --font-weight: 500;
+
+        text-decoration: underline;
+        text-decoration-style: dotted;
+
+        ${!$showSpoilers &&
+        !$useSpoilerBlock &&
+        $awakening.$isSpoiler &&
+        css`
+          --color: theme.fgRegular;
+          --font-weight: 400;
+
+          text-decoration: none;
+        `}
+      `}
+
+      ${$useSpoilerBlock &&
+      css`
+        background-color: ${$showSpoilers
+          ? "transparent"
+          : theme.borderRegular};
+        color: ${$showSpoilers ? "var(--color)" : "transparent"};
+
+        &:hover {
+          background-color: ${$showSpoilers ? "none" : "transparent"};
+          color: var(--color);
+          transition: background-color 0.1s ease-out;
+        }
+      `};
+    `}
+  }
+`;
 
 export default TableWrapper;
