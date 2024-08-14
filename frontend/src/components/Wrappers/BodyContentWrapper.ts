@@ -7,14 +7,14 @@ const BodyContentWrapper = styled.div`
 
   flex: 1;
 
+  gap: 16px;
+
   width: 100%;
 
   padding: 32px;
 
   border: 1px solid ${({ theme }) => theme.borderRegular};
   border-radius: 4px;
-
-  box-sizing: border-box;
 
   background-color: ${({ theme }) => theme.bgSurface};
 `;

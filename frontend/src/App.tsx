@@ -6,7 +6,7 @@ import Button from "./components/Button/Button";
 import PageWrapper from "./components/Wrappers/PageWrapper";
 import HeaderWrapper from "./components/Wrappers/HeaderWrapper";
 import Logo from "./components/Logo/Logo";
-import Header from "./components/Header/Header";
+import Header from "./components/Header/Header.styled";
 import ActionsWrapper from "./components/Wrappers/ActionsWrapper";
 
 import logo from "./assets/one-piece.png";
@@ -98,6 +98,9 @@ export const App: FC = () => {
           </BodyActionsWrapper>
           <BodyContentWrapper>
             <Table />
+            <div style={{ color: "red", backgroundColor: "blue" }}>
+              <p>Legend</p>
+            </div>
           </BodyContentWrapper>
         </BodyWrapper>
       </ContentWrapper>

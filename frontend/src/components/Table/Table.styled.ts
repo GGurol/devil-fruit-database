@@ -19,6 +19,7 @@ export const TableContainer = styled.div`
 
   &::-webkit-scrollbar {
     width: 12px;
+    height: 12px;
   }
 
   &::-webkit-scrollbar-thumb {
@@ -111,72 +112,78 @@ export const DataItem = styled.li`
 `;
 
 export const DataText = styled.p<IDataTextProps>`
-  ${DataItem} & {
-    ${({
-      theme,
-      $showSpoilers,
-      $useSpoilerBlock,
-      $awakening,
-      $isArtifical,
-    }) => css`
-      --color: ${theme.fgRegular};
-      --font-weight: 400;
+  ${({
+    theme,
+    $showSpoilers,
+    $useSpoilerBlock,
+    $awakening,
+    $isArtifical,
+  }) => css`
+    --color: ${theme.fgRegular};
+    --font-weight: 400;
 
-      color: var(--color);
-      font-weight: var(--font-weight);
+    color: var(--color);
+    font-weight: var(--font-weight);
 
-      ${$isArtifical &&
+    cursor: default;
+
+    ${$isArtifical &&
+    css`
+      --color: ${theme.primary[700]};
+      --font-weight: 500;
+
+      text-decoration: underline;
+      text-decoration-style: dotted;
+
+      cursor: help;
+
+      ${!$showSpoilers &&
+      !$useSpoilerBlock &&
       css`
-        --color: ${theme.primary[700]};
-        --font-weight: 500;
+        --color: theme.fgRegular;
+        --font-weight: 400;
 
-        text-decoration: underline;
-        text-decoration-style: dotted;
+        text-decoration: none;
 
-        ${!$showSpoilers &&
-        !$useSpoilerBlock &&
-        css`
-          --color: theme.fgRegular;
-          --font-weight: 400;
-
-          text-decoration: none;
-        `}
+        cursor: text;
       `}
+    `}
 
-      ${$awakening?.$isAwakend &&
+    ${$awakening?.$isAwakend &&
+    css`
+      --color: ${theme.tertiary[400]};
+      --font-weight: 500;
+
+      text-decoration: underline;
+      text-decoration-style: dotted;
+
+      cursor: help;
+
+      ${!$showSpoilers &&
+      !$useSpoilerBlock &&
+      $awakening.$isSpoiler &&
       css`
-        --color: ${theme.tertiary[400]};
-        --font-weight: 500;
+        --color: theme.fgRegular;
+        --font-weight: 400;
 
-        text-decoration: underline;
-        text-decoration-style: dotted;
+        text-decoration: none;
 
-        ${!$showSpoilers &&
-        !$useSpoilerBlock &&
-        $awakening.$isSpoiler &&
-        css`
-          --color: theme.fgRegular;
-          --font-weight: 400;
-
-          text-decoration: none;
-        `}
+        cursor: text;
       `}
+    `}
 
       ${$useSpoilerBlock &&
-      css`
-        background-color: ${$showSpoilers
-          ? "transparent"
-          : theme.borderRegular};
-        color: ${$showSpoilers ? "var(--color)" : "transparent"};
+    css`
+      background-color: ${$showSpoilers ? "transparent" : theme.borderRegular};
+      color: ${$showSpoilers ? "var(--color)" : "transparent"};
 
-        &:hover {
-          background-color: ${$showSpoilers ? "none" : "transparent"};
-          color: var(--color);
-          transition: background-color 0.1s ease-out;
-        }
-      `};
-    `}
-  }
+      &:hover {
+        background-color: ${$showSpoilers ? "none" : "transparent"};
+        color: var(--color);
+        transition: background-color 0.1s ease-out;
+      }
+    `};
+  `}
 `;
 
 export default TableWrapper;

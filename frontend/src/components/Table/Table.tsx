@@ -403,6 +403,482 @@ const fruitData: IFruitData[] = [
     },
     is_canon: false,
   },
+  {
+    fruit_id: "5be09cdb-30d4-4baa-b346-92fb898153e6",
+    names: {
+      romanized_names: [
+        {
+          name: "Hito Hito no Mi",
+          is_spoiler: false,
+        },
+      ],
+      translated_names: [
+        {
+          name: "Human-Human Fruit",
+          is_spoiler: false,
+        },
+      ],
+    },
+    types: [
+      {
+        type: "Zoan",
+        is_spoiler: false,
+      },
+    ],
+    abilities: {
+      ability:
+        "Allows an animal that eats it to become a full human or a half-human hybrid, as well as grant them human-like intelligence and the ability to speak.",
+      awakened_ability: null,
+    },
+    users: {
+      current_users: [
+        {
+          user: "Tony Tony Chopper",
+          is_artificial: false,
+          is_spoiler: false,
+          awakening: { is_awakened: false, is_spoiler: false },
+        },
+      ],
+      previous_users: null,
+    },
+    is_canon: true,
+  },
+  {
+    fruit_id: "b2167a97-2bd9-4cf9-a16f-ba665c369ff4",
+    names: {
+      romanized_names: [
+        {
+          name: "Neko Neko no Mi, Model: Leopard",
+          is_spoiler: false,
+        },
+      ],
+      translated_names: [
+        {
+          name: "Cat-Cat Fruit, Leopard Model",
+          is_spoiler: false,
+        },
+      ],
+    },
+    types: [
+      {
+        type: "Zoan",
+        is_spoiler: false,
+      },
+    ],
+    abilities: {
+      ability:
+        "Allows the user to become a full leopard or a half-leopard hybrid.",
+      awakened_ability: null,
+    },
+    users: {
+      current_users: [
+        {
+          user: "Rob Lucci",
+          is_artificial: false,
+          is_spoiler: true,
+          awakening: { is_awakened: true, is_spoiler: true },
+        },
+      ],
+      previous_users: null,
+    },
+    is_canon: true,
+  },
+  {
+    fruit_id: "a5381619-17c9-4d74-a84c-db5dd5442665",
+    names: {
+      romanized_names: [
+        {
+          name: "Tori Tori no Mi, Model: Eagle",
+          is_spoiler: false,
+        },
+      ],
+      translated_names: [
+        {
+          name: "Bird-Bird Fruit, Eagle Model",
+          is_spoiler: false,
+        },
+      ],
+    },
+    types: [
+      {
+        type: "Zoan",
+        is_spoiler: false,
+      },
+    ],
+    abilities: {
+      ability: "Allows the user to become a full eagle or a half-eagle hybrid.",
+      awakened_ability: null,
+    },
+    users: {
+      current_users: [
+        {
+          user: "Buzz",
+          is_artificial: false,
+          is_spoiler: false,
+          awakening: { is_awakened: false, is_spoiler: false },
+        },
+      ],
+      previous_users: null,
+    },
+    is_canon: false,
+  },
+  {
+    fruit_id: "5be09cdb-30d4-4baa-b346-92fb898153e6",
+    names: {
+      romanized_names: [
+        {
+          name: "Hito Hito no Mi",
+          is_spoiler: false,
+        },
+      ],
+      translated_names: [
+        {
+          name: "Human-Human Fruit",
+          is_spoiler: false,
+        },
+      ],
+    },
+    types: [
+      {
+        type: "Zoan",
+        is_spoiler: false,
+      },
+    ],
+    abilities: {
+      ability:
+        "Allows an animal that eats it to become a full human or a half-human hybrid, as well as grant them human-like intelligence and the ability to speak.",
+      awakened_ability: null,
+    },
+    users: {
+      current_users: [
+        {
+          user: "Tony Tony Chopper",
+          is_artificial: false,
+          is_spoiler: false,
+          awakening: { is_awakened: false, is_spoiler: false },
+        },
+      ],
+      previous_users: null,
+    },
+    is_canon: true,
+  },
+  {
+    fruit_id: "b2167a97-2bd9-4cf9-a16f-ba665c369ff4",
+    names: {
+      romanized_names: [
+        {
+          name: "Neko Neko no Mi, Model: Leopard",
+          is_spoiler: false,
+        },
+      ],
+      translated_names: [
+        {
+          name: "Cat-Cat Fruit, Leopard Model",
+          is_spoiler: false,
+        },
+      ],
+    },
+    types: [
+      {
+        type: "Zoan",
+        is_spoiler: false,
+      },
+    ],
+    abilities: {
+      ability:
+        "Allows the user to become a full leopard or a half-leopard hybrid.",
+      awakened_ability: null,
+    },
+    users: {
+      current_users: [
+        {
+          user: "Rob Lucci",
+          is_artificial: false,
+          is_spoiler: true,
+          awakening: { is_awakened: true, is_spoiler: true },
+        },
+      ],
+      previous_users: null,
+    },
+    is_canon: true,
+  },
+  {
+    fruit_id: "a5381619-17c9-4d74-a84c-db5dd5442665",
+    names: {
+      romanized_names: [
+        {
+          name: "Tori Tori no Mi, Model: Eagle",
+          is_spoiler: false,
+        },
+      ],
+      translated_names: [
+        {
+          name: "Bird-Bird Fruit, Eagle Model",
+          is_spoiler: false,
+        },
+      ],
+    },
+    types: [
+      {
+        type: "Zoan",
+        is_spoiler: false,
+      },
+    ],
+    abilities: {
+      ability: "Allows the user to become a full eagle or a half-eagle hybrid.",
+      awakened_ability: null,
+    },
+    users: {
+      current_users: [
+        {
+          user: "Buzz",
+          is_artificial: false,
+          is_spoiler: false,
+          awakening: { is_awakened: false, is_spoiler: false },
+        },
+      ],
+      previous_users: null,
+    },
+    is_canon: false,
+  },
+  {
+    fruit_id: "5be09cdb-30d4-4baa-b346-92fb898153e6",
+    names: {
+      romanized_names: [
+        {
+          name: "Hito Hito no Mi",
+          is_spoiler: false,
+        },
+      ],
+      translated_names: [
+        {
+          name: "Human-Human Fruit",
+          is_spoiler: false,
+        },
+      ],
+    },
+    types: [
+      {
+        type: "Zoan",
+        is_spoiler: false,
+      },
+    ],
+    abilities: {
+      ability:
+        "Allows an animal that eats it to become a full human or a half-human hybrid, as well as grant them human-like intelligence and the ability to speak.",
+      awakened_ability: null,
+    },
+    users: {
+      current_users: [
+        {
+          user: "Tony Tony Chopper",
+          is_artificial: false,
+          is_spoiler: false,
+          awakening: { is_awakened: false, is_spoiler: false },
+        },
+      ],
+      previous_users: null,
+    },
+    is_canon: true,
+  },
+  {
+    fruit_id: "b2167a97-2bd9-4cf9-a16f-ba665c369ff4",
+    names: {
+      romanized_names: [
+        {
+          name: "Neko Neko no Mi, Model: Leopard",
+          is_spoiler: false,
+        },
+      ],
+      translated_names: [
+        {
+          name: "Cat-Cat Fruit, Leopard Model",
+          is_spoiler: false,
+        },
+      ],
+    },
+    types: [
+      {
+        type: "Zoan",
+        is_spoiler: false,
+      },
+    ],
+    abilities: {
+      ability:
+        "Allows the user to become a full leopard or a half-leopard hybrid.",
+      awakened_ability: null,
+    },
+    users: {
+      current_users: [
+        {
+          user: "Rob Lucci",
+          is_artificial: false,
+          is_spoiler: true,
+          awakening: { is_awakened: true, is_spoiler: true },
+        },
+      ],
+      previous_users: null,
+    },
+    is_canon: true,
+  },
+  {
+    fruit_id: "a5381619-17c9-4d74-a84c-db5dd5442665",
+    names: {
+      romanized_names: [
+        {
+          name: "Tori Tori no Mi, Model: Eagle",
+          is_spoiler: false,
+        },
+      ],
+      translated_names: [
+        {
+          name: "Bird-Bird Fruit, Eagle Model",
+          is_spoiler: false,
+        },
+      ],
+    },
+    types: [
+      {
+        type: "Zoan",
+        is_spoiler: false,
+      },
+    ],
+    abilities: {
+      ability: "Allows the user to become a full eagle or a half-eagle hybrid.",
+      awakened_ability: null,
+    },
+    users: {
+      current_users: [
+        {
+          user: "Buzz",
+          is_artificial: false,
+          is_spoiler: false,
+          awakening: { is_awakened: false, is_spoiler: false },
+        },
+      ],
+      previous_users: null,
+    },
+    is_canon: false,
+  },
+  {
+    fruit_id: "5be09cdb-30d4-4baa-b346-92fb898153e6",
+    names: {
+      romanized_names: [
+        {
+          name: "Hito Hito no Mi",
+          is_spoiler: false,
+        },
+      ],
+      translated_names: [
+        {
+          name: "Human-Human Fruit",
+          is_spoiler: false,
+        },
+      ],
+    },
+    types: [
+      {
+        type: "Zoan",
+        is_spoiler: false,
+      },
+    ],
+    abilities: {
+      ability:
+        "Allows an animal that eats it to become a full human or a half-human hybrid, as well as grant them human-like intelligence and the ability to speak.",
+      awakened_ability: null,
+    },
+    users: {
+      current_users: [
+        {
+          user: "Tony Tony Chopper",
+          is_artificial: false,
+          is_spoiler: false,
+          awakening: { is_awakened: false, is_spoiler: false },
+        },
+      ],
+      previous_users: null,
+    },
+    is_canon: true,
+  },
+  {
+    fruit_id: "b2167a97-2bd9-4cf9-a16f-ba665c369ff4",
+    names: {
+      romanized_names: [
+        {
+          name: "Neko Neko no Mi, Model: Leopard",
+          is_spoiler: false,
+        },
+      ],
+      translated_names: [
+        {
+          name: "Cat-Cat Fruit, Leopard Model",
+          is_spoiler: false,
+        },
+      ],
+    },
+    types: [
+      {
+        type: "Zoan",
+        is_spoiler: false,
+      },
+    ],
+    abilities: {
+      ability:
+        "Allows the user to become a full leopard or a half-leopard hybrid.",
+      awakened_ability: null,
+    },
+    users: {
+      current_users: [
+        {
+          user: "Rob Lucci",
+          is_artificial: false,
+          is_spoiler: true,
+          awakening: { is_awakened: true, is_spoiler: true },
+        },
+      ],
+      previous_users: null,
+    },
+    is_canon: true,
+  },
+  {
+    fruit_id: "a5381619-17c9-4d74-a84c-db5dd5442665",
+    names: {
+      romanized_names: [
+        {
+          name: "Tori Tori no Mi, Model: Eagle",
+          is_spoiler: false,
+        },
+      ],
+      translated_names: [
+        {
+          name: "Bird-Bird Fruit, Eagle Model",
+          is_spoiler: false,
+        },
+      ],
+    },
+    types: [
+      {
+        type: "Zoan",
+        is_spoiler: false,
+      },
+    ],
+    abilities: {
+      ability: "Allows the user to become a full eagle or a half-eagle hybrid.",
+      awakened_ability: null,
+    },
+    users: {
+      current_users: [
+        {
+          user: "Buzz",
+          is_artificial: false,
+          is_spoiler: false,
+          awakening: { is_awakened: false, is_spoiler: false },
+        },
+      ],
+      previous_users: null,
+    },
+    is_canon: false,
+  },
 ];
 
 const Table: FC = () => {
@@ -489,6 +965,13 @@ const Table: FC = () => {
                             $isSpoiler: cuser.awakening.is_spoiler,
                           }}
                           $isArtifical={cuser.is_artificial}
+                          title={
+                            cuser.awakening.is_awakened
+                              ? "Awakened"
+                              : cuser.is_artificial
+                              ? "Artificial"
+                              : ""
+                          }
                         >
                           {cuser.user}
                         </DataText>
@@ -512,6 +995,7 @@ const Table: FC = () => {
                             $isAwakend: puser.awakening.is_awakened,
                             $isSpoiler: puser.awakening.is_spoiler,
                           }}
+                          title={puser.awakening.is_awakened ? "Awakened" : ""}
                         >
                           {puser.user}
                         </DataText>
