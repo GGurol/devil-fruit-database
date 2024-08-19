@@ -3,10 +3,9 @@ import styled from "styled-components";
 const BodyContentWrapper = styled.div`
   display: flex;
 
-  flex-direction: column;
-
   flex: 1;
 
+  flex-direction: column;
   gap: 16px;
 
   width: 100%;

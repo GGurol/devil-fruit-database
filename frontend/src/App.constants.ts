@@ -51,6 +51,9 @@ export const palettes = {
     "900": "#9A8E81" as const,
     "950": "#6D645B" as const,
   },
+  purple: {
+    '600': "#6B46C1" as const, 
+  },
   grayscale: {
     "50": "#FEFEFE" as const,
     "100": "#FDFDFD" as const,

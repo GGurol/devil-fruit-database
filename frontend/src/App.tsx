@@ -1,6 +1,9 @@
 import { FC } from "react";
 
+import { useTheme } from "styled-components";
+
 import { useThemeContext } from "./providers/Theme/Theme.context";
+import { useDataContext } from "./providers/Data/Data.context";
 
 import Button from "./components/Button/Button";
 import PageWrapper from "./components/Wrappers/PageWrapper";
@@ -16,11 +19,10 @@ import BodyActionsWrapper from "./components/Wrappers/BodyActionsWrapper";
 import ToggleWrapper from "./components/Wrappers/ToggleWrapper";
 import Checkbox from "./components/Checkbox/Checkbox";
 import BodyContentWrapper from "./components/Wrappers/BodyContentWrapper";
-import Textfield from "./components/Textfield/Textfield";
 import SearchActionsWrapper from "./components/Wrappers/SearchActionsWrapper";
 import Table from "./components/Table/Table";
-import { useTheme } from "styled-components";
-import { useDataContext } from "./providers/Data/Data.context";
+import Legend from "./components/Legend/Legend";
+import SearchBar from "./components/SearchBar/SearchBar";
 
 export const App: FC = () => {
   const theme = useTheme();
@@ -84,23 +86,12 @@ export const App: FC = () => {
               />
             </ToggleWrapper>
             <SearchActionsWrapper>
-              <Textfield
-                placeholder="Search"
-                $icon={{
-                  hasIcon: true,
-                  iconStyle: {
-                    iconName: "Search",
-                    fontSize: "20px",
-                  },
-                }}
-              />
+              <SearchBar />
             </SearchActionsWrapper>
           </BodyActionsWrapper>
           <BodyContentWrapper>
             <Table />
-            <div style={{ color: "red", backgroundColor: "blue" }}>
-              <p>Legend</p>
-            </div>
+            <Legend />
           </BodyContentWrapper>
         </BodyWrapper>
       </ContentWrapper>

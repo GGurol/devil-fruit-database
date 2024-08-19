@@ -129,7 +129,7 @@ export const DataText = styled.p<IDataTextProps>`
 
     ${$isArtifical &&
     css`
-      --color: ${theme.primary[700]};
+      --color: ${theme.purple[600]};
       --font-weight: 500;
 
       text-decoration: underline;
