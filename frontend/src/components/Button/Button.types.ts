@@ -40,6 +40,9 @@ export type IButtonIcon = IButtonBaseIconConfig | IButtonIconConfig;
 
 export interface IButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   $variant: TButtonVariant;
-  $minwidth?: `${string}px` | "auto";
+  $minwidth?:
+    | `${string}`
+    | "auto"
+    | { desktop: `${string}` | "auto"; mobile: `${string}` | "auto" };
   $icon?: IButtonIcon;
 }

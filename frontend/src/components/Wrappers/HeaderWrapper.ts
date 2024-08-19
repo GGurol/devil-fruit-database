@@ -8,6 +8,12 @@ const HeaderWrapper = styled.div`
   flex-direction: row;
   align-items: center;
   gap: 24px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
 `;
 
 export default HeaderWrapper;

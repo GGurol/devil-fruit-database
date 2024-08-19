@@ -40,7 +40,7 @@ export const App: FC = () => {
             <Button
               onClick={toggleMode}
               $variant={{ variantName: "Outline" }}
-              $minwidth="132px"
+              $minwidth={{ desktop: "132px", mobile: "auto" }}
               $icon={{
                 hasIcon: true,
                 iconStyle: {
@@ -55,6 +55,7 @@ export const App: FC = () => {
                 variantName: "Solid",
                 staticColors: { fgColor: theme.grayscale["50"] },
               }}
+              $minwidth={{ desktop: "132px", mobile: "auto" }}
               $icon={{
                 hasIcon: true,
                 iconStyle: {

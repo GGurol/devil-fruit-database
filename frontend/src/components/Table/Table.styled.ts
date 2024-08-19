@@ -35,12 +35,20 @@ export const TableContainer = styled.div`
 
     border-radius: 100px;
   }
+
+  @media (max-width: 768px) {
+    overflow-x: auto;
+  }
 `;
 
 const TableWrapper = styled.table`
   width: 100%;
 
   border-collapse: collapse;
+
+  @media (max-width: 768px) {
+    min-width: 600px;
+  }
 `;
 
 export const TableThread = styled.thead`

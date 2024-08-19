@@ -7,6 +7,10 @@ const PageWrapper = styled.div`
   height: 100vh;
 
   overflow: hidden;
+
+  @media (max-width: 768px) {
+    padding: 32px 16px 16px 16px;
+  }
 `;
 
 export default PageWrapper;
