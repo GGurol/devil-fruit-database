@@ -10,6 +10,16 @@ export interface IThemeModes {
   dark: DefaultTheme;
 }
 
+export interface IThemeCommonColors {
+  bgSubdued: string;
+  bgOverlay: string;
+  bgOverlaySecondary: string;
+  shadowsSoft: string;
+  accentPrimary: string;
+  accentSecondary: string;
+  focusShadow: string;  
+}
+
 export interface IThemeFonts {
   Rubik: CSSProp;
 }
@@ -23,6 +33,10 @@ export interface IThemeTypography {
   buttonSmall: CSSProp;
 }
 
+export interface IThemeCommonStyles {
+  commonBorder: CSSProp;
+}
+
 // dont forget to update the themeVars const, when adding a new component
 export interface IThemeComponents {
   buttons: typeof ButtonStyles;
@@ -32,8 +46,9 @@ export interface IThemeComponents {
 export interface ITheme {
   palettes: IThemePalettes;
   modes: IThemeModes;
-  common: DefaultTheme;
+  commonColors: IThemeCommonColors;
   typography: IThemeTypography;
+  commonStyles: IThemeCommonStyles;
   components: IThemeComponents;
 }
 

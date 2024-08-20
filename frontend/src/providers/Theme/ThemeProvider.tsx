@@ -9,7 +9,14 @@ export const ThemeProvider: FC<PropsWithChildren<ITheme>> = ({
   children,
   ...props
 }) => {
-  const { palettes, modes, common, typography, components } = props;
+  const {
+    palettes,
+    modes,
+    commonColors,
+    typography,
+    components,
+    commonStyles,
+  } = props;
 
   // initialize state with a default value or retrieve from localStorage
   const [mode, setMode] = useState<TModes>(() => {
@@ -41,9 +48,10 @@ export const ThemeProvider: FC<PropsWithChildren<ITheme>> = ({
       <StyledComponentsThemeProvider
         theme={{
           ...palettes,
-          ...common,
-          ...typography,
           ...(mode === "light" ? modes.light : modes.dark),
+          ...commonColors,
+          ...typography,
+          ...commonStyles,
           ...components,
         }}
       >

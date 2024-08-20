@@ -11,8 +11,9 @@ import TableWrapper, {
   TableThread,
 } from "./Table.styled";
 import { useDataContext } from "../../providers/Data/Data.context";
+import { ITableProps } from "./Table.types";
 
-const Table: FC = () => {
+const Table: FC<ITableProps> = ({ $alternate = false }) => {
   const { filteredFruitData, showSpoilers } = useDataContext();
 
   return (
@@ -29,7 +30,7 @@ const Table: FC = () => {
             <TableHeader>Canon</TableHeader>
           </TableRow>
         </TableThread>
-        <TableBody>
+        <TableBody $alternate={$alternate}>
           {filteredFruitData.map((fruit, index) => (
             <TableRow key={index}>
               <TableData>
@@ -39,7 +40,7 @@ const Table: FC = () => {
                       <DataText
                         $showSpoilers={showSpoilers}
                         $useSpoilerBlock={rname.is_spoiler}
-                        $isArtifical={false}
+                        $isArtificial={false}
                       >
                         {rname.name}
                       </DataText>
@@ -54,7 +55,7 @@ const Table: FC = () => {
                       <DataText
                         $showSpoilers={showSpoilers}
                         $useSpoilerBlock={tname.is_spoiler}
-                        $isArtifical={false}
+                        $isArtificial={false}
                       >
                         {tname.name}
                       </DataText>
@@ -69,7 +70,7 @@ const Table: FC = () => {
                       <DataText
                         $showSpoilers={showSpoilers}
                         $useSpoilerBlock={type.is_spoiler}
-                        $isArtifical={false}
+                        $isArtificial={false}
                       >
                         {type.type}
                       </DataText>
@@ -91,7 +92,7 @@ const Table: FC = () => {
                             $isAwakend: cuser.awakening.is_awakened,
                             $isSpoiler: cuser.awakening.is_spoiler,
                           }}
-                          $isArtifical={cuser.is_artificial}
+                          $isArtificial={cuser.is_artificial}
                           title={
                             cuser.awakening.is_awakened
                               ? "Awakened"

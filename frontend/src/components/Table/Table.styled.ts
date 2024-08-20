@@ -1,9 +1,14 @@
 import styled, { css } from "styled-components";
-import { IDataTextProps } from "./Table.types";
+
+import { IDataTextProps, ITableProps } from "./Table.types";
+import {
+  artificalTextStyles,
+  awakeningTextStyles,
+  defaultTextStyles,
+  spoilerBlockStyles,
+} from "./Table.styles";
 
 export const TableContainer = styled.div`
-  display: inline-block;
-
   flex: 1 0 0;
 
   width: 100%;
@@ -11,7 +16,7 @@ export const TableContainer = styled.div`
   max-height: 100%;
 
   border-radius: 2px;
-  border: 1px solid ${({ theme }) => theme.borderRegular};
+  ${({ theme }) => theme.commonBorder};
 
   overflow-y: auto;
 
@@ -36,6 +41,10 @@ export const TableContainer = styled.div`
     border-radius: 100px;
   }
 
+  &::-webkit-scrollbar-corner {
+    background: none;
+  }
+
   @media (max-width: 768px) {
     overflow-x: auto;
   }
@@ -56,13 +65,19 @@ export const TableThread = styled.thead`
 
   top: 0;
 
+  z-index: 1;
+
   background-color: ${({ theme }) => theme.bgSurface};
 `;
 
-export const TableBody = styled.tbody`
-  tr:nth-child(odd) {
-    /* background-color: ${({ theme }) => theme.bgSubdued}; */
-  }
+export const TableBody = styled.tbody<ITableProps>`
+  ${({ $alternate, theme }) =>
+    $alternate &&
+    css`
+      tr:nth-child(odd) {
+        background-color: ${theme.bgSubdued};
+      }
+    `}
 
   tr:last-of-type {
     border-bottom: none;
@@ -125,7 +140,7 @@ export const DataText = styled.p<IDataTextProps>`
     $showSpoilers,
     $useSpoilerBlock,
     $awakening,
-    $isArtifical,
+    $isArtificial,
   }) => css`
     --color: ${theme.fgRegular};
     --font-weight: 400;
@@ -135,62 +150,22 @@ export const DataText = styled.p<IDataTextProps>`
 
     cursor: default;
 
-    ${$isArtifical &&
+    ${$isArtificial &&
     css`
-      --color: ${theme.purple[600]};
-      --font-weight: 500;
-
-      text-decoration: underline;
-      text-decoration-style: dotted;
-
-      cursor: help;
-
-      ${!$showSpoilers &&
-      !$useSpoilerBlock &&
-      css`
-        --color: theme.fgRegular;
-        --font-weight: 400;
-
-        text-decoration: none;
-
-        cursor: text;
-      `}
+      ${artificalTextStyles}
+      ${!$showSpoilers && !$useSpoilerBlock && defaultTextStyles}
     `}
 
     ${$awakening?.$isAwakend &&
     css`
-      --color: ${theme.tertiary[400]};
-      --font-weight: 500;
-
-      text-decoration: underline;
-      text-decoration-style: dotted;
-
-      cursor: help;
-
+      ${awakeningTextStyles}
       ${!$showSpoilers &&
       !$useSpoilerBlock &&
       $awakening.$isSpoiler &&
-      css`
-        --color: theme.fgRegular;
-        --font-weight: 400;
-
-        text-decoration: none;
-
-        cursor: text;
-      `}
+      defaultTextStyles}
     `}
 
-      ${$useSpoilerBlock &&
-    css`
-      background-color: ${$showSpoilers ? "transparent" : theme.borderRegular};
-      color: ${$showSpoilers ? "var(--color)" : "transparent"};
-
-      &:hover {
-        background-color: ${$showSpoilers ? "none" : "transparent"};
-        color: var(--color);
-        transition: background-color 0.1s ease-out;
-      }
-    `};
+    ${$useSpoilerBlock && spoilerBlockStyles($showSpoilers, theme)};
   `}
 `;
 

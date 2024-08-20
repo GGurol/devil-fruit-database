@@ -34,7 +34,7 @@ const TextfieldInput = styled.input.attrs({ type: "text" })<ITextfieldProps>`
 
   box-sizing: border-box;
 
-  border: 1px solid ${({ theme }) => theme.borderRegular};
+  ${({ theme }) => theme.commonBorder};
   border-radius: 4px;
 
   color: ${({ theme }) => theme.fgSubdued};

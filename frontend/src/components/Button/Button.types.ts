@@ -43,6 +43,10 @@ export interface IButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   $minwidth?:
     | `${string}`
     | "auto"
-    | { desktop: `${string}` | "auto"; mobile: `${string}` | "auto" };
+    | {
+        desktop?: `${string}` | "auto";
+        tablet?: `${string}` | "auto";
+        mobile?: `${string}` | "auto";
+      };
   $icon?: IButtonIcon;
 }

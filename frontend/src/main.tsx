@@ -11,9 +11,10 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <ThemeProvider
       palettes={themeVars.palettes}
       modes={themeVars.modes}
-      common={themeVars.common}
+      commonColors={themeVars.commonColors}
       typography={themeVars.typography}
       components={themeVars.components}
+      commonStyles={themeVars.commonStyles}
     >
       <DataProvider>
         <App />

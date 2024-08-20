@@ -91,7 +91,7 @@ export const App: FC = () => {
             </SearchActionsWrapper>
           </BodyActionsWrapper>
           <BodyContentWrapper>
-            <Table />
+            <Table $alternate={false} />
             <Legend />
           </BodyContentWrapper>
         </BodyWrapper>

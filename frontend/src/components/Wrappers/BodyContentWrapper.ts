@@ -12,10 +12,14 @@ const BodyContentWrapper = styled.div`
 
   padding: 32px;
 
-  border: 1px solid ${({ theme }) => theme.borderRegular};
+  ${({ theme }) => theme.commonBorder};
   border-radius: 4px;
 
   background-color: ${({ theme }) => theme.bgSurface};
+
+  @media (max-width: 768px) {
+    padding: 16px;
+  }
 `;
 
 export default BodyContentWrapper;

@@ -363,6 +363,942 @@ const fruitData: IFruitData[] = [
     },
     is_canon: false,
   },
+  {
+    fruit_id: "a5381619-17c9-4d74-a84c-db5dd5442665",
+    names: {
+      romanized_names: [
+        {
+          name: "Tori Tori no Mi, Model: Eagle",
+          is_spoiler: false,
+        },
+      ],
+      translated_names: [
+        {
+          name: "Bird-Bird Fruit, Eagle Model",
+          is_spoiler: false,
+        },
+      ],
+    },
+    types: [
+      {
+        type: "Zoan",
+        is_spoiler: false,
+      },
+    ],
+    abilities: {
+      ability: "Allows the user to become a full eagle or a half-eagle hybrid.",
+      awakened_ability: null,
+    },
+    users: {
+      current_users: [
+        {
+          user: "Buzz",
+          is_artificial: false,
+          is_spoiler: false,
+          awakening: { is_awakened: false, is_spoiler: false },
+        },
+      ],
+      previous_users: null,
+    },
+    is_canon: false,
+  },
+  {
+    fruit_id: "a5381619-17c9-4d74-a84c-db5dd5442665",
+    names: {
+      romanized_names: [
+        {
+          name: "Tori Tori no Mi, Model: Eagle",
+          is_spoiler: false,
+        },
+      ],
+      translated_names: [
+        {
+          name: "Bird-Bird Fruit, Eagle Model",
+          is_spoiler: false,
+        },
+      ],
+    },
+    types: [
+      {
+        type: "Zoan",
+        is_spoiler: false,
+      },
+    ],
+    abilities: {
+      ability: "Allows the user to become a full eagle or a half-eagle hybrid.",
+      awakened_ability: null,
+    },
+    users: {
+      current_users: [
+        {
+          user: "Buzz",
+          is_artificial: false,
+          is_spoiler: false,
+          awakening: { is_awakened: false, is_spoiler: false },
+        },
+      ],
+      previous_users: null,
+    },
+    is_canon: false,
+  },
+  {
+    fruit_id: "a5381619-17c9-4d74-a84c-db5dd5442665",
+    names: {
+      romanized_names: [
+        {
+          name: "Tori Tori no Mi, Model: Eagle",
+          is_spoiler: false,
+        },
+      ],
+      translated_names: [
+        {
+          name: "Bird-Bird Fruit, Eagle Model",
+          is_spoiler: false,
+        },
+      ],
+    },
+    types: [
+      {
+        type: "Zoan",
+        is_spoiler: false,
+      },
+    ],
+    abilities: {
+      ability: "Allows the user to become a full eagle or a half-eagle hybrid.",
+      awakened_ability: null,
+    },
+    users: {
+      current_users: [
+        {
+          user: "Buzz",
+          is_artificial: false,
+          is_spoiler: false,
+          awakening: { is_awakened: false, is_spoiler: false },
+        },
+      ],
+      previous_users: null,
+    },
+    is_canon: false,
+  },
+  {
+    fruit_id: "a5381619-17c9-4d74-a84c-db5dd5442665",
+    names: {
+      romanized_names: [
+        {
+          name: "Tori Tori no Mi, Model: Eagle",
+          is_spoiler: false,
+        },
+      ],
+      translated_names: [
+        {
+          name: "Bird-Bird Fruit, Eagle Model",
+          is_spoiler: false,
+        },
+      ],
+    },
+    types: [
+      {
+        type: "Zoan",
+        is_spoiler: false,
+      },
+    ],
+    abilities: {
+      ability: "Allows the user to become a full eagle or a half-eagle hybrid.",
+      awakened_ability: null,
+    },
+    users: {
+      current_users: [
+        {
+          user: "Buzz",
+          is_artificial: false,
+          is_spoiler: false,
+          awakening: { is_awakened: false, is_spoiler: false },
+        },
+      ],
+      previous_users: null,
+    },
+    is_canon: false,
+  },
+  {
+    fruit_id: "a5381619-17c9-4d74-a84c-db5dd5442665",
+    names: {
+      romanized_names: [
+        {
+          name: "Tori Tori no Mi, Model: Eagle",
+          is_spoiler: false,
+        },
+      ],
+      translated_names: [
+        {
+          name: "Bird-Bird Fruit, Eagle Model",
+          is_spoiler: false,
+        },
+      ],
+    },
+    types: [
+      {
+        type: "Zoan",
+        is_spoiler: false,
+      },
+    ],
+    abilities: {
+      ability: "Allows the user to become a full eagle or a half-eagle hybrid.",
+      awakened_ability: null,
+    },
+    users: {
+      current_users: [
+        {
+          user: "Buzz",
+          is_artificial: false,
+          is_spoiler: false,
+          awakening: { is_awakened: false, is_spoiler: false },
+        },
+      ],
+      previous_users: null,
+    },
+    is_canon: false,
+  },
+  {
+    fruit_id: "a5381619-17c9-4d74-a84c-db5dd5442665",
+    names: {
+      romanized_names: [
+        {
+          name: "Tori Tori no Mi, Model: Eagle",
+          is_spoiler: false,
+        },
+      ],
+      translated_names: [
+        {
+          name: "Bird-Bird Fruit, Eagle Model",
+          is_spoiler: false,
+        },
+      ],
+    },
+    types: [
+      {
+        type: "Zoan",
+        is_spoiler: false,
+      },
+    ],
+    abilities: {
+      ability: "Allows the user to become a full eagle or a half-eagle hybrid.",
+      awakened_ability: null,
+    },
+    users: {
+      current_users: [
+        {
+          user: "Buzz",
+          is_artificial: false,
+          is_spoiler: false,
+          awakening: { is_awakened: false, is_spoiler: false },
+        },
+      ],
+      previous_users: null,
+    },
+    is_canon: false,
+  },
+  {
+    fruit_id: "a5381619-17c9-4d74-a84c-db5dd5442665",
+    names: {
+      romanized_names: [
+        {
+          name: "Tori Tori no Mi, Model: Eagle",
+          is_spoiler: false,
+        },
+      ],
+      translated_names: [
+        {
+          name: "Bird-Bird Fruit, Eagle Model",
+          is_spoiler: false,
+        },
+      ],
+    },
+    types: [
+      {
+        type: "Zoan",
+        is_spoiler: false,
+      },
+    ],
+    abilities: {
+      ability: "Allows the user to become a full eagle or a half-eagle hybrid.",
+      awakened_ability: null,
+    },
+    users: {
+      current_users: [
+        {
+          user: "Buzz",
+          is_artificial: false,
+          is_spoiler: false,
+          awakening: { is_awakened: false, is_spoiler: false },
+        },
+      ],
+      previous_users: null,
+    },
+    is_canon: false,
+  },
+  {
+    fruit_id: "a5381619-17c9-4d74-a84c-db5dd5442665",
+    names: {
+      romanized_names: [
+        {
+          name: "Tori Tori no Mi, Model: Eagle",
+          is_spoiler: false,
+        },
+      ],
+      translated_names: [
+        {
+          name: "Bird-Bird Fruit, Eagle Model",
+          is_spoiler: false,
+        },
+      ],
+    },
+    types: [
+      {
+        type: "Zoan",
+        is_spoiler: false,
+      },
+    ],
+    abilities: {
+      ability: "Allows the user to become a full eagle or a half-eagle hybrid.",
+      awakened_ability: null,
+    },
+    users: {
+      current_users: [
+        {
+          user: "Buzz",
+          is_artificial: false,
+          is_spoiler: false,
+          awakening: { is_awakened: false, is_spoiler: false },
+        },
+      ],
+      previous_users: null,
+    },
+    is_canon: false,
+  },
+  {
+    fruit_id: "a5381619-17c9-4d74-a84c-db5dd5442665",
+    names: {
+      romanized_names: [
+        {
+          name: "Tori Tori no Mi, Model: Eagle",
+          is_spoiler: false,
+        },
+      ],
+      translated_names: [
+        {
+          name: "Bird-Bird Fruit, Eagle Model",
+          is_spoiler: false,
+        },
+      ],
+    },
+    types: [
+      {
+        type: "Zoan",
+        is_spoiler: false,
+      },
+    ],
+    abilities: {
+      ability: "Allows the user to become a full eagle or a half-eagle hybrid.",
+      awakened_ability: null,
+    },
+    users: {
+      current_users: [
+        {
+          user: "Buzz",
+          is_artificial: false,
+          is_spoiler: false,
+          awakening: { is_awakened: false, is_spoiler: false },
+        },
+      ],
+      previous_users: null,
+    },
+    is_canon: false,
+  },
+  {
+    fruit_id: "a5381619-17c9-4d74-a84c-db5dd5442665",
+    names: {
+      romanized_names: [
+        {
+          name: "Tori Tori no Mi, Model: Eagle",
+          is_spoiler: false,
+        },
+      ],
+      translated_names: [
+        {
+          name: "Bird-Bird Fruit, Eagle Model",
+          is_spoiler: false,
+        },
+      ],
+    },
+    types: [
+      {
+        type: "Zoan",
+        is_spoiler: false,
+      },
+    ],
+    abilities: {
+      ability: "Allows the user to become a full eagle or a half-eagle hybrid.",
+      awakened_ability: null,
+    },
+    users: {
+      current_users: [
+        {
+          user: "Buzz",
+          is_artificial: false,
+          is_spoiler: false,
+          awakening: { is_awakened: false, is_spoiler: false },
+        },
+      ],
+      previous_users: null,
+    },
+    is_canon: false,
+  },
+  {
+    fruit_id: "a5381619-17c9-4d74-a84c-db5dd5442665",
+    names: {
+      romanized_names: [
+        {
+          name: "Tori Tori no Mi, Model: Eagle",
+          is_spoiler: false,
+        },
+      ],
+      translated_names: [
+        {
+          name: "Bird-Bird Fruit, Eagle Model",
+          is_spoiler: false,
+        },
+      ],
+    },
+    types: [
+      {
+        type: "Zoan",
+        is_spoiler: false,
+      },
+    ],
+    abilities: {
+      ability: "Allows the user to become a full eagle or a half-eagle hybrid.",
+      awakened_ability: null,
+    },
+    users: {
+      current_users: [
+        {
+          user: "Buzz",
+          is_artificial: false,
+          is_spoiler: false,
+          awakening: { is_awakened: false, is_spoiler: false },
+        },
+      ],
+      previous_users: null,
+    },
+    is_canon: false,
+  },
+  {
+    fruit_id: "a5381619-17c9-4d74-a84c-db5dd5442665",
+    names: {
+      romanized_names: [
+        {
+          name: "Tori Tori no Mi, Model: Eagle",
+          is_spoiler: false,
+        },
+      ],
+      translated_names: [
+        {
+          name: "Bird-Bird Fruit, Eagle Model",
+          is_spoiler: false,
+        },
+      ],
+    },
+    types: [
+      {
+        type: "Zoan",
+        is_spoiler: false,
+      },
+    ],
+    abilities: {
+      ability: "Allows the user to become a full eagle or a half-eagle hybrid.",
+      awakened_ability: null,
+    },
+    users: {
+      current_users: [
+        {
+          user: "Buzz",
+          is_artificial: false,
+          is_spoiler: false,
+          awakening: { is_awakened: false, is_spoiler: false },
+        },
+      ],
+      previous_users: null,
+    },
+    is_canon: false,
+  },
+  {
+    fruit_id: "a5381619-17c9-4d74-a84c-db5dd5442665",
+    names: {
+      romanized_names: [
+        {
+          name: "Tori Tori no Mi, Model: Eagle",
+          is_spoiler: false,
+        },
+      ],
+      translated_names: [
+        {
+          name: "Bird-Bird Fruit, Eagle Model",
+          is_spoiler: false,
+        },
+      ],
+    },
+    types: [
+      {
+        type: "Zoan",
+        is_spoiler: false,
+      },
+    ],
+    abilities: {
+      ability: "Allows the user to become a full eagle or a half-eagle hybrid.",
+      awakened_ability: null,
+    },
+    users: {
+      current_users: [
+        {
+          user: "Buzz",
+          is_artificial: false,
+          is_spoiler: false,
+          awakening: { is_awakened: false, is_spoiler: false },
+        },
+      ],
+      previous_users: null,
+    },
+    is_canon: false,
+  },
+  {
+    fruit_id: "a5381619-17c9-4d74-a84c-db5dd5442665",
+    names: {
+      romanized_names: [
+        {
+          name: "Tori Tori no Mi, Model: Eagle",
+          is_spoiler: false,
+        },
+      ],
+      translated_names: [
+        {
+          name: "Bird-Bird Fruit, Eagle Model",
+          is_spoiler: false,
+        },
+      ],
+    },
+    types: [
+      {
+        type: "Zoan",
+        is_spoiler: false,
+      },
+    ],
+    abilities: {
+      ability: "Allows the user to become a full eagle or a half-eagle hybrid.",
+      awakened_ability: null,
+    },
+    users: {
+      current_users: [
+        {
+          user: "Buzz",
+          is_artificial: false,
+          is_spoiler: false,
+          awakening: { is_awakened: false, is_spoiler: false },
+        },
+      ],
+      previous_users: null,
+    },
+    is_canon: false,
+  },
+  {
+    fruit_id: "a5381619-17c9-4d74-a84c-db5dd5442665",
+    names: {
+      romanized_names: [
+        {
+          name: "Tori Tori no Mi, Model: Eagle",
+          is_spoiler: false,
+        },
+      ],
+      translated_names: [
+        {
+          name: "Bird-Bird Fruit, Eagle Model",
+          is_spoiler: false,
+        },
+      ],
+    },
+    types: [
+      {
+        type: "Zoan",
+        is_spoiler: false,
+      },
+    ],
+    abilities: {
+      ability: "Allows the user to become a full eagle or a half-eagle hybrid.",
+      awakened_ability: null,
+    },
+    users: {
+      current_users: [
+        {
+          user: "Buzz",
+          is_artificial: false,
+          is_spoiler: false,
+          awakening: { is_awakened: false, is_spoiler: false },
+        },
+      ],
+      previous_users: null,
+    },
+    is_canon: false,
+  },
+  {
+    fruit_id: "a5381619-17c9-4d74-a84c-db5dd5442665",
+    names: {
+      romanized_names: [
+        {
+          name: "Tori Tori no Mi, Model: Eagle",
+          is_spoiler: false,
+        },
+      ],
+      translated_names: [
+        {
+          name: "Bird-Bird Fruit, Eagle Model",
+          is_spoiler: false,
+        },
+      ],
+    },
+    types: [
+      {
+        type: "Zoan",
+        is_spoiler: false,
+      },
+    ],
+    abilities: {
+      ability: "Allows the user to become a full eagle or a half-eagle hybrid.",
+      awakened_ability: null,
+    },
+    users: {
+      current_users: [
+        {
+          user: "Buzz",
+          is_artificial: false,
+          is_spoiler: false,
+          awakening: { is_awakened: false, is_spoiler: false },
+        },
+      ],
+      previous_users: null,
+    },
+    is_canon: false,
+  },
+  {
+    fruit_id: "a5381619-17c9-4d74-a84c-db5dd5442665",
+    names: {
+      romanized_names: [
+        {
+          name: "Tori Tori no Mi, Model: Eagle",
+          is_spoiler: false,
+        },
+      ],
+      translated_names: [
+        {
+          name: "Bird-Bird Fruit, Eagle Model",
+          is_spoiler: false,
+        },
+      ],
+    },
+    types: [
+      {
+        type: "Zoan",
+        is_spoiler: false,
+      },
+    ],
+    abilities: {
+      ability: "Allows the user to become a full eagle or a half-eagle hybrid.",
+      awakened_ability: null,
+    },
+    users: {
+      current_users: [
+        {
+          user: "Buzz",
+          is_artificial: false,
+          is_spoiler: false,
+          awakening: { is_awakened: false, is_spoiler: false },
+        },
+      ],
+      previous_users: null,
+    },
+    is_canon: false,
+  },
+  {
+    fruit_id: "a5381619-17c9-4d74-a84c-db5dd5442665",
+    names: {
+      romanized_names: [
+        {
+          name: "Tori Tori no Mi, Model: Eagle",
+          is_spoiler: false,
+        },
+      ],
+      translated_names: [
+        {
+          name: "Bird-Bird Fruit, Eagle Model",
+          is_spoiler: false,
+        },
+      ],
+    },
+    types: [
+      {
+        type: "Zoan",
+        is_spoiler: false,
+      },
+    ],
+    abilities: {
+      ability: "Allows the user to become a full eagle or a half-eagle hybrid.",
+      awakened_ability: null,
+    },
+    users: {
+      current_users: [
+        {
+          user: "Buzz",
+          is_artificial: false,
+          is_spoiler: false,
+          awakening: { is_awakened: false, is_spoiler: false },
+        },
+      ],
+      previous_users: null,
+    },
+    is_canon: false,
+  },
+  {
+    fruit_id: "a5381619-17c9-4d74-a84c-db5dd5442665",
+    names: {
+      romanized_names: [
+        {
+          name: "Tori Tori no Mi, Model: Eagle",
+          is_spoiler: false,
+        },
+      ],
+      translated_names: [
+        {
+          name: "Bird-Bird Fruit, Eagle Model",
+          is_spoiler: false,
+        },
+      ],
+    },
+    types: [
+      {
+        type: "Zoan",
+        is_spoiler: false,
+      },
+    ],
+    abilities: {
+      ability: "Allows the user to become a full eagle or a half-eagle hybrid.",
+      awakened_ability: null,
+    },
+    users: {
+      current_users: [
+        {
+          user: "Buzz",
+          is_artificial: false,
+          is_spoiler: false,
+          awakening: { is_awakened: false, is_spoiler: false },
+        },
+      ],
+      previous_users: null,
+    },
+    is_canon: false,
+  },
+  {
+    fruit_id: "a5381619-17c9-4d74-a84c-db5dd5442665",
+    names: {
+      romanized_names: [
+        {
+          name: "Tori Tori no Mi, Model: Eagle",
+          is_spoiler: false,
+        },
+      ],
+      translated_names: [
+        {
+          name: "Bird-Bird Fruit, Eagle Model",
+          is_spoiler: false,
+        },
+      ],
+    },
+    types: [
+      {
+        type: "Zoan",
+        is_spoiler: false,
+      },
+    ],
+    abilities: {
+      ability: "Allows the user to become a full eagle or a half-eagle hybrid.",
+      awakened_ability: null,
+    },
+    users: {
+      current_users: [
+        {
+          user: "Buzz",
+          is_artificial: false,
+          is_spoiler: false,
+          awakening: { is_awakened: false, is_spoiler: false },
+        },
+      ],
+      previous_users: null,
+    },
+    is_canon: false,
+  },
+  {
+    fruit_id: "a5381619-17c9-4d74-a84c-db5dd5442665",
+    names: {
+      romanized_names: [
+        {
+          name: "Tori Tori no Mi, Model: Eagle",
+          is_spoiler: false,
+        },
+      ],
+      translated_names: [
+        {
+          name: "Bird-Bird Fruit, Eagle Model",
+          is_spoiler: false,
+        },
+      ],
+    },
+    types: [
+      {
+        type: "Zoan",
+        is_spoiler: false,
+      },
+    ],
+    abilities: {
+      ability: "Allows the user to become a full eagle or a half-eagle hybrid.",
+      awakened_ability: null,
+    },
+    users: {
+      current_users: [
+        {
+          user: "Buzz",
+          is_artificial: false,
+          is_spoiler: false,
+          awakening: { is_awakened: false, is_spoiler: false },
+        },
+      ],
+      previous_users: null,
+    },
+    is_canon: false,
+  },
+  {
+    fruit_id: "a5381619-17c9-4d74-a84c-db5dd5442665",
+    names: {
+      romanized_names: [
+        {
+          name: "Tori Tori no Mi, Model: Eagle",
+          is_spoiler: false,
+        },
+      ],
+      translated_names: [
+        {
+          name: "Bird-Bird Fruit, Eagle Model",
+          is_spoiler: false,
+        },
+      ],
+    },
+    types: [
+      {
+        type: "Zoan",
+        is_spoiler: false,
+      },
+    ],
+    abilities: {
+      ability: "Allows the user to become a full eagle or a half-eagle hybrid.",
+      awakened_ability: null,
+    },
+    users: {
+      current_users: [
+        {
+          user: "Buzz",
+          is_artificial: false,
+          is_spoiler: false,
+          awakening: { is_awakened: false, is_spoiler: false },
+        },
+      ],
+      previous_users: null,
+    },
+    is_canon: false,
+  },
+  {
+    fruit_id: "a5381619-17c9-4d74-a84c-db5dd5442665",
+    names: {
+      romanized_names: [
+        {
+          name: "Tori Tori no Mi, Model: Eagle",
+          is_spoiler: false,
+        },
+      ],
+      translated_names: [
+        {
+          name: "Bird-Bird Fruit, Eagle Model",
+          is_spoiler: false,
+        },
+      ],
+    },
+    types: [
+      {
+        type: "Zoan",
+        is_spoiler: false,
+      },
+    ],
+    abilities: {
+      ability: "Allows the user to become a full eagle or a half-eagle hybrid.",
+      awakened_ability: null,
+    },
+    users: {
+      current_users: [
+        {
+          user: "Buzz",
+          is_artificial: false,
+          is_spoiler: false,
+          awakening: { is_awakened: false, is_spoiler: false },
+        },
+      ],
+      previous_users: null,
+    },
+    is_canon: false,
+  },
+  {
+    fruit_id: "a5381619-17c9-4d74-a84c-db5dd5442665",
+    names: {
+      romanized_names: [
+        {
+          name: "Tori Tori no Mi, Model: Eagle",
+          is_spoiler: false,
+        },
+      ],
+      translated_names: [
+        {
+          name: "Bird-Bird Fruit, Eagle Model",
+          is_spoiler: false,
+        },
+      ],
+    },
+    types: [
+      {
+        type: "Zoan",
+        is_spoiler: false,
+      },
+    ],
+    abilities: {
+      ability: "Allows the user to become a full eagle or a half-eagle hybrid.",
+      awakened_ability: null,
+    },
+    users: {
+      current_users: [
+        {
+          user: "Buzz",
+          is_artificial: false,
+          is_spoiler: false,
+          awakening: { is_awakened: false, is_spoiler: false },
+        },
+      ],
+      previous_users: null,
+    },
+    is_canon: false,
+  },
 ];
 
 export const DataProvider: FC<PropsWithChildren> = ({ children }) => {

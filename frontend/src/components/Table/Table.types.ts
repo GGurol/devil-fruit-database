@@ -19,6 +19,10 @@ export interface ISpoilerProps {
   $spoilerContent: TSpoilerContent;
 }
 
+export interface ITableProps {
+  $alternate?: boolean;
+}
+
 export interface IDataTextProps {
   $showSpoilers: boolean;
   $useSpoilerBlock: boolean;
@@ -26,5 +30,5 @@ export interface IDataTextProps {
     $isAwakend: boolean;
     $isSpoiler: boolean;
   };
-  $isArtifical?: boolean;
+  $isArtificial?: boolean;
 }

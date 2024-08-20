@@ -3,6 +3,8 @@ import { css } from "styled-components";
 import { palettes } from "../../App.constants";
 import {
   ITheme,
+  IThemeCommonColors,
+  IThemeCommonStyles,
   IThemeFonts,
   IThemeModes,
   IThemeTypography,
@@ -31,6 +33,16 @@ const modes: IThemeModes = {
     borderRegular: `${palettes.secondary[200]}80` as const, //#B9E0FE80
     dividerRegular: `${palettes.secondary[200]}CC` as const, // ##B9E0FECC
   },
+};
+
+const commonColors: IThemeCommonColors = {
+  bgSubdued: `${palettes.grayscale[700]}1A` as const, // #6F70711A
+  bgOverlay: `${palettes.grayscale[700]}40` as const, // #6F707140
+  bgOverlaySecondary: `${palettes.grayscale[600]}40` as const, // #A2A2A340
+  shadowsSoft: `${palettes.base.black}1A` as const, // ##0000001A
+  accentPrimary: palettes.tertiary[500],
+  accentSecondary: palettes.secondary[500],
+  focusShadow: `${palettes.secondary[700]}33`,
 };
 
 const fonts: IThemeFonts = {
@@ -97,18 +109,17 @@ const typography: IThemeTypography = {
   `,
 };
 
+const commonStyles: IThemeCommonStyles = {
+  commonBorder: css`
+    border: 1px solid ${({ theme }) => theme.borderRegular};
+  `,
+};
+
 export const themeVars: ITheme = {
+  palettes: { ...palettes },
   modes,
-  common: {
-    bgSubdued: `${palettes.grayscale[700]}1A` as const, // #6F70711A
-    bgOverlay: `${palettes.grayscale[700]}40` as const, // #6F707140
-    bgOverlaySecondary: `${palettes.grayscale[600]}40` as const, // #A2A2A340
-    shadowsSoft: `${palettes.base.black}1A` as const, // ##0000001A
-    accentPrimary: palettes.tertiary[500],
-    accentSecondary: palettes.secondary[500],
-    focusShadow: `${palettes.secondary[700]}33`,
-  },
+  commonColors,
   typography,
   components: { buttons: ButtonStyles, checkboxes: CheckboxStyles },
-  palettes: { ...palettes },
+  commonStyles,
 };

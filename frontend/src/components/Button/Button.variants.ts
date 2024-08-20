@@ -4,7 +4,7 @@ import { IButtonStyles } from "./Button.types";
 export const ButtonStyles: IButtonStyles = {
   Outline: css`
     background-color: ${({ theme }) => theme.bgSurface};
-    border: 1px solid ${({ theme }) => theme.borderRegular};
+    ${({ theme }) => theme.commonBorder};
 
     &:hover {
       border-color: ${({ theme }) => theme.secondary["300"]};
@@ -38,7 +38,7 @@ export const ButtonStyles: IButtonStyles = {
   `,
   IconOutline: css`
     background-color: ${({ theme }) => theme.bgSurface};
-    border: 1px solid ${({ theme }) => theme.borderRegular};
+    ${({ theme }) => theme.commonBorder};
 
     padding: 8px;
 

@@ -9,7 +9,7 @@ const Legend: FC = () => {
   return (
     <LegendWrapper>
       <LegendItem $color={theme.tertiary[400]} $label="Awakened User" />
-      <LegendItem $color={theme.purple[600]} $label="Artifical User" />
+      <LegendItem $color={theme.purple[600]} $label="Artificial User" />
     </LegendWrapper>
   );
 };

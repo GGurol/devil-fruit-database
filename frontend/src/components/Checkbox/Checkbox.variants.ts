@@ -6,7 +6,7 @@ export const CheckboxStyles: ICheckboxStyles = {
     unchecked: css`
       background: ${({ theme }) => theme.bgSurface};
 
-      border: 1px solid ${({ theme }) => theme.borderRegular};
+      ${({ theme }) => theme.commonBorder};
     `,
     checked: css`
       background: ${({ theme }) => theme.accentPrimary};
@@ -18,7 +18,7 @@ export const CheckboxStyles: ICheckboxStyles = {
     unchecked: css`
       background: ${({ theme }) => theme.bgSurface};
 
-      border: 1px solid ${({ theme }) => theme.borderRegular};
+      ${({ theme }) => theme.commonBorder};
     `,
     checked: css`
       background: ${({ theme }) => theme.accentSecondary};
