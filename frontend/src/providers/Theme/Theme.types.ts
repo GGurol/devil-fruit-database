@@ -6,18 +6,38 @@ import { CheckboxStyles } from "../../components/Checkbox/Checkbox.variants";
 export type IThemePalettes = typeof palettes;
 
 export interface IThemeModes {
-  light: DefaultTheme;
-  dark: DefaultTheme;
+  light: {
+    foreground: DefaultTheme;
+    background: DefaultTheme;
+    border: DefaultTheme;
+    interactive: DefaultTheme;
+  };
+  dark: {
+    foreground: DefaultTheme;
+    background: DefaultTheme;
+    border: DefaultTheme;
+    interactive: DefaultTheme;
+  };
 }
 
 export interface IThemeCommonColors {
-  bgSubdued: string;
-  bgOverlay: string;
-  bgOverlaySecondary: string;
-  shadowsSoft: string;
-  accentPrimary: string;
-  accentSecondary: string;
-  focusShadow: string;  
+  commonForeground: {
+    "fg-white": string;
+    "fg-disabled": string;
+    "fg-placeholder": string;
+  };
+  commonBackground: {
+    "bg-white": string;
+  };
+  commonInteractive: {
+    "interactive-primary": string;
+    "interactive-primary-hover": string;
+    "interactive-primary-active": string;
+  };
+  legend: {
+    awakened: string;
+    artificial: string;
+  };
 }
 
 export interface IThemeFonts {
@@ -25,12 +45,28 @@ export interface IThemeFonts {
 }
 
 export interface IThemeTypography {
-  headerNormal: CSSProp;
-  sectionTitle: CSSProp;
+  headerLarge: CSSProp;
+  headerMedium: CSSProp;
+  headerSmall: CSSProp;
+  headerExtraSmall: CSSProp;
   bodyLarge: CSSProp;
+  bodyMedium: CSSProp;
   bodySmall: CSSProp;
+  bodyExtraSmall: CSSProp;
   label: CSSProp;
-  buttonSmall: CSSProp;
+}
+
+export interface IThemeBreakpoints {
+  mobile: {
+    max: string;
+  };
+  tablet: {
+    min: string;
+    max: string;
+  };
+  desktop: {
+    min: string;
+  };
 }
 
 export interface IThemeCommonStyles {
@@ -48,6 +84,7 @@ export interface ITheme {
   modes: IThemeModes;
   commonColors: IThemeCommonColors;
   typography: IThemeTypography;
+  breakpoints: IThemeBreakpoints;
   commonStyles: IThemeCommonStyles;
   components: IThemeComponents;
 }

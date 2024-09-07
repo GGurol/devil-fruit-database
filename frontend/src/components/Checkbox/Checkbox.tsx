@@ -12,7 +12,7 @@ import { useTheme } from "styled-components";
 const Checkbox = forwardRef<HTMLInputElement, ICheckboxWrapperProps>(
   (props, ref) => {
     const {
-      $variant = "AccentSecondary",
+      $variant = "AccentPrimary",
       $label,
       $handleState,
       name,

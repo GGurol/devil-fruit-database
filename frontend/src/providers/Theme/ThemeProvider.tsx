@@ -14,6 +14,7 @@ export const ThemeProvider: FC<PropsWithChildren<ITheme>> = ({
     modes,
     commonColors,
     typography,
+    breakpoints,
     components,
     commonStyles,
   } = props;
@@ -51,6 +52,7 @@ export const ThemeProvider: FC<PropsWithChildren<ITheme>> = ({
           ...(mode === "light" ? modes.light : modes.dark),
           ...commonColors,
           ...typography,
+          breakpoints,
           ...commonStyles,
           ...components,
         }}

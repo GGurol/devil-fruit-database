@@ -9,9 +9,9 @@ const Header = styled.h1`
   text-overflow: ellipsis;
   white-space: nowrap;
 
-  color: ${({ theme }) => theme.fgRegular};
+  color: ${({ theme }) => theme.foreground["fg-primary"]};
 
-  ${({ theme }) => theme.sectionTitle}
+  ${({ theme }) => theme.headerSmall}
 
   /* prevent text highlight */
   user-select: none; // chrome, edge, opera, firefox

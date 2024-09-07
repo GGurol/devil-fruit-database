@@ -58,7 +58,7 @@ export const CheckIconOverlay = styled.div`
 `;
 
 export const CheckboxLabel = styled.label`
-  color: ${({ theme }) => theme.fgRegular};
+  color: ${({ theme }) => theme.foreground["fg-primary"]};
 
   ${({ theme }) => theme.bodySmall};
 

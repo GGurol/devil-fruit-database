@@ -19,7 +19,7 @@ export const TextfieldIconContainer = styled.span`
 `;
 
 const TextfieldInput = styled.input.attrs({ type: "text" })<ITextfieldProps>`
-  background-color: ${({ theme }) => theme.bgSurface};
+  background-color: ${({ theme }) => theme.background["bg-primary"]};
 
   width: 100%;
 
@@ -37,7 +37,7 @@ const TextfieldInput = styled.input.attrs({ type: "text" })<ITextfieldProps>`
   ${({ theme }) => theme.commonBorder};
   border-radius: 4px;
 
-  color: ${({ theme }) => theme.fgSubdued};
+  color: ${({ theme }) => theme.foreground["fg-tertiary"]};
 
   ${({ theme }) => theme.bodySmall};
 
@@ -48,10 +48,12 @@ const TextfieldInput = styled.input.attrs({ type: "text" })<ITextfieldProps>`
   &:focus {
     outline: none;
 
-    color: ${({ theme }) => theme.fgRegular};
+    color: ${({ theme }) => theme.foreground["fg-primary"]};
 
-    border: 1px solid ${({ theme }) => theme.accentSecondary};
-    box-shadow: 0px 0px 0px 2px ${({ theme }) => theme.focusShadow};
+    border: 1px solid
+      ${({ theme }) => theme.commonInteractive["interactive-primary"]};
+    box-shadow: 0px 0px 0px 2px
+      ${({ theme }) => theme.interactive["interactive-focus"]};
   }
 `;
 

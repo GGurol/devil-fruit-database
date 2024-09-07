@@ -14,9 +14,9 @@ const ButtonWrapper = styled.button<IButtonProps>`
 
   border-radius: 4px;
 
-  color: ${({ theme }) => theme.fgRegular};
+  color: ${({ theme }) => theme.foreground["fg-primary"]};
 
-  ${({ theme }) => theme.buttonSmall};
+  ${({ theme }) => theme.bodySmall};
 
   cursor: pointer;
 
@@ -31,14 +31,20 @@ const ButtonWrapper = styled.button<IButtonProps>`
       return css`
         min-width: ${$minwidth.desktop};
 
-        @media (max-width: 768px) {
+        @media (min-width: ${({ theme }) =>
+            theme.breakpoints.tablet.min}) and (max-width: ${({ theme }) =>
+            theme.breakpoints.tablet.max}) {
+          min-width: ${$minwidth.tablet};
+        }
+
+        @media (max-width: ${({ theme }) => theme.breakpoints.mobile.max}) {
           min-width: ${$minwidth.mobile};
         }
       `;
     }
   }}
 
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet.max}) {
     flex: 1 0 auto;
   }
 `;

@@ -13,6 +13,7 @@ export const TableContainer = styled.div`
 
   width: 100%;
 
+  min-height: 128px;
   max-height: 100%;
 
   border-radius: 2px;
@@ -28,15 +29,17 @@ export const TableContainer = styled.div`
   }
 
   &::-webkit-scrollbar-thumb {
-    box-shadow: inset 0 0 16px 16px ${({ theme }) => theme.bgOverlaySecondary};
-    border: solid 3px ${({ theme }) => theme.bgSurface};
+    box-shadow: inset 0 0 16px 16px
+      ${({ theme }) => theme.background["bg-tertiary"]};
+    border: solid 3px ${({ theme }) => theme.background["bg-primary"]};
 
     border-radius: 100px;
   }
 
   &::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 16px 16px ${({ theme }) => theme.bgSubdued};
-    border: solid 3px ${({ theme }) => theme.bgSurface};
+    box-shadow: inset 0 0 16px 16px
+      ${({ theme }) => theme.background["bg-secondary"]};
+    border: solid 3px ${({ theme }) => theme.background["bg-primary"]};
 
     border-radius: 100px;
   }
@@ -45,7 +48,7 @@ export const TableContainer = styled.div`
     background: none;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet.max}) {
     overflow-x: auto;
   }
 `;
@@ -55,7 +58,7 @@ const TableWrapper = styled.table`
 
   border-collapse: collapse;
 
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet.max}) {
     min-width: 600px;
   }
 `;
@@ -67,7 +70,7 @@ export const TableThread = styled.thead`
 
   z-index: 1;
 
-  background-color: ${({ theme }) => theme.bgSurface};
+  background-color: ${({ theme }) => theme.background["bg-primary"]};
 `;
 
 export const TableBody = styled.tbody<ITableProps>`
@@ -75,7 +78,7 @@ export const TableBody = styled.tbody<ITableProps>`
     $alternate &&
     css`
       tr:nth-child(odd) {
-        background-color: ${theme.bgSubdued};
+        background-color: ${theme.background["bg-secondary"]};
       }
     `}
 
@@ -85,19 +88,19 @@ export const TableBody = styled.tbody<ITableProps>`
 `;
 
 export const TableRow = styled.tr`
-  border-bottom: 1px solid ${({ theme }) => theme.borderRegular};
+  border-bottom: 1px solid ${({ theme }) => theme.border["border-primary"]};
 `;
 
 export const TableHeader = styled.th`
-  color: ${({ theme }) => theme.fgRegular};
+  color: ${({ theme }) => theme.foreground["fg-primary"]};
 
   padding: 8px 16px;
   text-align: left;
 
   ${({ theme }) => theme.label}
 
-  border-right: 1px solid ${({ theme }) => theme.borderRegular};
-  border-bottom: 1px solid ${({ theme }) => theme.borderRegular};
+  border-right: 1px solid ${({ theme }) => theme.border["border-primary"]};
+  border-bottom: 1px solid ${({ theme }) => theme.border["border-primary"]};
 
   &:last-of-type {
     border-right: none;
@@ -105,7 +108,7 @@ export const TableHeader = styled.th`
 `;
 
 export const TableData = styled.td`
-  color: ${({ theme }) => theme.fgRegular};
+  color: ${({ theme }) => theme.foreground["fg-primary"]};
 
   padding: 8px 16px;
   text-align: left;
@@ -113,8 +116,8 @@ export const TableData = styled.td`
 
   ${({ theme }) => theme.bodySmall}
 
-  border-right: 1px solid ${({ theme }) => theme.borderRegular};
-  border-bottom: 1px solid ${({ theme }) => theme.borderRegular};
+  border-right: 1px solid ${({ theme }) => theme.border["border-primary"]};
+  border-bottom: 1px solid ${({ theme }) => theme.border["border-primary"]};
 
   &:last-of-type {
     border-right: none;
@@ -142,7 +145,7 @@ export const DataText = styled.p<IDataTextProps>`
     $awakening,
     $isArtificial,
   }) => css`
-    --color: ${theme.fgRegular};
+    --color: ${theme.foreground["fg-primary"]};
     --font-weight: 400;
 
     color: var(--color);

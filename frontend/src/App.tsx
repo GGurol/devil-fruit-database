@@ -53,7 +53,9 @@ export const App: FC = () => {
             <Button
               $variant={{
                 variantName: "Solid",
-                staticColors: { fgColor: theme.grayscale["50"] },
+                staticColors: {
+                  fgColor: theme.foreground["fg-primary-on-brand"],
+                },
               }}
               $minwidth={{ desktop: "132px", mobile: "auto" }}
               $icon={{
@@ -73,14 +75,14 @@ export const App: FC = () => {
             <ToggleWrapper>
               <Checkbox
                 name="show-spoilers"
-                $variant="AccentSecondary"
+                $variant="AccentPrimary"
                 $label={{ hasLabel: true, labelText: "Show Spoilers" }}
                 $handleState={handleShowSpoilers}
                 checked={showSpoilers}
               />
               <Checkbox
                 name="show-noncanon "
-                $variant="AccentSecondary"
+                $variant="AccentPrimary"
                 $label={{ hasLabel: true, labelText: "Show Non-Canon" }}
                 $handleState={handleShowNonCanon}
                 checked={showNonCanon}

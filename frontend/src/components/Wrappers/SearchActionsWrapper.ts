@@ -10,7 +10,7 @@ const SearchActionsWrapper = styled.div`
   align-items: center;
   gap: 8px;
 
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet.max}) {
     width: 100%;
     justify-content: flex-start;
   }

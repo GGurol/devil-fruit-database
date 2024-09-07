@@ -1,7 +1,7 @@
 import { css, DefaultTheme } from "styled-components";
 
 export const artificalTextStyles = css`
-  --color: ${({ theme }) => theme.purple[600]};
+  --color: ${({ theme }) => theme.legend.artificial};
   --font-weight: 500;
 
   text-decoration: underline dotted;
@@ -10,7 +10,7 @@ export const artificalTextStyles = css`
 `;
 
 export const awakeningTextStyles = css`
-  --color: ${({ theme }) => theme.tertiary[400]};
+  --color: ${({ theme }) => theme.legend.awakened};
   --font-weight: 500;
 
   text-decoration: underline dotted;
@@ -19,7 +19,7 @@ export const awakeningTextStyles = css`
 `;
 
 export const defaultTextStyles = css`
-  --color: ${({ theme }) => theme.fgRegular};
+  --color: ${({ theme }) => theme.foreground["fg-primary"]};
   --font-weight: 400;
 
   text-decoration: none;
@@ -31,7 +31,9 @@ export const spoilerBlockStyles = (
   $showSpoilers: boolean,
   theme: DefaultTheme
 ) => css`
-  background-color: ${$showSpoilers ? "transparent" : theme.borderRegular};
+  background-color: ${$showSpoilers
+    ? "transparent"
+    : theme.border["border-primary"]};
   color: ${$showSpoilers ? "var(--color)" : "transparent"};
 
   &:hover {

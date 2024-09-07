@@ -8,8 +8,8 @@ const Legend: FC = () => {
 
   return (
     <LegendWrapper>
-      <LegendItem $color={theme.tertiary[400]} $label="Awakened User" />
-      <LegendItem $color={theme.purple[600]} $label="Artificial User" />
+      <LegendItem $color={theme.legend.awakened} $label="Awakened User" />
+      <LegendItem $color={theme.legend.artificial} $label="Artificial User" />
     </LegendWrapper>
   );
 };

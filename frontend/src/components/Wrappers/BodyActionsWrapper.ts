@@ -8,7 +8,7 @@ const BodyActionsWrapper = styled.div`
   align-items: center;
   align-self: stretch;
 
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet.max}) {
     flex-direction: column;
     align-items: flex-start;
     gap: 16px;

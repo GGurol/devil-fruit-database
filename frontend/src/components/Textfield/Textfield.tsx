@@ -30,7 +30,11 @@ const Textfield = forwardRef<HTMLInputElement, ITextfieldProps>(
             <Icon
               iconName={$icon.iconStyle.iconName}
               fontSize={$icon.iconStyle.fontSize}
-              fill={fieldFocus ? theme.fgRegular : theme.fgSubdued}
+              fill={
+                fieldFocus
+                  ? theme.foreground["fg-primary"]
+                  : theme.foreground["fg-tertiary"]
+              }
             />
           </TextfieldIconContainer>
         )}

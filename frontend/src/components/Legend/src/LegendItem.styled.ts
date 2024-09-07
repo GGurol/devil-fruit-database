@@ -17,11 +17,11 @@ export const LegendItemCircle = styled.div<ILegendItemCircleProps>`
   border-radius: 50px;
 
   background-color: ${({ $color }) => $color};
-  box-shadow: 0px 0px 0px 1px ${({ theme }) => theme.bgSubdued};
+  box-shadow: 0px 0px 0px 1px ${({ theme }) => theme.background["bg-tertiary"]};
 `;
 
 export const LegendItemLabel = styled.p`
   ${({ theme }) => theme.bodySmall}
 
-  color: ${({ theme }) => theme.fgRegular};
+  color: ${({ theme }) => theme.foreground["fg-primary"]};
 `;

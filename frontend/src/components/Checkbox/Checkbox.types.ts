@@ -6,10 +6,6 @@ export interface ICheckboxStyles {
     unchecked: CSSProp;
     checked: CSSProp;
   };
-  AccentSecondary: {
-    unchecked: CSSProp;
-    checked: CSSProp;
-  };
 }
 export type TCheckboxVariants = keyof ICheckboxStyles;
 

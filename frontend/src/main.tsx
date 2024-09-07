@@ -13,6 +13,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       modes={themeVars.modes}
       commonColors={themeVars.commonColors}
       typography={themeVars.typography}
+      breakpoints={themeVars.breakpoints}
       components={themeVars.components}
       commonStyles={themeVars.commonStyles}
     >

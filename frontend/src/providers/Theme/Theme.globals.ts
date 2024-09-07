@@ -14,7 +14,7 @@ const GlobalStyles = createGlobalStyle`
   }
 
   body {
-    background-color: ${({ theme }) => theme.bgRegular};
+    background-color: ${({ theme }) => theme.background["bg-base"]};
 
     ${({ theme }) => theme.Rubik};
     

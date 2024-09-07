@@ -8,8 +8,21 @@ const PageWrapper = styled.div`
 
   overflow: hidden;
 
-  @media (max-width: 768px) {
-    padding: 32px 16px 16px 16px;
+  @media (min-width: ${({ theme }) =>
+      theme.breakpoints.tablet.min}) and (max-width: ${({ theme }) =>
+      theme.breakpoints.tablet.max}) {
+    padding: 64px 32px 32px 32px;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile.max}) {
+    padding: 32px 16px;
+  }
+
+  @media (max-width: ${({ theme }) =>
+      theme.breakpoints.tablet.max}) and (orientation: landscape) {
+    overflow-y: auto;
+    height: auto;
+    min-height: 100vh;
   }
 `;
 

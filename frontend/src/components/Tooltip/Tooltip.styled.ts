@@ -18,8 +18,8 @@ export const Tooltip = styled.span`
 
   margin-left: -60px;
 
-  background-color: ${({ theme }) => theme.bgOverlay};
-  color: ${({ theme }) => theme.fgRegular};
+  background-color: ${({ theme }) => theme.background["bg-tertiary"]};
+  color: ${({ theme }) => theme.foreground["fg-primary"]};
 
   backdrop-filter: blur(2px);
 
@@ -37,8 +37,8 @@ export const Tooltip = styled.span`
 
     border-width: 5px;
     border-style: solid;
-    border-color: transparent transparent ${({ theme }) => theme.bgOverlay}
-      transparent;
+    border-color: transparent transparent
+      ${({ theme }) => theme.background["bg-tertiary"]} transparent;
   }
 `;
 

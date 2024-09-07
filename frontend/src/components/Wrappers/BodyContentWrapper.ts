@@ -15,9 +15,9 @@ const BodyContentWrapper = styled.div`
   ${({ theme }) => theme.commonBorder};
   border-radius: 4px;
 
-  background-color: ${({ theme }) => theme.bgSurface};
+  background-color: ${({ theme }) => theme.background["bg-primary"]};
 
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet.max}) {
     padding: 16px;
   }
 `;
