@@ -65,7 +65,7 @@ export const App: FC = () => {
                 },
               }}
             >
-              Download
+              Export
             </Button>
           </ActionsWrapper>
         </HeaderWrapper>

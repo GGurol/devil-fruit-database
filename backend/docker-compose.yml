@@ -1,0 +1,43 @@
+services:
+  db:
+    image: postgres
+    restart: always
+    volumes:
+      - app-db-data:/var/lib/postgresql/data/pgdata
+    env_file:
+      - .env
+    environment:
+      - PGDATA=/var/lib/postgresql/data/pgdata
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD?Variable not set}
+      - POSTGRES_USER=${POSTGRES_USER?Variable not set}
+      - POSTGRES_DB=${POSTGRES_DB?Variable not set}
+
+  adminer:
+    image: adminer
+    depends_on:
+      - db
+    restart: always
+    ports:
+      - 8080:8080
+
+  backend:
+    build: .
+    restart: no
+    depends_on:
+      - db
+    container_name: devil-fruit-backend
+    env_file:
+      - .env
+    environment:
+      - DOMAIN=${DOMAIN}
+      - ENVIRONMENT=${ENVIRONMENT}
+      - POSTGRES_SERVER=db
+      - POSTGRES_PORT=${POSTGRES_PORT}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER?Variable not set}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD?Variable not set}
+    ports:
+      - 8000:8000
+  
+volumes:
+  app-db-data:
