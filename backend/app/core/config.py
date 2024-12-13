@@ -1,9 +1,10 @@
 from functools import lru_cache
-from typing import Literal
 
 from pydantic import PostgresDsn, computed_field, model_validator
 from pydantic_core import MultiHostUrl
 from pydantic_settings import BaseSettings, SettingsConfigDict
+
+from app.core.constants import Environment
 
 
 class Settings(BaseSettings):
@@ -14,7 +15,7 @@ class Settings(BaseSettings):
     PROJECT_NAME: str
 
     DOMAIN: str = "localhost"
-    ENVIRONMENT: Literal["local", "staging", "production"] = "local"
+    ENVIRONMENT: Environment = Environment.DEV
 
     IS_ALLOWED_CREDENTIALS: bool
     ALLOWED_ORIGINS: list[str] = [
@@ -45,9 +46,4 @@ class Settings(BaseSettings):
         )
 
 
-@lru_cache
-def get_settings() -> Settings:
-    return Settings()  # type: ignore
-
-
-settings: Settings = get_settings()
+settings = Settings()

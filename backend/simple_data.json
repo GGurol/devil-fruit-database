@@ -1,0 +1,61 @@
+{
+  "devil_fruits": [
+    {
+      "fruit_id": "8933e317-1f46-48b6-a6f8-9d0c96113a25",
+      "names": {
+        "romanized_names": [
+          {
+            "name": "Gomu Gomu no Mi",
+            "is_spoiler": false
+          },
+          {
+            "name": "Hito Hito no Mi, Model: Nika",
+            "is_spoiler": true
+          }
+        ],
+        "translated_names": [
+          {
+            "name": "Gum-Gum Fruit",
+            "is_spoiler": false
+          },
+          {
+            "name": "Human-Human Fruit, Nika Model",
+            "is_spoiler": true
+          }
+        ]
+      },
+      "types": [
+        {
+          "type": "Paramecia",
+          "is_spoiler": false
+        },
+        {
+          "type": "Mythical Zoan",
+          "is_spoiler": true
+        }
+      ],
+      "abilities": {
+        "ability": "Turns the user's body into rubber, giving them the power to stretch, bounce, and inflate, as well as making them immune to electricity and near impervious to blunt-force attacks and bullets.",
+        "awakened_ability": null
+      },
+      "users": {
+        "current_users": [
+          {
+            "user": "Monkey D. Luffy",
+            "is_artificial": false,
+            "is_spoiler": false,
+            "awakening": { "is_awakened": true, "is_spoiler": true }
+          }
+        ],
+        "previous_users": [
+          {
+            "user": "Joy Boy",
+            "is_spoiler": true,
+            "awakening": { "is_awakened": true, "is_spoiler": false }
+          }
+        ]
+      },
+      "is_canon": true
+    }
+  ]
+}
