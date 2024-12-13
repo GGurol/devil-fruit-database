@@ -1,0 +1,14 @@
+# Initialize dev database without data
+python -m app.core.db_management init
+
+# Initialize dev database with data
+python -m app.core.db_management init --populate
+
+# Initialize production database
+python -m app.core.db_management init --env prod
+
+# Reset dev database
+python -m app.core.db_management reset
+
+# Reset production database (will prompt for confirmation)
+python -m app.core.db_management reset --env prod
