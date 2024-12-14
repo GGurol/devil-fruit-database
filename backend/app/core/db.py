@@ -82,13 +82,13 @@ def populate_db(json_file_path: str):
                 session.add(translated_name)
 
             # add types
-            # for type_data in fruit_data["types"]:
-            #     fruit_type = FruitTypeAssociation(
-            #         type=type_data["type"],
-            #         is_spoiler=type_data["is_spoiler"],
-            #         fruit_id=devil_fruit.fruit_id,
-            #     )
-            #     session.add(fruit_type)
+            for type_data in fruit_data["types"]:
+                fruit_type = FruitTypeAssociation(
+                    type=type_data["type"],
+                    is_spoiler=type_data["is_spoiler"],
+                    fruit_id=devil_fruit.fruit_id,
+                )
+                session.add(fruit_type)
 
             # add current users
             if fruit_data["users"]["current_users"]:

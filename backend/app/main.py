@@ -1,15 +1,24 @@
 import traceback
 
 from contextlib import asynccontextmanager
-from fastapi import Depends, FastAPI, Request
+from uuid import UUID
+from fastapi import Depends, FastAPI, HTTPException, Query, Request
 from fastapi.responses import JSONResponse
-from sqlmodel import Session
+from sqlmodel import Session, or_, select
 from starlette.middleware.cors import CORSMiddleware
 
 from app.core.config import settings
-from app.core.db import drop_db, get_session, init_db
+from app.core.db import get_session
 
-from app.models import DevilFruit, FruitTypeEnum, RomanizedName, User
+from app.models import (
+    DevilFruit,
+    DevilFruitWithRelationships,
+    FruitTypeEnum,
+    NameBase,
+    RomanizedName,
+    TranslatedName,
+    User,
+)
 
 
 @asynccontextmanager
@@ -18,7 +27,6 @@ async def lifespan(app: FastAPI):
     yield
 
     # on end, clean up stuff here
-    drop_db()
 
 
 app = FastAPI(title=settings.PROJECT_NAME, lifespan=lifespan)
@@ -60,8 +68,9 @@ def get_info_df_type():
     return {"info": list(FruitTypeEnum)}
 
 
-@app.post("/devil-fruit-user/", response_model=User, tags=["Users"])
-def create_df_user(*, session: Session = Depends(get_session), df_user: User):
+# devil fruit user routes
+@app.post("/devil-fruit/user/", response_model=User, tags=["Users"])
+def create_devil_fruit_user(*, session: Session = Depends(get_session), df_user: User):
     db_df_user = User.model_validate(df_user)
 
     session.add(db_df_user)
@@ -70,6 +79,54 @@ def create_df_user(*, session: Session = Depends(get_session), df_user: User):
     session.refresh(db_df_user)
 
     return db_df_user
+
+
+# devil fruit routes
+@app.get(
+    "/devil-fruit/",
+    response_model=list[DevilFruitWithRelationships],
+    tags=["Devil Fruits"],
+)
+def read_devil_fruits(
+    *,
+    session: Session = Depends(get_session),
+    offset: int = 0,
+    limit: int = Query(default=100, le=100)
+):
+    devil_fruits = session.exec(select(DevilFruit).offset(offset).limit(limit)).all()
+
+    return devil_fruits
+
+
+@app.get(
+    "/devil-fruit/{fruit_id}",
+    response_model=DevilFruitWithRelationships,
+    tags=["Devil Fruits"],
+)
+def read_devil_fruit_by_id(*, session: Session = Depends(get_session), fruit_id: UUID):
+    devil_fruit = session.get(DevilFruit, fruit_id)
+    if not devil_fruit:
+        raise HTTPException(status_code=404, detail="Devil fruit not found")
+
+    return devil_fruit
+
+
+@app.get(
+    "/devil-fruit/name/{name}",
+    response_model=DevilFruitWithRelationships,
+    tags=["Devil Fruits"],
+)
+def read_devil_fruit_by_name(*, session: Session = Depends(get_session), name: str):
+    devil_fruit = session.exec(
+        select(DevilFruit)
+        .join(RomanizedName)
+        .join(TranslatedName)
+        .where(or_(RomanizedName.name == name, TranslatedName.name == name))
+    ).first()
+    if not devil_fruit:
+        raise HTTPException(status_code=404, detail="Devil fruit not found")
+
+    return devil_fruit
 
 
 @app.post("/devil-fruit/", response_model=DevilFruit, tags=["Devil Fruits"])

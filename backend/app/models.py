@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import Optional, List
+from typing import Optional
 from uuid import UUID
 from sqlmodel import Field, SQLModel, JSON, Relationship
 
@@ -11,7 +11,7 @@ class FruitTypeEnum(str, Enum):
 
 
 class NameBase(SQLModel):
-    name: str
+    name: str = Field(index=True)
     is_spoiler: bool = False
 
     fruit_id: UUID = Field(foreign_key="devilfruit.fruit_id")
@@ -60,30 +60,56 @@ class User(SQLModel, table=True):
     devil_fruit: "DevilFruit" = Relationship(back_populates="users")
 
 
-class DevilFruit(SQLModel, table=True):
-    fruit_id: UUID = Field(default=None, primary_key=True)
-
+class DevilFruitBase(SQLModel):
     ability: str
     awakened_ability: Optional[str] = None
     is_canon: bool = True
 
-    romanized_names: List["RomanizedName"] = Relationship(back_populates="devil_fruit")
-    translated_names: List["TranslatedName"] = Relationship(
+
+class DevilFruit(DevilFruitBase, table=True):
+    fruit_id: UUID = Field(default=None, primary_key=True)
+
+    romanized_names: list["RomanizedName"] = Relationship(back_populates="devil_fruit")
+    translated_names: list["TranslatedName"] = Relationship(
         back_populates="devil_fruit"
     )
-    types: List["FruitTypeAssociation"] = Relationship(back_populates="devil_fruit")
-    users: List["User"] = Relationship(back_populates="devil_fruit")
+    types: list["FruitTypeAssociation"] = Relationship(back_populates="devil_fruit")
+    users: list["User"] = Relationship(back_populates="devil_fruit")
 
 
 # pydantic models
-# class DevilFruitCreate(DevilFruit):
-#     pass
+class RomanizedNameRead(SQLModel):
+    name: str
+    is_spoiler: bool
 
 
-# class DevilFruitUpdate(DevilFruitBase):
-#     ability: Optional[str] = None
-#     awakened_ability: Optional[str] = None
-#     is_canon: Optional[bool] = None
+class TranslatedNameRead(SQLModel):
+    name: str
+    is_spoiler: bool
+
+
+class FruitTypeRead(SQLModel):
+    type: str
+    is_spoiler: bool
+
+
+class UserAwakeningRead(SQLModel):
+    is_awakened: bool = False
+    is_spoiler: bool = False
+
+
+class UserRead(SQLModel):
+    user: str
+    is_artificial: bool
+    is_current: bool
+    is_spoiler: bool
+
+    awakening: Optional[UserAwakeningRead] = None
 
 
 # relationship models
+class DevilFruitWithRelationships(DevilFruitBase):
+    romanized_names: list[RomanizedNameRead] = []
+    translated_names: list[TranslatedNameRead] = []
+    types: list[FruitTypeRead] = []
+    users: list[UserRead] = []
