@@ -14,7 +14,7 @@ services:
 
   db-populate:
     build: .
-    command: python -m app.core.db_management init --env ${ENVIRONMENT} --service
+    command: python -m app.core.db_management force-reset --env ${ENVIRONMENT}
     depends_on:
       - db 
     env_file:

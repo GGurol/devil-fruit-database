@@ -2,9 +2,10 @@ import traceback
 
 from contextlib import asynccontextmanager
 from uuid import UUID
-from fastapi import Depends, FastAPI, HTTPException, Query, Request
+from fastapi import Depends, FastAPI, HTTPException, Path, Query, Request
 from fastapi.responses import JSONResponse
-from sqlmodel import Session, or_, select
+from sqlalchemy import func
+from sqlmodel import Session, col, or_, select
 from starlette.middleware.cors import CORSMiddleware
 
 from app.core.config import settings
@@ -14,10 +15,10 @@ from app.models import (
     DevilFruit,
     DevilFruitWithRelationships,
     FruitTypeEnum,
-    NameBase,
     RomanizedName,
     TranslatedName,
     User,
+    UserRead,
 )
 
 
@@ -64,11 +65,23 @@ def read_info():
 
 
 @app.get("/info/devil-fruit-types/", tags=["Info"])
-def get_info_df_type():
+def get_info_devil_fruit_type():
     return {"info": list(FruitTypeEnum)}
 
 
 # devil fruit user routes
+@app.get("/devil-fruit/user/", response_model=UserRead, tags=["Users"])
+def read_devil_fruit_users(
+    *,
+    session: Session = Depends(get_session),
+    offset: int = 0,
+    limit: int = Query(default=100, le=100),
+):
+    df_users = session.exec(select(User).offset(offset).limit(limit)).all()
+
+    return df_users
+
+
 @app.post("/devil-fruit/user/", response_model=User, tags=["Users"])
 def create_devil_fruit_user(*, session: Session = Depends(get_session), df_user: User):
     db_df_user = User.model_validate(df_user)
@@ -91,7 +104,7 @@ def read_devil_fruits(
     *,
     session: Session = Depends(get_session),
     offset: int = 0,
-    limit: int = Query(default=100, le=100)
+    limit: int = Query(default=100, le=100),
 ):
     devil_fruits = session.exec(select(DevilFruit).offset(offset).limit(limit)).all()
 
@@ -127,6 +140,61 @@ def read_devil_fruit_by_name(*, session: Session = Depends(get_session), name: s
         raise HTTPException(status_code=404, detail="Devil fruit not found")
 
     return devil_fruit
+
+
+@app.get(
+    "/devil-fruit/user/{user}",
+    response_model=DevilFruitWithRelationships,
+    tags=["Devil Fruits"],
+)
+def read_devil_fruit_by_user(*, session: Session = Depends(get_session), user: str):
+    devil_fruit = session.exec(
+        select(DevilFruit).join(User).where(User.user == user)
+    ).first()
+    if not devil_fruit:
+        raise HTTPException(status_code=404, detail="Devil fruit not found")
+
+    return devil_fruit
+
+
+@app.get(
+    "/devil-fruit/search/{search_term}",
+    response_model=list[DevilFruitWithRelationships],
+    tags=["Devil Fruits"],
+)
+def search_devils_fruits(
+    *,
+    session: Session = Depends(get_session),
+    search_term: str = Path(..., min_length=3),
+    limit: int = Query(default=100, le=100),
+):
+    """
+    Search devil fruits by name using fuzzy matching.
+    Returns fruits where either romanized or translated names contain the search term.
+    Requires at least 3 characters for search.
+    """
+    devil_fruits = session.exec(
+        select(DevilFruit)
+        .distinct()
+        .join(RomanizedName)
+        .join(TranslatedName)
+        .join(User)
+        .where(
+            or_(
+                func.lower(RomanizedName.name).contains(search_term.lower()),
+                func.lower(TranslatedName.name).contains(search_term.lower()),
+                func.lower(User.user).contains(search_term.lower()),
+            )
+        )
+        .limit(limit)
+    ).all()
+
+    if not devil_fruits:
+        raise HTTPException(
+            status_code=404, detail=f"No devil fruits found matching '{search_term}'"
+        )
+
+    return devil_fruits
 
 
 @app.post("/devil-fruit/", response_model=DevilFruit, tags=["Devil Fruits"])
