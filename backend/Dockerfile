@@ -6,6 +6,13 @@ COPY ./requirements.txt /app/requirements.txt
 
 RUN pip install --no-cache-dir --upgrade -r /app/requirements.txt
 
-COPY ./app /app/app
+# create data dir
+RUN mkdir -p /app/data
 
-CMD ["fastapi", "run", "./app/main.py", "--port", "8000"]
+# copt application code
+COPY ./app /app
+
+# copy data files to data dir
+COPY ./simple_data.json /app/data/simple_data.json
+
+CMD ["fastapi", "run", "./main.py", "--port", "8000"]

@@ -1,0 +1,5 @@
+# Normal startup (without db-setup)
+docker-compose up
+
+# With database setup
+docker-compose --profile setup up
