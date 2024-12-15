@@ -3,20 +3,13 @@ import typer
 from typing import Dict, Optional
 from sqlmodel import Session, select
 
-from app.core.constants import Environment
+from app.core.constants import DATA_FILES, Environment
 from app.core.db import init_db, drop_db, populate_db, engine
 
 from app.models import DevilFruit
 
 
 app = typer.Typer()
-
-# constants
-DATA_FILES: Dict[Environment, str] = {
-    Environment.DEV: "data/simple_data.json",
-    Environment.STAGING: "data/simple_data.json",
-    Environment.PROD: "data/simple_data.json",
-}
 
 
 class DatabaseManager:

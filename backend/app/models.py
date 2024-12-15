@@ -8,6 +8,7 @@ class FruitTypeEnum(str, Enum):
     ZOAN = "Zoan"
     LOGIA = "Logia"
     PARAMECIA = "Paramecia"
+    MYTHICAL_ZOAN = "Mythical Zoan"
 
 
 class NameBase(SQLModel):
@@ -75,6 +76,76 @@ class DevilFruit(DevilFruitBase, table=True):
     )
     types: list["FruitTypeAssociation"] = Relationship(back_populates="devil_fruit")
     users: list["User"] = Relationship(back_populates="devil_fruit")
+
+
+class DevilFruitSimple(DevilFruitBase):
+    fruit_id: UUID
+
+    romanized_name: Optional[str] = None
+    translated_name: Optional[str] = None
+
+    ability: Optional[str] = None
+    awakened_ability: Optional[str] = None
+
+    type: Optional[str] = None
+
+    is_canon: Optional[bool] = None
+    is_spoiler: Optional[bool] = None
+
+    @classmethod
+    def from_devil_fruit(
+        cls,
+        df: "DevilFruit",
+        include_names: bool = True,
+        include_abilites: bool = True,
+        include_type: bool = True,
+        include_metadata: bool = True,
+    ) -> "DevilFruitSimple":
+        """
+        Convert a DevilFruit instance to DevilFruitSimple
+
+        Args:
+            df: DevilFruit instance
+            include_names: include romanized and translated names
+            include_ability: include ability and awakened ability
+            include_type: include fruit type
+            inlcude_metadata: include is canon and is spoiler
+        """
+        result = {
+            "fruit_id": df.fruit_id,
+        }
+
+        if include_names:
+            result.update(
+                {
+                    "romanized_name": (
+                        df.romanized_names[0].name if df.romanized_names else None
+                    ),
+                    "translated_name": (
+                        df.translated_names[0].name if df.translated_names else None
+                    ),
+                }
+            )
+
+        if include_abilites:
+            result.update(
+                {
+                    "ability": (df.ability),
+                    "awakened_ability": (df.awakened_ability),
+                }
+            )
+
+        if include_type:
+            result.update(
+                {
+                    "type": df.types[0].type if df.types else None,
+                }
+            )
+
+        if include_metadata:
+            result.update({"is_canon": df.is_canon})
+
+        return cls(**result)
 
 
 # pydantic models

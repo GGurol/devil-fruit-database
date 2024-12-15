@@ -1,4 +1,5 @@
 from enum import Enum
+from typing import Dict
 
 
 class Environment(str, Enum):
@@ -13,3 +14,10 @@ class Environment(str, Enum):
     @property
     def is_dev(self) -> bool:
         return self == self.DEV
+
+
+DATA_FILES: Dict[Environment, str] = {
+    Environment.DEV: "data/simple_data.json",
+    Environment.STAGING: "data/simple_data.json",
+    Environment.PROD: "data/simple_data.json",
+}

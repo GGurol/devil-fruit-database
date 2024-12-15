@@ -13,8 +13,11 @@ from app.core.db import get_session
 
 from app.models import (
     DevilFruit,
+    DevilFruitSimple,
     DevilFruitWithRelationships,
+    FruitTypeAssociation,
     FruitTypeEnum,
+    FruitTypeRead,
     RomanizedName,
     TranslatedName,
     User,
@@ -64,20 +67,35 @@ def read_info():
     return {"title": settings.PROJECT_NAME, "db-server": settings.POSTGRES_SERVER}
 
 
-@app.get("/info/devil-fruit-types/", tags=["Info"])
+@app.get("/info/devil-fruit/types/enum/", tags=["Info"])
 def get_info_devil_fruit_type():
     return {"info": list(FruitTypeEnum)}
 
 
+@app.get("/info/devil-fruit/types/", response_model=list[FruitTypeRead], tags=["Info"])
+def get_info_devil_fruit_types(*, session: Session = Depends(get_session)):
+    fruit_types = session.exec(
+        select(FruitTypeAssociation).distinct(FruitTypeAssociation.type)
+    )
+
+    if not fruit_types:
+        raise HTTPException(status_code=404, detail="No types found")
+
+    return fruit_types
+
+
 # devil fruit user routes
-@app.get("/devil-fruit/user/", response_model=UserRead, tags=["Users"])
+@app.get("/devil-fruit/user/", response_model=list[UserRead], tags=["Users"])
 def read_devil_fruit_users(
     *,
     session: Session = Depends(get_session),
-    offset: int = 0,
+    offset: int = Query(default=0, ge=0),
     limit: int = Query(default=100, le=100),
 ):
     df_users = session.exec(select(User).offset(offset).limit(limit)).all()
+
+    if not df_users:
+        raise HTTPException(status_code=404, detail="No users found")
 
     return df_users
 
@@ -103,12 +121,54 @@ def create_devil_fruit_user(*, session: Session = Depends(get_session), df_user:
 def read_devil_fruits(
     *,
     session: Session = Depends(get_session),
-    offset: int = 0,
+    offset: int = Query(default=0, ge=0),
     limit: int = Query(default=100, le=100),
 ):
     devil_fruits = session.exec(select(DevilFruit).offset(offset).limit(limit)).all()
 
+    if not devil_fruits:
+        raise HTTPException(status_code=404, detail="No devil fruits found")
+
     return devil_fruits
+
+
+@app.get(
+    "/devil-fruit/simple/",
+    response_model=list[DevilFruitSimple],
+    response_model_exclude_none=True,
+    tags=["Devil Fruits"],
+)
+def read_devil_fruits_simple(
+    *,
+    session: Session = Depends(get_session),
+    include_names: bool = Query(
+        default=True, description="Include a romanized and translated name"
+    ),
+    include_abilities: bool = Query(default=False, description="Include ablitites"),
+    include_type: bool = Query(default=False, description="Include fruit type"),
+    include_metadata: bool = Query(
+        default=False, description="Include metadata (i.e. is canon)"
+    ),
+    offset: int = Query(default=0, ge=0),
+    limit: int = Query(default=100, le=100),
+):
+    devil_fruits = session.exec(select(DevilFruit).offset(offset).limit(limit)).all()
+
+    if not devil_fruits:
+        raise HTTPException(status_code=404, detail="No devil fruits found")
+
+    simple_fruits = [
+        DevilFruitSimple.from_devil_fruit(
+            df,
+            include_names=include_names,
+            include_abilites=include_abilities,
+            include_type=include_type,
+            include_metadata=include_metadata,
+        )
+        for df in devil_fruits
+    ]
+
+    return simple_fruits
 
 
 @app.get(
@@ -140,6 +200,29 @@ def read_devil_fruit_by_name(*, session: Session = Depends(get_session), name: s
         raise HTTPException(status_code=404, detail="Devil fruit not found")
 
     return devil_fruit
+
+
+@app.get(
+    "/devil-fruit/type/{fruit_type}",
+    response_model=list[DevilFruitSimple],
+    tags=["Devil Fruits"],
+)
+def read_devil_fruits_by_type(
+    *, session: Session = Depends(get_session), fruit_type: str
+):
+    # TODO: once all known fruit types are added to the enum, will use that instead as the type
+    devil_fruits = session.exec(
+        select(DevilFruit)
+        .join(FruitTypeAssociation)
+        .where(FruitTypeAssociation.type == fruit_type)
+    ).all()
+
+    if not devil_fruits:
+        raise HTTPException(status_code=404, detail="Devil fruits with type not found")
+
+    simple_fruits = [DevilFruitSimple.from_devil_fruit(df) for df in devil_fruits]
+
+    return simple_fruits
 
 
 @app.get(

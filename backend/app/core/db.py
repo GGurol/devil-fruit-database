@@ -13,9 +13,6 @@ from app.models import (
     UserAwakening,
 )
 
-# TEMP
-DATABASE_URL = "postgresql://postgres:postgres@localhost:5432/devil_fruit_db"
-
 
 def get_engine_config():
     return {
