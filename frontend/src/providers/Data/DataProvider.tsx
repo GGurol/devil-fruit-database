@@ -1,7 +1,9 @@
 import { ChangeEvent, FC, PropsWithChildren, useMemo, useState } from "react";
 
+import { useQuery } from "react-query";
+
 import { DataContext } from "./Data.context";
-import { IFruitData } from "./Data.types";
+import { IFruitData, INewFruitData } from "./Data.types";
 
 const fruitData: IFruitData[] = [
   {
@@ -1301,11 +1303,61 @@ const fruitData: IFruitData[] = [
   },
 ];
 
+const BASE_URL = "http://0.0.0.0:8000/api"; // /devil-fruits/
+
+const fetchFruitData = async (): Promise<INewFruitData[] | null> => {
+  const response = await fetch(`${BASE_URL}/devil-fruits/`, {
+    method: "GET",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  return await response.json();
+};
+
 export const DataProvider: FC<PropsWithChildren> = ({ children }) => {
   const [showSpoilers, setShowSpoilers] = useState<boolean>(false);
   const [showNonCanon, setShowNonCanon] = useState<boolean>(true);
 
   const [searchQuery, setSearchQuery] = useState<string>("");
+
+  const {
+    data: devilFruits,
+    error,
+    isLoading,
+  } = useQuery({
+    queryKey: ["devilFruits"],
+    queryFn: fetchFruitData,
+  });
+
+  const tempFruitData = useMemo(() => {
+    let tempData = devilFruits;
+
+    if (error) return null;
+    if (isLoading) return null;
+
+    if (!showNonCanon) {
+      tempData = tempData?.filter((fruit) => fruit.is_canon);
+    }
+
+    if (searchQuery) {
+      tempData = tempData?.filter((fruit) => {
+        const searchableFields = [
+          ...fruit.names.romanized_names.map((rname) => rname.name),
+          ...fruit.names.translated_names.map((tname) => tname.name),
+          ...(fruit.users.current_users?.map((cuser) => cuser.user) || []),
+          ...(fruit.users.previous_users?.map((puser) => puser.user) || []),
+        ].map((field) => field?.toLowerCase());
+
+        return searchableFields.some((field) => field?.includes(searchQuery));
+      });
+    }
+
+    return tempData;
+  }, [searchQuery, showNonCanon, error, isLoading]);
+
+  console.log(tempFruitData);
 
   const filteredFruitData = useMemo(() => {
     let tempData = fruitData;

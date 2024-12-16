@@ -51,7 +51,7 @@ def populate_db(json_file_path: str):
 
     with Session(engine) as session:
         for fruit_data in devil_fruits_data:
-            # create devil fruit table
+            # Create devil fruit table
             devil_fruit = DevilFruit(
                 fruit_id=UUID(fruit_data["fruit_id"]),
                 ability=fruit_data["abilities"]["ability"],
@@ -60,7 +60,7 @@ def populate_db(json_file_path: str):
             )
             session.add(devil_fruit)
 
-            # add romanized names
+            # Add romanized names
             for rname in fruit_data["names"]["romanized_names"]:
                 romanized_name = RomanizedName(
                     name=rname["name"],
@@ -69,7 +69,7 @@ def populate_db(json_file_path: str):
                 )
                 session.add(romanized_name)
 
-            # add translated names
+            # Add translated names
             for tname in fruit_data["names"]["translated_names"]:
                 translated_name = TranslatedName(
                     name=tname["name"],
@@ -78,7 +78,7 @@ def populate_db(json_file_path: str):
                 )
                 session.add(translated_name)
 
-            # add types
+            # Add types
             for type_data in fruit_data["types"]:
                 fruit_type = FruitTypeAssociation(
                     type=type_data["type"],
@@ -87,7 +87,7 @@ def populate_db(json_file_path: str):
                 )
                 session.add(fruit_type)
 
-            # add current users
+            # Add current users
             if fruit_data["users"]["current_users"]:
                 for user_data in fruit_data["users"]["current_users"]:
                     user = User(
@@ -99,7 +99,7 @@ def populate_db(json_file_path: str):
                     )
                     session.add(user)
 
-                    # add user awakening
+                    # Add user awakening
                     awakening = UserAwakening(
                         is_awakened=user_data["awakening"]["is_awakened"],
                         is_spoiler=user_data["awakening"]["is_spoiler"],
@@ -107,7 +107,7 @@ def populate_db(json_file_path: str):
                     )
                     session.add(awakening)
 
-            # add previous users
+            # Add previous users
             if fruit_data["users"]["previous_users"]:
                 for user_data in fruit_data["users"]["previous_users"]:
                     user = User(
@@ -118,7 +118,7 @@ def populate_db(json_file_path: str):
                     )
                     session.add(user)
 
-                    # add user awakening
+                    # Add user awakening
                     awakening = UserAwakening(
                         is_awakened=user_data["awakening"]["is_awakened"],
                         is_spoiler=user_data["awakening"]["is_spoiler"],

@@ -81,13 +81,15 @@ class DevilFruit(DevilFruitBase, table=True):
 class DevilFruitSimple(DevilFruitBase):
     fruit_id: UUID
 
-    romanized_name: Optional[str] = None
-    translated_name: Optional[str] = None
+    primary_name: str
+    localized_name: Optional[str] = None
 
     ability: Optional[str] = None
     awakened_ability: Optional[str] = None
 
-    type: Optional[str] = None
+    current_user: Optional[str] = None
+
+    primary_type: Optional[str] = None
 
     is_canon: Optional[bool] = None
     is_spoiler: Optional[bool] = None
@@ -98,6 +100,7 @@ class DevilFruitSimple(DevilFruitBase):
         df: "DevilFruit",
         include_names: bool = True,
         include_abilites: bool = True,
+        include_user: bool = True,
         include_type: bool = True,
         include_metadata: bool = True,
     ) -> "DevilFruitSimple":
@@ -118,10 +121,10 @@ class DevilFruitSimple(DevilFruitBase):
         if include_names:
             result.update(
                 {
-                    "romanized_name": (
+                    "primary_name": (
                         df.romanized_names[0].name if df.romanized_names else None
                     ),
-                    "translated_name": (
+                    "localized_name": (
                         df.translated_names[0].name if df.translated_names else None
                     ),
                 }
@@ -135,10 +138,15 @@ class DevilFruitSimple(DevilFruitBase):
                 }
             )
 
+        if include_user:
+            result.update(
+                {"current_user": next((u.user for u in df.users if u.is_current), None)}
+            )
+
         if include_type:
             result.update(
                 {
-                    "type": df.types[0].type if df.types else None,
+                    "primary_type": df.types[0].type if df.types else None,
                 }
             )
 
@@ -180,6 +188,8 @@ class UserRead(SQLModel):
 
 # relationship models
 class DevilFruitWithRelationships(DevilFruitBase):
+    fruit_id: UUID
+
     romanized_names: list[RomanizedNameRead] = []
     translated_names: list[TranslatedNameRead] = []
     types: list[FruitTypeRead] = []
