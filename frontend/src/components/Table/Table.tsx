@@ -35,7 +35,7 @@ const Table: FC<ITableProps> = ({ $alternate = false }) => {
             <TableRow key={index}>
               <TableData>
                 <DataList>
-                  {fruit.names.romanized_names.map((rname, rnameIndex) => (
+                  {fruit.romanized_names.map((rname, rnameIndex) => (
                     <DataItem key={rnameIndex}>
                       <DataText
                         $showSpoilers={showSpoilers}
@@ -50,7 +50,7 @@ const Table: FC<ITableProps> = ({ $alternate = false }) => {
               </TableData>
               <TableData>
                 <DataList>
-                  {fruit.names.translated_names.map((tname, tnameIndex) => (
+                  {fruit.translated_names.map((tname, tnameIndex) => (
                     <DataItem key={tnameIndex}>
                       <DataText
                         $showSpoilers={showSpoilers}
@@ -78,12 +78,12 @@ const Table: FC<ITableProps> = ({ $alternate = false }) => {
                   ))}
                 </DataList>
               </TableData>
-              <TableData>{fruit.abilities.ability}</TableData>
+              <TableData>{fruit.ability}</TableData>
 
               <TableData>
-                {fruit.users.current_users ? (
+                {fruit.users ? (
                   <DataList>
-                    {fruit.users.current_users.map((cuser, cuserIndex) => (
+                    {fruit.users.map((cuser, cuserIndex) => (
                       <DataItem key={cuserIndex}>
                         <DataText
                           $showSpoilers={showSpoilers}
@@ -101,7 +101,7 @@ const Table: FC<ITableProps> = ({ $alternate = false }) => {
                               : ""
                           }
                         >
-                          {cuser.user}
+                          {cuser.is_current ? cuser.user : "None"}
                         </DataText>
                       </DataItem>
                     ))}
@@ -112,9 +112,9 @@ const Table: FC<ITableProps> = ({ $alternate = false }) => {
               </TableData>
 
               <TableData>
-                {fruit.users.previous_users ? (
+                {fruit.users ? (
                   <DataList>
-                    {fruit.users.previous_users.map((puser, puserIndex) => (
+                    {fruit.users.map((puser, puserIndex) => (
                       <DataItem key={puserIndex}>
                         <DataText
                           $showSpoilers={showSpoilers}
@@ -123,9 +123,16 @@ const Table: FC<ITableProps> = ({ $alternate = false }) => {
                             $isAwakend: puser.awakening.is_awakened,
                             $isSpoiler: puser.awakening.is_spoiler,
                           }}
-                          title={puser.awakening.is_awakened ? "Awakened" : ""}
+                          $isArtificial={puser.is_artificial}
+                          title={
+                            puser.awakening.is_awakened
+                              ? "Awakened"
+                              : puser.is_artificial
+                              ? "Artificial"
+                              : ""
+                          }
                         >
-                          {puser.user}
+                          {puser.is_current === false ? puser.user : "None"}
                         </DataText>
                       </DataItem>
                     ))}
