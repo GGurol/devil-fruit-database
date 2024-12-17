@@ -50,7 +50,8 @@ export interface INewFruitData {
 }
 
 export interface IDataState {
-  filteredFruitData: INewFruitData[];
+  filteredFruitData: INewFruitData[] | null | undefined;
+  isLoading: boolean;
   showSpoilers: boolean;
   showNonCanon: boolean;
   handleSearch: (e: ChangeEvent<HTMLInputElement>) => void;

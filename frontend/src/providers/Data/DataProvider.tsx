@@ -372,20 +372,15 @@ export const DataProvider: FC<PropsWithChildren> = ({ children }) => {
 
   const [searchQuery, setSearchQuery] = useState<string>("");
 
-  const {
-    data: devilFruits,
-    error,
-    isLoading,
-  } = useQuery({
+  // TODO: Implement search functionality with backend api call
+
+  const { data: devilFruits, isLoading } = useQuery({
     queryKey: ["devilFruits"],
     queryFn: fetchFruitData,
   });
 
-  const tempFruitData = useMemo(() => {
+  const filteredFruitData = useMemo(() => {
     let tempData = devilFruits;
-
-    // if (error) return null;
-    // if (isLoading) return null;
 
     if (!showNonCanon) {
       tempData = tempData?.filter((fruit) => fruit.is_canon);
@@ -396,8 +391,7 @@ export const DataProvider: FC<PropsWithChildren> = ({ children }) => {
         const searchableFields = [
           ...fruit.romanized_names.map((rname) => rname.name),
           ...fruit.translated_names.map((tname) => tname.name),
-          ...(fruit.users.current_users?.map((cuser) => cuser.user) || []),
-          ...(fruit.users.previous_users?.map((puser) => puser.user) || []),
+          ...(fruit.users?.map((user) => user.user) || []),
         ].map((field) => field?.toLowerCase());
 
         return searchableFields.some((field) => field?.includes(searchQuery));
@@ -405,34 +399,7 @@ export const DataProvider: FC<PropsWithChildren> = ({ children }) => {
     }
 
     return tempData;
-  }, [searchQuery, showNonCanon, error, isLoading]);
-
-  console.log(tempFruitData);
-
-  const filteredFruitData = useMemo(() => {
-    let tempData = fruitData;
-
-    if (!showNonCanon) {
-      tempData = tempData.filter((fruit) => fruit.is_canon);
-    }
-
-    if (searchQuery) {
-      tempData = tempData.filter((fruit) => {
-        const searchableFields = [
-          ...fruit.romanized_names.map((rname) => rname.name),
-          ...fruit.translated_names.map((tname) => tname.name),
-          ...(fruit.users.current_users?.map((cuser) => cuser.user) || []),
-          ...(fruit.users.previous_users?.map((puser) => puser.user) || []),
-        ].map((field) => field?.toLowerCase());
-
-        return searchableFields.some((field) => field?.includes(searchQuery));
-      });
-    }
-
-    return tempData;
-  }, [searchQuery, showNonCanon]);
-
-  console.log(filteredFruitData);
+  }, [devilFruits, searchQuery, showNonCanon, isLoading]);
 
   const handleShowSpoilers = () => {
     setShowSpoilers(!showSpoilers);
@@ -451,6 +418,7 @@ export const DataProvider: FC<PropsWithChildren> = ({ children }) => {
     filteredFruitData,
     showSpoilers,
     showNonCanon,
+    isLoading,
     handleSearch,
     handleShowSpoilers,
     handleShowNonCanon,
