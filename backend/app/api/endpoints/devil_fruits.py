@@ -45,14 +45,18 @@ def read_devil_fruits(
 def read_devil_fruits_simple(
     *,
     session: Session = Depends(get_session),
+    include_metadata: bool = Query(
+        default=True, description="Include metadata (i.e. fruit_id, is canon)"
+    ),
     include_names: bool = Query(
         default=True, description="Include a romanized and translated name"
     ),
-    include_abilities: bool = Query(default=False, description="Include ablitites"),
-    include_type: bool = Query(default=False, description="Include fruit type"),
-    include_user: bool = Query(default=False, description="Include current user"),
-    include_metadata: bool = Query(
-        default=False, description="Include metadata (i.e. is canon)"
+    include_abilities: bool = Query(
+        default=False, description="Include fruits ablitites"
+    ),
+    include_type: bool = Query(default=False, description="Include the fruit type"),
+    include_user: bool = Query(
+        default=False, description="Include current user of fruit"
     ),
     offset: int = Query(default=0, ge=0),
     limit: int = Query(default=100, le=100),
@@ -65,11 +69,11 @@ def read_devil_fruits_simple(
     simple_fruits = [
         DevilFruitSimple.from_devil_fruit(
             df,
+            include_metadata=include_metadata,
             include_names=include_names,
             include_abilites=include_abilities,
             include_user=include_user,
             include_type=include_type,
-            include_metadata=include_metadata,
         )
         for df in devil_fruits
     ]
