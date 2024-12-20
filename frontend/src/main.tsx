@@ -1,10 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 
+import { QueryClient, QueryClientProvider } from "react-query";
+
 import App from "./App.tsx";
 import { ThemeProvider } from "./providers/Theme/ThemeProvider.tsx";
 import { themeVars } from "./providers/Theme/Theme.ts";
 import { DataProvider } from "./providers/Data/DataProvider.tsx";
+import { ModalProvider } from "./providers/Modal/ModalProvider.tsx";
+
+const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
@@ -17,9 +22,13 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       components={themeVars.components}
       commonStyles={themeVars.commonStyles}
     >
-      <DataProvider>
-        <App />
-      </DataProvider>
+      <QueryClientProvider client={queryClient}>
+        <DataProvider>
+          <ModalProvider>
+            <App />
+          </ModalProvider>
+        </DataProvider>
+      </QueryClientProvider>
     </ThemeProvider>
   </React.StrictMode>
 );

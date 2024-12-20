@@ -1,3 +1,4 @@
+from collections import OrderedDict
 from enum import Enum
 from typing import Optional
 from uuid import UUID
@@ -79,27 +80,44 @@ class DevilFruit(DevilFruitBase, table=True):
 
 
 class DevilFruitSimple(DevilFruitBase):
-    fruit_id: UUID
-
-    romanized_name: Optional[str] = None
-    translated_name: Optional[str] = None
-
+    fruit_id: Optional[UUID] = None
+    names: Optional[dict] = None
+    types: Optional[set] = None
     ability: Optional[str] = None
     awakened_ability: Optional[str] = None
-
-    type: Optional[str] = None
-
+    users: Optional[dict] = None
     is_canon: Optional[bool] = None
-    is_spoiler: Optional[bool] = None
+
+    @classmethod
+    def sort_fields(cls, result: "DevilFruitSimple") -> OrderedDict:
+        ordered_fields = [
+            "fruit_id",
+            "names",
+            "types",
+            "ability",
+            "awakened_ability",
+            "users",
+            "is_canon",
+        ]
+
+        sorted_result = OrderedDict()
+        for field in ordered_fields:
+            if field in result:
+                sorted_result[field] = result[field]
+
+        print(sorted_result)
+
+        return sorted_result
 
     @classmethod
     def from_devil_fruit(
         cls,
         df: "DevilFruit",
+        include_metadata: bool = True,
         include_names: bool = True,
         include_abilites: bool = True,
+        include_user: bool = True,
         include_type: bool = True,
-        include_metadata: bool = True,
     ) -> "DevilFruitSimple":
         """
         Convert a DevilFruit instance to DevilFruitSimple
@@ -111,39 +129,36 @@ class DevilFruitSimple(DevilFruitBase):
             include_type: include fruit type
             inlcude_metadata: include is canon and is spoiler
         """
-        result = {
-            "fruit_id": df.fruit_id,
-        }
-
-        if include_names:
-            result.update(
-                {
-                    "romanized_name": (
-                        df.romanized_names[0].name if df.romanized_names else None
-                    ),
-                    "translated_name": (
-                        df.translated_names[0].name if df.translated_names else None
-                    ),
-                }
-            )
-
-        if include_abilites:
-            result.update(
-                {
-                    "ability": (df.ability),
-                    "awakened_ability": (df.awakened_ability),
-                }
-            )
-
-        if include_type:
-            result.update(
-                {
-                    "type": df.types[0].type if df.types else None,
-                }
-            )
+        result: "DevilFruitSimple" = {}
 
         if include_metadata:
-            result.update({"is_canon": df.is_canon})
+            result["fruit_id"] = df.fruit_id
+            result["is_canon"] = df.is_canon
+
+        if include_names:
+            result["names"] = {
+                "primary_name": (
+                    df.romanized_names[0].name if df.romanized_names else None
+                ),
+                "localized_name": (
+                    df.translated_names[0].name if df.translated_names else None
+                ),
+            }
+
+        if include_type:
+            result["types"] = {ta.type for ta in df.types}
+
+        if include_abilites:
+            result["ability"] = df.ability
+            result["awakened_ability"] = df.awakened_ability
+
+        if include_user:
+            result["users"] = {
+                "current_user": next((u.user for u in df.users if u.is_current), None)
+            }
+
+        # TODO: Figure out a way for the response to be in ordered in a specific way
+        # sorted_result = cls.sort_fields(result)
 
         return cls(**result)
 
@@ -180,6 +195,8 @@ class UserRead(SQLModel):
 
 # relationship models
 class DevilFruitWithRelationships(DevilFruitBase):
+    fruit_id: UUID
+
     romanized_names: list[RomanizedNameRead] = []
     translated_names: list[TranslatedNameRead] = []
     types: list[FruitTypeRead] = []

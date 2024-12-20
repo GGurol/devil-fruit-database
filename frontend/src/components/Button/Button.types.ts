@@ -48,5 +48,6 @@ export interface IButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
         tablet?: `${string}` | "auto";
         mobile?: `${string}` | "auto";
       };
+  $fillContainer?: boolean;
   $icon?: IButtonIcon;
 }

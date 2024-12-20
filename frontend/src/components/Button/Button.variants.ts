@@ -14,7 +14,8 @@ export const ButtonStyles: IButtonStyles = {
     }
 
     &:active {
-      border-color: ${({ theme }) => theme.commonInteractive["interactive-primary"]};
+      border-color: ${({ theme }) =>
+        theme.commonInteractive["interactive-primary"]};
 
       transition: border-color 100ms ease-in;
     }
@@ -48,14 +49,14 @@ export const ButtonStyles: IButtonStyles = {
 
     &:hover {
       border-color: ${({ theme }) =>
-        theme.commonInteractive["interactive-primary-hover"]};};
+        theme.commonInteractive["interactive-primary-hover"]};
 
       transition: border-color 100ms ease-in;
     }
 
     &:active {
       border-color: ${({ theme }) =>
-        theme.theme.commonInteractive["interactive-primary"]};};
+        theme.commonInteractive["interactive-primary"]};
 
       transition: border-color 100ms ease-in;
     }

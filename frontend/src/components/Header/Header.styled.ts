@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 
-const Header = styled.h1`
+export const Header = styled.h1`
   min-width: 132px;
 
   margin-right: auto;
@@ -19,4 +19,8 @@ const Header = styled.h1`
   -webkit-touch-callout: none; // ios
 `;
 
-export default Header;
+export const HeaderExtraSmall = styled.h1`
+  color: ${({ theme }) => theme.foreground["fg-primary"]};
+
+  ${({ theme }) => theme.headerExtraSmall}
+`;

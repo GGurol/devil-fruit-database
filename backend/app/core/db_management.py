@@ -15,7 +15,7 @@ app = typer.Typer()
 class DatabaseManager:
     @staticmethod
     def is_empty() -> bool:
-        """check if the database is empty"""
+        """Check if the database is empty"""
         with Session(engine) as session:
             try:
                 result = session.exec(select(DevilFruit).limit(1)).first()
@@ -25,7 +25,7 @@ class DatabaseManager:
 
     @staticmethod
     def require_production_confirmation(env: Environment) -> None:
-        """require confirmation for production operations"""
+        """Require confirmation for production operations"""
         if env.is_prod:
             typer.confirm(
                 "⚠️  WARNING: You are about to modify the PRODUCTION database. Are you sure?",
@@ -34,7 +34,7 @@ class DatabaseManager:
 
     @staticmethod
     def require_data_drop_confirmation(env: Environment) -> None:
-        """require confirmation when dropping exisiting data"""
+        """Require confirmation when dropping exisiting data"""
         typer.confirm(
             "⚠️  WARNING: You are about to drop a database containing data. Are you sure?",
             abort=True,
@@ -42,7 +42,7 @@ class DatabaseManager:
 
     @staticmethod
     def get_data_file(env: Environment, data_file: Optional[str] = None) -> str:
-        """get the appropiate data file path"""
+        """Get the appropiate data file path"""
         file_path = data_file or DATA_FILES.get(env)
         if not file_path:
             raise ValueError(f"No data file specified for {env} environment.")
@@ -57,7 +57,7 @@ class DatabaseManager:
         force: bool = False,
         data_file: Optional[str] = None,
     ) -> None:
-        """initialize the database and optionally populate it with data"""
+        """Initialize the database and optionally populate it with data"""
         cls.require_production_confirmation(env)
 
         if not force and not cls.is_empty():
@@ -73,13 +73,13 @@ class DatabaseManager:
                 file_path = cls.get_data_file(env, data_file)
                 populate_db(file_path)
             except Exception as e:
-                raise typer.BadParameter(f"Erro populating database: {e}")
+                raise typer.BadParameter(f"Error populating database: {e}")
         else:
             init_db()
 
     @classmethod
     def backup(cls) -> None:
-        """backup the database"""
+        """Backup the database"""
 
         # TODO: implement backup functionality
 
@@ -87,7 +87,7 @@ class DatabaseManager:
 
     @classmethod
     def drop(cls, env: Environment) -> None:
-        """drop the database"""
+        """Drop the database"""
         cls.require_production_confirmation(env)
         cls.backup()
 
@@ -95,7 +95,7 @@ class DatabaseManager:
 
     @classmethod
     def reset(cls, env: Environment) -> None:
-        """reset the database"""
+        """Reset the database"""
         cls.require_production_confirmation(env)
         cls.backup()
 
@@ -104,17 +104,17 @@ class DatabaseManager:
 
     @classmethod
     def force_reset(cls, env: Environment, data_file: Optional[str] = None):
-        """force reset and populate the database without any confirmations"""
+        """Force reset and populate the database without any confirmations"""
         if env.is_prod:
             typer.echo(
                 "⚠️  WARNING: Using force-reset in production is not recommended!",
                 err=True,
             )
 
-        # skip all confirmations and force drop everything
+        # Skip all confirmations and force drop everything
         drop_db()
 
-        # initialize and populate with fresh data
+        # Initialize and populate with fresh data
         file_path = cls.get_data_file(env, data_file)
         populate_db(file_path)
 
@@ -127,7 +127,7 @@ def init(
     force: bool = False,
     data_file: Optional[str] = None,
 ):
-    """initialize the database and optionally populate it with data"""
+    """Initialize the database and optionally populate it with data"""
     try:
         DatabaseManager.initialize(env, populate, force, data_file)
         typer.echo(f"Database initialized for {env} environment.")
@@ -138,7 +138,7 @@ def init(
 
 @app.command()
 def backup(env: Environment = Environment.DEV):
-    """backup the database"""
+    """Backup the database"""
     try:
         DatabaseManager.backup()
         typer.echo(f"Database backed up for {env} environment.")
@@ -149,7 +149,7 @@ def backup(env: Environment = Environment.DEV):
 
 @app.command()
 def reset(env: Environment = Environment.DEV):
-    """reset the database, this is a destructive operation"""
+    """Reset the database, this is a destructive operation"""
     try:
         DatabaseManager.reset(env)
         typer.echo(f"Database reset for {env} environment.")
@@ -160,7 +160,7 @@ def reset(env: Environment = Environment.DEV):
 
 @app.command()
 def force_reset(env: Environment = Environment.DEV, data_file: Optional[str] = None):
-    """force reset and populate the database without any confirmations"""
+    """Force reset and populate the database without any confirmations"""
     try:
         DatabaseManager.force_reset(env, data_file)
         typer.echo(f"Database force reset and populated for {env} environment.")
@@ -171,7 +171,7 @@ def force_reset(env: Environment = Environment.DEV, data_file: Optional[str] = N
 
 @app.command()
 def drop(env: Environment = Environment.DEV):
-    """drop that database, this is a destructive operation"""
+    """Drop that database, this is a destructive operation"""
     try:
         DatabaseManager.drop(env)
         typer.echo(f"Database dropped for {env} environment.")

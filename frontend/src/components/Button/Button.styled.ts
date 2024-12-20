@@ -45,7 +45,7 @@ const ButtonWrapper = styled.button<IButtonProps>`
   }}
 
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet.max}) {
-    flex: 1 0 auto;
+    ${({ $fillContainer }) => $fillContainer && "flex: 1 0 auto;"}
   }
 `;
 
