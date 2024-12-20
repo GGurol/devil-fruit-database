@@ -7,6 +7,7 @@ import App from "./App.tsx";
 import { ThemeProvider } from "./providers/Theme/ThemeProvider.tsx";
 import { themeVars } from "./providers/Theme/Theme.ts";
 import { DataProvider } from "./providers/Data/DataProvider.tsx";
+import { ModalProvider } from "./providers/Modal/ModalProvider.tsx";
 
 const queryClient = new QueryClient();
 
@@ -23,7 +24,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     >
       <QueryClientProvider client={queryClient}>
         <DataProvider>
-          <App />
+          <ModalProvider>
+            <App />
+          </ModalProvider>
         </DataProvider>
       </QueryClientProvider>
     </ThemeProvider>

@@ -2,7 +2,15 @@ import { ComponentType, SVGProps } from "react";
 
 import * as Icons from "./src/index";
 
-export type TIconComponents = "Check" | "Download" | "Moon" | "Search" | "Sun";
+export type TIconComponents =
+  | "Check"
+  | "CheckCircle"
+  | "Cross"
+  | "Copy"
+  | "Download"
+  | "Moon"
+  | "Search"
+  | "Sun";
 
 export const IconComponentMap: Record<
   string,

@@ -78,6 +78,7 @@ const commonColors: IThemeCommonColors = {
   },
   commonBackground: {
     "bg-white": palettes.base.white,
+    "bg-modal-overlay": palettes.alpha.modal,
   },
   commonInteractive: {
     "interactive-primary": palettes.primary[500],
@@ -93,6 +94,9 @@ const commonColors: IThemeCommonColors = {
 const fonts: IThemeFonts = {
   Rubik: css`
     font-family: "Rubik", sans-serif;
+  `,
+  FiraCode: css`
+    font-family: "Fira Code", monospace;
   `,
 };
 
@@ -160,6 +164,13 @@ const typography: IThemeTypography = {
     font-weight: 500;
     line-height: 1rem;
     text-transform: uppercase;
+  `,
+  code: css`
+    ${fonts.FiraCode}
+    font-size: 0.875rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.25rem;
   `,
 };
 

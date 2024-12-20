@@ -5,33 +5,41 @@ import { useTheme } from "styled-components";
 import { useThemeContext } from "./providers/Theme/Theme.context";
 import { useDataContext } from "./providers/Data/Data.context";
 
-import Button from "./components/Button/Button";
+import logo from "./assets/one-piece.png";
+
 import PageWrapper from "./components/Wrappers/PageWrapper";
 import HeaderWrapper from "./components/Wrappers/HeaderWrapper";
-import Logo from "./components/Logo/Logo";
-import Header from "./components/Header/Header.styled";
 import ActionsWrapper from "./components/Wrappers/ActionsWrapper";
-
-import logo from "./assets/one-piece.png";
 import BodyWrapper from "./components/Wrappers/BodyWrapper";
 import ContentWrapper from "./components/Wrappers/ContentWrapper";
 import BodyActionsWrapper from "./components/Wrappers/BodyActionsWrapper";
 import ToggleWrapper from "./components/Wrappers/ToggleWrapper";
-import Checkbox from "./components/Checkbox/Checkbox";
 import BodyContentWrapper from "./components/Wrappers/BodyContentWrapper";
 import SearchActionsWrapper from "./components/Wrappers/SearchActionsWrapper";
+
+import Button from "./components/Button/Button";
+import Checkbox from "./components/Checkbox/Checkbox";
+import Logo from "./components/Logo/Logo";
+
 import Table from "./components/Table/Table";
 import Legend from "./components/Legend/Legend";
 import SearchBar from "./components/SearchBar/SearchBar";
+import Modal from "./components/Modal/Modal";
+import Export from "./components/Export/Export";
+
+import { Header } from "./components/Header/Header.styled";
+import { useModalContext } from "./providers/Modal/Modal.context";
 
 export const App: FC = () => {
   const theme = useTheme();
   const { mode, toggleMode } = useThemeContext();
   const { showSpoilers, showNonCanon, handleShowSpoilers, handleShowNonCanon } =
     useDataContext();
+  const { isModalOpen, modalContent, openModal } = useModalContext();
 
   return (
     <PageWrapper>
+      {isModalOpen && <Modal>{modalContent}</Modal>}
       <ContentWrapper>
         <HeaderWrapper>
           <Logo src={logo} />
@@ -41,6 +49,7 @@ export const App: FC = () => {
               onClick={toggleMode}
               $variant={{ variantName: "Outline" }}
               $minwidth={{ desktop: "132px", mobile: "auto" }}
+              $fillContainer={true}
               $icon={{
                 hasIcon: true,
                 iconStyle: {
@@ -51,6 +60,7 @@ export const App: FC = () => {
               {mode === "light" ? "Dark Mode" : "Light Mode"}
             </Button>
             <Button
+              onClick={() => openModal(<Export />)}
               $variant={{
                 variantName: "Solid",
                 staticColors: {
@@ -58,6 +68,7 @@ export const App: FC = () => {
                 },
               }}
               $minwidth={{ desktop: "132px", mobile: "auto" }}
+              $fillContainer={true}
               $icon={{
                 hasIcon: true,
                 iconStyle: {

@@ -28,6 +28,7 @@ export interface IThemeCommonColors {
   };
   commonBackground: {
     "bg-white": string;
+    "bg-modal-overlay": string;
   };
   commonInteractive: {
     "interactive-primary": string;
@@ -42,6 +43,7 @@ export interface IThemeCommonColors {
 
 export interface IThemeFonts {
   Rubik: CSSProp;
+  FiraCode: CSSProp;
 }
 
 export interface IThemeTypography {
@@ -54,6 +56,7 @@ export interface IThemeTypography {
   bodySmall: CSSProp;
   bodyExtraSmall: CSSProp;
   label: CSSProp;
+  code: CSSProp;
 }
 
 export interface IThemeBreakpoints {

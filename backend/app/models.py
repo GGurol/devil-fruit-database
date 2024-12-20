@@ -1,3 +1,4 @@
+from collections import OrderedDict
 from enum import Enum
 from typing import Optional
 from uuid import UUID
@@ -79,7 +80,7 @@ class DevilFruit(DevilFruitBase, table=True):
 
 
 class DevilFruitSimple(DevilFruitBase):
-    fruit_id: UUID
+    fruit_id: Optional[UUID] = None
     names: Optional[dict] = None
     types: Optional[set] = None
     ability: Optional[str] = None
@@ -88,16 +89,25 @@ class DevilFruitSimple(DevilFruitBase):
     is_canon: Optional[bool] = None
 
     @classmethod
-    def sort_fields(cls, df: "DevilFruitSimple") -> "DevilFruitSimple":
-        return {
-            "fruit_id": df.fruit_id,
-            "names": df.names,
-            "types": df.types,
-            "ability": df.ability,
-            "awakened_ability": df.awakened_ability,
-            "users": df.users,
-            "is_canon": df.is_canon,
-        }
+    def sort_fields(cls, result: "DevilFruitSimple") -> OrderedDict:
+        ordered_fields = [
+            "fruit_id",
+            "names",
+            "types",
+            "ability",
+            "awakened_ability",
+            "users",
+            "is_canon",
+        ]
+
+        sorted_result = OrderedDict()
+        for field in ordered_fields:
+            if field in result:
+                sorted_result[field] = result[field]
+
+        print(sorted_result)
+
+        return sorted_result
 
     @classmethod
     def from_devil_fruit(
@@ -147,8 +157,10 @@ class DevilFruitSimple(DevilFruitBase):
                 "current_user": next((u.user for u in df.users if u.is_current), None)
             }
 
-        sorted_result = cls.sort_fields(result)
-        return cls(sorted_result)
+        # TODO: Figure out a way for the response to be in ordered in a specific way
+        # sorted_result = cls.sort_fields(result)
+
+        return cls(**result)
 
 
 # pydantic models
