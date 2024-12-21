@@ -1,0 +1,130 @@
+name: "Build and Deploy"
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  build:
+    # Allow the job to fetch a GitHub ID token
+    permissions:
+      id-token: write
+      contents: read
+  
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4.2.2
+
+      - id: 'auth'
+        name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2.1.4
+        with:
+          create_credentials_file: true
+          workload_identity_provider: 'projects/${{ secrets.GCP_PROJECT_NUMBER }}/locations/global/workloadIdentityPools/github-actions-pool/providers/${{ secrets.GCP_PROVIDER_ID }}'
+          service_account: '${{ secrets.GCP_SERVICE_ACCOUNT }}'
+
+      - name: Set up bun
+        uses: oven-sh/setup-bun@v2
+        
+      - name: Install dependencies
+        run: bun install
+        working-directory: ./frontend
+
+      - name: Build frontend
+        run: bun run build
+        working-directory: ./frontend
+
+      - name: Upload frontend build artifacts
+        uses: actions/upload-artifact@v4.5.0
+        with:
+          name: frontend-dist
+          path: ./frontend/dist
+
+      - name: Set up docker buildx
+        uses: docker/setup-buildx-action@v3.8.0
+
+      - name: Log in to Github Container Registry
+        uses: docker/login-action@v3.3.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Build docker image
+        uses: docker/build-push-action@v6.10.0
+        with: 
+          context: ./backend
+          push: false
+          tags: ghcr.io/${{ github.repository_owner }}/devil-fruit-backend:pr-${{ github.event.number }}
+          
+  deploy:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4.2.2
+
+      - id: 'auth'
+        name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2.1.4
+        with:
+          create_credentials_file: true
+          workload_identity_provider: 'projects/${{ secrets.GCP_PROJECT_NUMBER }}/locations/global/workloadIdentityPools/github-actions-pool/providers/${{ secrets.GCP_PROVIDER_ID }}'
+          service_account: '${{ secrets.GCP_SERVICE_ACCOUNT }}'
+
+      - name: Set up Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@v1
+        with:
+          version: 'latest'
+
+      - name: Download frontend build artifacts
+        uses: actions/download-artifact@v4.1.8
+        with:
+          name: frontend-dist
+          path: ./frontend/dist
+        
+      - name: Deploy frontend
+        uses: actions/deploy-pages@v4.0.5
+        with:
+          folder: ./frontend/dist
+          branch: gh-pages
+
+      - name: Set up docker buildx
+        uses: docker/setup-buildx-action@v3.8.0
+
+      - name: Log in to Github Container Registry
+        uses: docker/login-action@v3.3.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Build and push docker image
+        uses: docker/build-push-action@v6.10.0
+        with: 
+          context: ./backend
+          push: true
+          tags: ghcr.io/${{ github.repository_owner }}/devil-fruit-backend:latest
+
+      - name: Authenticate Docker with Google Cloud
+        run: gcloud auth configure-docker
+
+      - name: Deploy to GCP Compute Engine
+        run: |
+          gcloud compute instances update-container YOUR_INSTANCE_NAME \
+            --zone YOUR_INSTANCE_ZONE \
+            --container-image ghcr.io/${{ github.repository_owner }}/devil-fruit-backend:latest \
+            --container-restart-policy always
+          gcloud compute ssh YOUR_INSTANCE_NAME --zone YOUR_INSTANCE_ZONE --command "docker-compose -f /path/to/your/docker-compose.yml up -d && python -m app.core.db_management init --env prod --populate --force"
+    
