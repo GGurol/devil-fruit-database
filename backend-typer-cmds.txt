@@ -10,6 +10,12 @@ python -m app.core.db_management init --populate --force
 # Initialize production database
 python -m app.core.db_management init --env prod
 
+# Initialize production database with data
+python -m app.core.db_management init --env prod --populate 
+
+# Initialize production database with data, force initializtion when database already exists
+python -m app.core.db_management init --env prod --populate --force
+
 # Reset dev database
 python -m app.core.db_management reset
 
