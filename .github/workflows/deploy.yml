@@ -29,8 +29,8 @@ jobs:
         uses: google-github-actions/auth@v2.1.4
         with:
           create_credentials_file: true
-          workload_identity_provider: 'projects/${{ secrets.GCP_PROJECT_NUMBER }}/locations/global/workloadIdentityPools/github-actions-pool/providers/${{ secrets.GCP_PROVIDER_ID }}'
-          service_account: '${{ secrets.GCP_SERVICE_ACCOUNT }}'
+          workload_identity_provider: 'projects/691860815676/locations/global/workloadIdentityPools/github-actions-pool/providers/github-actions-provider'
+          service_account: 'devil-fruit-database-gsa@devil-fruit-database-id.iam.gserviceaccount.com'
 
       - name: Set up bun
         uses: oven-sh/setup-bun@v2
@@ -80,8 +80,8 @@ jobs:
         uses: google-github-actions/auth@v2.1.4
         with:
           create_credentials_file: true
-          workload_identity_provider: 'projects/${{ secrets.GCP_PROJECT_NUMBER }}/locations/global/workloadIdentityPools/github-actions-pool/providers/${{ secrets.GCP_PROVIDER_ID }}'
-          service_account: '${{ secrets.GCP_SERVICE_ACCOUNT }}'
+          workload_identity_provider: 'projects/691860815676/locations/global/workloadIdentityPools/github-actions-pool/providers/github-actions-provider'
+          service_account: 'devil-fruit-database-gsa@devil-fruit-database-id.iam.gserviceaccount.com'
 
       - name: Set up Google Cloud SDK
         uses: google-github-actions/setup-gcloud@v1
