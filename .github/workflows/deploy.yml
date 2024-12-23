@@ -27,7 +27,7 @@ jobs:
         with:
           project_id: devil-fruit-database-id
           create_credentials_file: true
-          workload_identity_provider: 'projects/691860815676/locations/global/workloadIdentityPools/github-actions-pool/providers/github-actions-provider'
+          workload_identity_provider: 'projects/${{ secrets.GCP_PROJECT_NUMBER }}/locations/global/workloadIdentityPools/github-actions-pool/providers/github-actions-provider'
           # service_account: 'devil-fruit-database-gsa@devil-fruit-database-id.iam.gserviceaccount.com'
 
       
