@@ -7,7 +7,7 @@ on:
   pull_request:
     branches:
       - main
-      
+
 permissions:
   id-token: write
   pages: write
@@ -18,23 +18,23 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-20.04
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4.2.2
 
-      - id: 'auth'
+      - id: "auth"
         name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v2.1.4
         with:
           project_id: devil-fruit-database-id
           create_credentials_file: true
-          workload_identity_provider: 'projects/${{ secrets.GCP_PROJECT_NUMBER }}/locations/global/workloadIdentityPools/${{ secrets.GCP_POOL_ID }}/providers/${{ secrets.GCP_PROVIDER_ID }}'
-          service_account: 'devil-fruit-database-gsa@devil-fruit-database-id.iam.gserviceaccount.com'
-      
+          workload_identity_provider: "projects/${{ secrets.GCP_PROJECT_NUMBER }}/locations/global/workloadIdentityPools/${{ secrets.GCP_POOL_ID }}/providers/${{ secrets.GCP_PROVIDER_ID }}"
+          service_account: "devil-fruit-database-gsa@devil-fruit-database-id.iam.gserviceaccount.com"
+
       - name: Set up bun
         uses: oven-sh/setup-bun@v2
-        
+
       - name: Install dependencies
         run: bun install
         working-directory: ./frontend
@@ -58,7 +58,7 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      
+
       - name: Set Docker tag
         run: |
           if [ "${{ github.event_name }}" == "pull_request" ]; then
@@ -69,11 +69,11 @@ jobs:
 
       - name: Build docker image
         uses: docker/build-push-action@v6.10.0
-        with: 
+        with:
           context: ./backend
           push: false
           tags: ${{ env.DOCKER_TAG }}
-          
+
   deploy:
     if: github.event_name == 'push'
     runs-on: ubuntu-20.04
@@ -83,26 +83,26 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4.2.2
 
-      - id: 'auth'
+      - id: "auth"
         name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v2.1.4
         with:
           project_id: devil-fruit-database-id
           create_credentials_file: true
-          workload_identity_provider: 'projects/${{ secrets.GCP_PROJECT_NUMBER }}/locations/global/workloadIdentityPools/${{ secrets.GCP_POOL_ID }}/providers/${{ secrets.GCP_PROVIDER_ID }}'
-          service_account: 'devil-fruit-database-gsa@devil-fruit-database-id.iam.gserviceaccount.com'
-          
+          workload_identity_provider: "projects/${{ secrets.GCP_PROJECT_NUMBER }}/locations/global/workloadIdentityPools/${{ secrets.GCP_POOL_ID }}/providers/${{ secrets.GCP_PROVIDER_ID }}"
+          service_account: "devil-fruit-database-gsa@devil-fruit-database-id.iam.gserviceaccount.com"
+
       - name: Set up Google Cloud SDK
         uses: google-github-actions/setup-gcloud@v1
         with:
-          version: 'latest'
+          version: "latest"
 
       - name: Download frontend build artifacts
         uses: actions/download-artifact@v4.1.8
         with:
           name: frontend-dist
           path: ./frontend/dist
-        
+
       - name: Deploy frontend
         uses: actions/deploy-pages@v4.0.5
         with:
@@ -115,10 +115,10 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      
+
       - name: Build and push docker image
         uses: docker/build-push-action@v6.10.0
-        with: 
+        with:
           context: ./backend
           push: true
           tags: ghcr.io/${{ github.repository_owner }}/devil-fruit-backend:latest
@@ -138,9 +138,14 @@ jobs:
                   tty: false
               restartPolicy: Always'
 
-      - name: Deploy to GCP Compute Engine
+      - name: Pull Docker image on GCP Compute Engine
         run: |
-          gcloud compute instances update-container ${{ secrets.GCP_INSTANCE_NAME }} \
+          gcloud compute ssh ${{ secrets.GCP_INSTANCE_NAME }} \
             --zone ${{ secrets.GCP_INSTANCE_ZONE }} \
-            --container-image ghcr.io/${{ github.repository_owner }}/devil-fruit-backend:latest \
-            --container-restart-policy always
+            --command "docker pull ghcr.io/${{ github.repository_owner }}/devil-fruit-backend:latest"
+
+      - name: Run Docker Compose on GCP Compute Engine
+        run: |
+          gcloud compute ssh ${{ secrets.GCP_INSTANCE_NAME }} \
+            --zone ${{ secrets.GCP_INSTANCE_ZONE }} \
+            --command "cd /home/docker && docker compose up -d && python -m app.core.db_management init --env prod --populate --force"
