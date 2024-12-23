@@ -142,6 +142,8 @@ jobs:
         run: |
           gcloud compute scp ./backend/docker-compose.yml ${{ secrets.GCP_INSTANCE_NAME }}:/home/docker/docker-compose.yml \
             --zone ${{ secrets.GCP_INSTANCE_ZONE }}
+          gcloud compute scp ./backend/.env ${{ secrets.GCP_INSTANCE_NAME }}:/home/docker/.env \
+            --zone ${{ secrets.GCP_INSTANCE_ZONE }}
 
       - name: Pull Docker image on GCP Compute Engine
         run: |
@@ -150,7 +152,14 @@ jobs:
             --command "docker pull ghcr.io/${{ github.repository_owner }}/devil-fruit-backend:latest"
 
       - name: Run Docker Compose on GCP Compute Engine
+        env:
+          DOMAIN: ${{ secrets.DOMAIN }}
+          ENVIRONMENT: ${{ secrets.ENVIRONMENT }}
+          POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
+          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
         run: |
           gcloud compute ssh ${{ secrets.GCP_INSTANCE_NAME }} \
             --zone ${{ secrets.GCP_INSTANCE_ZONE }} \
-            --command "cd /home/docker && docker compose up -d"
+            --command "cd /home/docker && docker-compose up -d"

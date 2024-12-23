@@ -17,8 +17,6 @@ services:
     command: python -m app.core.db_management force-reset --env ${ENVIRONMENT}
     depends_on:
       - db 
-    env_file:
-      - .env
     environment:
       - ENVIRONMENT=${ENVIRONMENT}
       - PYTHONPATH=../
@@ -44,8 +42,6 @@ services:
     depends_on:
       - db
     container_name: devil-fruit-backend
-    env_file:
-      - .env
     environment:
       - DOMAIN=${DOMAIN}
       - ENVIRONMENT=${ENVIRONMENT}
