@@ -140,7 +140,6 @@ jobs:
 
       - name: Deploy to GCP Compute Engine
         run: |
-          gcloud config set core/log_http true
           gcloud compute instances update-container ${{ secrets.GCP_INSTANCE_NAME }} \
             --zone ${{ secrets.GCP_INSTANCE_ZONE }} \
             --container-image ghcr.io/${{ github.repository_owner }}/devil-fruit-backend:latest \
