@@ -144,5 +144,5 @@ jobs:
             --zone ${{ secrets.GCP_INSTANCE_ZONE }} \
             --container-image ghcr.io/${{ github.repository_owner }}/devil-fruit-backend:latest \
             --container-restart-policy always
-          gcloud compute ssh ${{ secrets.GCP_INSTANCE_NAME }} --zone ${{ secrets.GCP_INSTANCE_ZONE }} --command "docker-compose -f ./backend/docker-compose.yml up -d && python -m app.core.db_management init --env prod --populate --force"
+          gcloud compute ssh ${{ secrets.GCP_INSTANCE_NAME }} --zone ${{ secrets.GCP_INSTANCE_ZONE }} --command "docker compose -f ./backend/docker-compose.yml up -d && python -m app.core.db_management init --env prod --populate --force"
           
