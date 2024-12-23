@@ -30,6 +30,7 @@ jobs:
           project_id: devil-fruit-database-id
           create_credentials_file: true
           workload_identity_provider: 'projects/${{ secrets.GCP_PROJECT_NUMBER }}/locations/global/workloadIdentityPools/${{ secrets.GCP_POOL_ID }}/providers/${{ secrets.GCP_PROVIDER_ID }}'
+          service_account: 'devil-fruit-database-gsa@devil-fruit-database-id.iam.gserviceaccount.com'
       
       - name: Set up bun
         uses: oven-sh/setup-bun@v2
@@ -82,15 +83,7 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4.2.2
-
-      - id: 'auth'
-        name: Authenticate to Google Cloud
-        uses: google-github-actions/auth@v2.1.4
-        with:
-          project_id: devil-fruit-database-id
-          create_credentials_file: true
-          workload_identity_provider: 'projects/${{ secrets.GCP_PROJECT_NUMBER }}/locations/global/workloadIdentityPools/${{ secrets.GCP_POOL_ID }}/providers/${{ secrets.GCP_PROVIDER_ID }}'
-      
+        
       - name: Set up Google Cloud SDK
         uses: google-github-actions/setup-gcloud@v1
         with:
@@ -127,8 +120,10 @@ jobs:
 
       - name: Deploy to GCP Compute Engine
         run: |
+          gcloud config set core/log_http true
           gcloud compute instances update-container ${{ secrets.GCP_INSTANCE_NAME }} \
             --zone ${{ secrets.GCP_INSTANCE_ZONE }} \
             --container-image ghcr.io/${{ github.repository_owner }}/devil-fruit-backend:latest \
             --container-restart-policy always
           gcloud compute ssh ${{ secrets.GCP_INSTANCE_NAME }} --zone ${{ secrets.GCP_INSTANCE_ZONE }} --command "docker-compose -f ./backend/docker-compose.yml up -d && python -m app.core.db_management init --env prod --populate --force"
+          
