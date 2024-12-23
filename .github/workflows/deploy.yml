@@ -36,9 +36,15 @@ jobs:
         run: bun install
         working-directory: ./frontend
 
+      - name: Cleanup old artifacts
+        run: rm -rf ./frontend/dist
+
       - name: Build frontend
         run: bun run build
         working-directory: ./frontend
+
+      - name: Remove symlinks
+        run: find ./frontend/dist -type l -delete
 
       - name: Upload frontend build artifacts
         uses: actions/upload-artifact@v4.5.0
