@@ -83,7 +83,16 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4.2.2
-        
+
+      - id: 'auth'
+        name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2.1.4
+        with:
+          project_id: devil-fruit-database-id
+          create_credentials_file: true
+          workload_identity_provider: 'projects/${{ secrets.GCP_PROJECT_NUMBER }}/locations/global/workloadIdentityPools/${{ secrets.GCP_POOL_ID }}/providers/${{ secrets.GCP_PROVIDER_ID }}'
+          service_account: 'devil-fruit-database-gsa@devil-fruit-database-id.iam.gserviceaccount.com'
+          
       - name: Set up Google Cloud SDK
         uses: google-github-actions/setup-gcloud@v1
         with:
