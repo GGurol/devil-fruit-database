@@ -132,6 +132,11 @@ jobs:
             --zone ${{ secrets.GCP_INSTANCE_ZONE }} \
             --command "sudo usermod -aG docker $USER && newgrp docker"
 
+      - name: Copy docker-compose.yml to GCP Compute Engine
+        run: |
+          gcloud compute scp ./backend/docker-compose.yml ${{ secrets.GCP_INSTANCE_NAME }}:/home/docker/docker-compose.yml \
+            --zone ${{ secrets.GCP_INSTANCE_ZONE }}
+
       - name: Pull Docker image on GCP Compute Engine
         run: |
           gcloud compute ssh ${{ secrets.GCP_INSTANCE_NAME }} \
@@ -142,4 +147,4 @@ jobs:
         run: |
           gcloud compute ssh ${{ secrets.GCP_INSTANCE_NAME }} \
             --zone ${{ secrets.GCP_INSTANCE_ZONE }} \
-            --command "cd /home/docker && ls -la"
+            --command "cd /home/docker && docker compose up -d"
