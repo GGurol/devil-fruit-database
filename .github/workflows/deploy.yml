@@ -43,8 +43,10 @@ jobs:
         run: bun run build
         working-directory: ./frontend
 
-      - name: Remove symlinks
-        run: find ./frontend/dist -type l -delete
+      - name: Validate artifact content
+        run: |
+          find ./frontend/dist -type l -print -delete
+          du -sh ./frontend/dist
 
       - name: Upload frontend build artifacts
         uses: actions/upload-artifact@v4.5.0
