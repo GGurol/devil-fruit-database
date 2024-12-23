@@ -138,16 +138,10 @@ jobs:
                   tty: false
               restartPolicy: Always'
 
-      - name: List directory structure
+      - name: Deploy to GCP Compute Engine
         run: |
-          gcloud compute ssh ${{ secrets.GCP_INSTANCE_NAME }} --zone ${{ secrets.GCP_INSTANCE_ZONE }} --command "ls -R /home/runner"
-
-
-      # - name: Deploy to GCP Compute Engine
-      #   run: |
-      #     gcloud compute instances update-container ${{ secrets.GCP_INSTANCE_NAME }} \
-      #       --zone ${{ secrets.GCP_INSTANCE_ZONE }} \
-      #       --container-image ghcr.io/${{ github.repository_owner }}/devil-fruit-backend:latest \
-      #       --container-restart-policy always
-      #     gcloud compute ssh ${{ secrets.GCP_INSTANCE_NAME }} --zone ${{ secrets.GCP_INSTANCE_ZONE }} --command "docker compose -f  up -d && python -m app.core.db_management init --env prod --populate --force"
-          
+          gcloud compute instances update-container ${{ secrets.GCP_INSTANCE_NAME }} \
+            --zone ${{ secrets.GCP_INSTANCE_ZONE }} \
+            --container-image ghcr.io/${{ github.repository_owner }}/devil-fruit-backend:latest \
+            --container-restart-policy always
+          gcloud compute ssh ${{ secrets.GCP_INSTANCE_NAME }} --zone ${{ secrets.GCP_INSTANCE_ZONE }} --command "ls -R"
