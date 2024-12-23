@@ -132,6 +132,12 @@ jobs:
             --zone ${{ secrets.GCP_INSTANCE_ZONE }} \
             --command "sudo usermod -aG docker $USER && newgrp docker"
 
+      - name: Create directory on GCP Compute Engine
+        run: |
+          gcloud compute ssh ${{ secrets.GCP_INSTANCE_NAME }} \
+            --zone ${{ secrets.GCP_INSTANCE_ZONE }} \
+            --command "mkdir -p /home/docker"
+
       - name: Copy docker-compose.yml to GCP Compute Engine
         run: |
           gcloud compute scp ./backend/docker-compose.yml ${{ secrets.GCP_INSTANCE_NAME }}:/home/docker/docker-compose.yml \
