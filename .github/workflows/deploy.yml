@@ -142,8 +142,6 @@ jobs:
         run: |
           gcloud compute scp ./backend/docker-compose.yml ${{ secrets.GCP_INSTANCE_NAME }}:/home/docker/docker-compose.yml \
             --zone ${{ secrets.GCP_INSTANCE_ZONE }}
-          gcloud compute scp ./backend/.env ${{ secrets.GCP_INSTANCE_NAME }}:/home/docker/.env \
-            --zone ${{ secrets.GCP_INSTANCE_ZONE }}
 
       - name: Pull Docker image on GCP Compute Engine
         run: |
