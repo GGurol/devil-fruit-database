@@ -142,4 +142,4 @@ jobs:
         run: |
           gcloud compute ssh ${{ secrets.GCP_INSTANCE_NAME }} \
             --zone ${{ secrets.GCP_INSTANCE_ZONE }} \
-            --command "cd /app && docker compose up -d && python -m app.core.db_management init --env prod --populate --force"
+            --command "cd /home/docker && ls -la"
