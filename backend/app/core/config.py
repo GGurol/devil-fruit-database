@@ -12,12 +12,12 @@ class Settings(BaseSettings):
         env_file=".env", env_ignore_empty=True, extra="ignore"
     )
 
-    PROJECT_NAME: str
+    PROJECT_NAME: str = "Devil Fruit Database"
 
     DOMAIN: str = "localhost"
     ENVIRONMENT: Environment = Environment.DEV
 
-    IS_ALLOWED_CREDENTIALS: bool
+    IS_ALLOWED_CREDENTIALS: bool = True
     ALLOWED_ORIGINS: list[str] = [
         "http://localhost",
         "http://localhost:5173",
