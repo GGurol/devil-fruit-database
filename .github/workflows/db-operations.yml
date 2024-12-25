@@ -1,0 +1,57 @@
+name: "Database Operations"
+
+on:
+  workflow_dispatch:
+    inputs:
+      operation:
+        description: "Select database operation"
+        required: true
+        type: choice
+        options:
+          - force-reset
+          - backup
+          - drop
+        default: "force-reset"
+      environment:
+        description: "Select environment"
+        required: true
+        type: choice
+        options:
+          - dev
+          - prod
+        default: "dev"
+
+jobs:
+  database:
+    runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.environment }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - id: auth
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ vars.WIF_PROVIDER }}
+          service_account: ${{ vars.WIF_SERVICE_ACCOUNT }}
+
+      - name: Run Database Operation
+        run: |
+          case ${{ github.event.inputs.operation }} in
+            force-reset)
+              COMMAND="force-reset"
+              ;;
+            backup)
+              COMMAND="backup"
+              ;;
+            drop)
+              COMMAND="drop"
+              ;;
+          esac
+
+          gcloud run jobs create db-op-${{ github.run_number }} \
+            --image "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/${{ env.SERVICE }}:latest" \
+            --region ${{ env.REGION }} \
+            --tasks 1 \
+            --command "python" \
+            --args "-m","app.core.db_management","${COMMAND}","--env","${{ github.event.inputs.environment }}"
