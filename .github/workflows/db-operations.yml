@@ -39,15 +39,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-
-      - name: Download SHA
-        uses: actions/download-artifact@v4.1.8
-        with:
-          name: image-sha
-
-      - name: Set SHA
-        run: echo "IMAGE_SHA=$(cat image-sha.txt)" >> $GITHUB_ENV
-
+      
       - id: auth
         uses: google-github-actions/auth@v2
         with:
@@ -69,7 +61,7 @@ jobs:
           esac
 
           gcloud run jobs create db-op-${{ github.run_number }} \
-            --image "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/${{ env.SERVICE }}:${IMAGE_SHA}" \
+            --image "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/${{ env.SERVICE }}:latest" \
             --region ${{ env.REGION }} \
             --tasks 1 \
             --command "python -m app.core.db_management ${COMMAND} --env ${{ github.event.inputs.environment }}"
