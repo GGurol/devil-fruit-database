@@ -3,8 +3,16 @@ name: "Build and Deploy"
 on:
   push:
     branches: [main]
+    paths:
+      - "backend/**"
+      - "frontend/**"
+      - ".github/workflows/deploy.yml"
   pull_request:
     branches: [main]
+    paths:
+      - "backend/**"
+      - "frontend/**"
+      - ".github/workflows/deploy.yml"
 
 permissions:
   id-token: write
