@@ -21,6 +21,10 @@ on:
           - prod
         default: "dev"
 
+permissions:
+  id-token: write
+  actions: read
+
 jobs:
   database:
     runs-on: ubuntu-latest
