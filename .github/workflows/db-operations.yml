@@ -41,7 +41,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Download SHA
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v4.1.8
         with:
           name: image-sha
 

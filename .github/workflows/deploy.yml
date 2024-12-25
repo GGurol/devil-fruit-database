@@ -84,7 +84,7 @@ jobs:
         run: echo ${{ github.sha }} > image-sha.txt
 
       - name: Upload SHA
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4.5.0
         with:
           name: image-sha
           path: image-sha.txt
