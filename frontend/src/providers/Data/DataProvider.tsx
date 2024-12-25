@@ -362,7 +362,10 @@ import { INewFruitData } from "./Data.types";
 // const BASE_URL = "http://0.0.0.0:8000/api"; // /devil-fruits/
 
 const fetchFruitData = async (): Promise<INewFruitData[] | null> => {
-  const response = await fetch(`http://0.0.0.0:8000/api/devil-fruits/`, {});
+  const response = await fetch(
+    `https://devil-fruit-database-crs-qehiib5lra-ue.a.run.app/api/devil-fruits/`,
+    {}
+  );
   return await response.json();
 };
 
