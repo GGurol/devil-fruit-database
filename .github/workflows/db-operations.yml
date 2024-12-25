@@ -26,11 +26,11 @@ permissions:
   actions: read
 
 env:
-PROJECT_ID: devil-fruit-database-id
-GAR_LOCATION: us-east1
-REPOSITORY: devil-fruit-backend
-SERVICE: devil-fruit-database-crs
-REGION: us-east1
+  PROJECT_ID: devil-fruit-database-id
+  GAR_LOCATION: us-east1
+  REPOSITORY: devil-fruit-backend
+  SERVICE: devil-fruit-database-crs
+  REGION: us-east1
 
 jobs:
   database:
