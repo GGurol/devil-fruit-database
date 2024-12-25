@@ -80,6 +80,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4.2.2
 
+      - name: Save SHA
+        run: echo ${{ github.sha }} > image-sha.txt
+
+      - name: Upload SHA
+        uses: actions/upload-artifact@v4
+        with:
+          name: image-sha
+          path: image-sha.txt
+
       - id: "auth"
         name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v2.1.4
