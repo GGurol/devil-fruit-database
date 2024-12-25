@@ -64,5 +64,4 @@ jobs:
             --image "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/${{ env.SERVICE }}:${{ github.sha }}" \
             --region ${{ env.REGION }} \
             --tasks 1 \
-            --command "python" \
-            --args "-m","app.core.db_management","${COMMAND}","--env","${{ github.event.inputs.environment }}"
+            --command "python -m app.core.db_management ${COMMAND} --env ${{ github.event.inputs.environment }}"
