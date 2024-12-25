@@ -18,4 +18,4 @@ COPY ./simple_data.json /app/data/simple_data.json
 # copy docker-compose.yml to the image
 COPY ./docker-compose.yml /app/docker-compose.yml
 
-CMD ["fastapi", "run", "./main.py", "--port", "8000"]
+CMD ["fastapi", "run", "./main.py", "--port", "8080"]
