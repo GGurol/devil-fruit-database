@@ -11,10 +11,10 @@ done
 
 ls -la
 
-cd /app
+# cd /app
 
 # Initialize database
-python -m app.core.db_management force-reset --env prod
+# python -m app.core.db_management force-reset --env prod
 
 # Start FastAPI application
-python -m fastapi app.main:app --host 0.0.0.0 --port 8000
+# python fastapi run ./main.py --port 8000
