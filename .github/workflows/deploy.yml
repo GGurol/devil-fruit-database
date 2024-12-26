@@ -121,7 +121,15 @@ jobs:
           service: ${{ env.SERVICE }}
           region: ${{ env.REGION }}
           image: ${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/${{ env.SERVICE }}:latest
-          flags: "--port=8000 --cpu=1 --memory=512Mi --min-instances=0 --max-instances=1 --allow-unauthenticated --add-volume=[name=crs-db-data, type=cloud-storage, bucket=${{ env.PROJECT_ID }}-db] --add-volume-mount=[volume=crs-db-data,mount-path=/var/lib/postgresql/data]"
+          flags: >-
+            --port=8000 
+            --cpu=1 
+            --memory=512Mi 
+            --min-instances=0 
+            --max-instances=1 
+            --allow-unauthenticated
+            --add-volume=name=db-data,type=cloud-storage,bucket=${{ env.PROJECT_ID }}-db
+            --add-volume-mount=volume=db-data,mount-path=/var/lib/postgresql/data
           env_vars: |
             ENVIRONMENT=prod
             POSTGRES_SERVER=db
