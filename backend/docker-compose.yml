@@ -15,7 +15,7 @@ services:
   db-populate:
     build: 
       context: .
-      target: development
+      target: dev
     command: python -m app.core.db_management force-reset --env ${ENVIRONMENT}
     depends_on:
       - db 
@@ -24,6 +24,7 @@ services:
     environment:
       - ENVIRONMENT=${ENVIRONMENT}
       - PYTHONPATH=../
+      - PGDATA=/var/lib/postgresql/data/pgdata
       - POSTGRES_SERVER=db
       - POSTGRES_PORT=${POSTGRES_PORT}
       - POSTGRES_DB=${POSTGRES_DB}
@@ -43,7 +44,7 @@ services:
   backend:
     build: 
       context: .
-      target: development
+      target: dev
     restart: no
     depends_on:
       - db
@@ -54,6 +55,7 @@ services:
       - DOMAIN=${DOMAIN}
       - ENVIRONMENT=${ENVIRONMENT}
       - PYTHONPATH=../
+      - PGDATA=/var/lib/postgresql/data/pgdata
       - POSTGRES_SERVER=db
       - POSTGRES_PORT=${POSTGRES_PORT}
       - POSTGRES_DB=${POSTGRES_DB}

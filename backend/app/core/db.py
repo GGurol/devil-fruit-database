@@ -36,8 +36,18 @@ def drop_db():
 
 
 def get_session():
-    with Session(engine) as session:
-        yield session
+    try:
+        with Session(engine) as session:
+            print(f"Database connection test - PGDATA: {os.environ.get('PGDATA')}")
+
+            # Test query
+            result = session.exec(text("SELECT 1")).one()
+            print(f"Database connection successful: {result}")
+
+            yield session
+    except Exception as e:
+        print(f"Database connection error: {e}")
+        raise
 
 
 def load_json_data(json_file_path: str):
@@ -76,15 +86,6 @@ def populate_db(json_file_path: str):
     retries = 5
     while retries > 0:
         try:
-            # Debug volume mount
-            pgdata = os.environ.get("PGDATA")
-            print(f"\nDebug Volume Information:")
-            print(f"PGDATA: {pgdata}")
-            print(f"PGDATA exists: {os.path.exists(pgdata)}")
-            print(f"PGDATA contents: {os.listdir(pgdata)}")
-            print(f"Mount points: {os.popen('df -h').read()}")
-            print(f"Directory permissions: {os.popen(f'ls -la {pgdata}').read()}")
-
             init_db()
             break
         except Exception as e:
@@ -175,11 +176,5 @@ def populate_db(json_file_path: str):
 
         print(f"Committing changes to database at: {os.environ.get('PGDATA')}")
         session.commit()
-        with engine.connect() as conn:
-            conn.execute(text("CHECKPOINT;"))
-            conn.execute(text("SELECT pg_sync_data();"))
-
-        print(f"\nVerifying data persistence:")
-        print(f"Database files: {os.listdir(pgdata + '/base')}")
 
         verify_db_population()

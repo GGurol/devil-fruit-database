@@ -1,4 +1,4 @@
-FROM python:3.10 as base
+FROM python:3.10 AS base
 
 # Copy application code
 WORKDIR /app/
@@ -14,12 +14,12 @@ COPY ./app /app
 COPY ./simple_data.json /app/data/simple_data.json
 
 # Development stage
-FROM base as dev
+FROM base AS dev
 
 CMD ["fastapi", "run", "./main.py", "--port", "8000"]
 
 # Production stage
-FROM base as prod
+FROM base AS prod
 
 # Install PostgreSQL
 RUN apt-get update && apt-get install -y postgresql postgresql-contrib
