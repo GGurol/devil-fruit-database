@@ -11,6 +11,9 @@ done
 
 ls -la
 
+echo $PYTHONPATH
+python -c "import sys; print('\n'.join(sys.path))"
+
 # Make script executable
 # chmod +x /app/app/core/db_management.py
 
