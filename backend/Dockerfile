@@ -31,8 +31,4 @@ RUN mkdir -p /var/lib/postgresql/data && chown -R postgres:postgres /var/lib/pos
 COPY db_init.sh /app/db_init.sh
 RUN chmod +x /app/db_init.sh
 
-# db_ops script
-COPY db_ops.sh /app/db_ops.sh
-RUN chmod +x /app/db_ops.sh
-
 CMD ["fastapi", "run", "./main.py", "--port", "8000"]
