@@ -26,10 +26,11 @@ RUN mkdir -p /var/lib/postgresql/data && chown -R postgres:postgres /var/lib/pos
 COPY start.sh /app/start.sh
 RUN chmod +x /app/start.sh
 
+ENV PYTHONPATH=/app
+
 CMD ["fastapi", "run", "./main.py", "--port", "8000"]
 
 # Production stage
 # FROM base as production
-
 
 # CMD ["/app/start.sh"]

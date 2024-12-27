@@ -9,9 +9,13 @@ until pg_isready; do
   sleep 2
 done
 
-cd /app
-
 ls -la
 
+# Make script executable
+# chmod +x /app/app/core/db_management.py
+
+# Run script directly
+# ./app/core/db_management.py force-reset --env prod
+
 # Initialize database
-python -m app.core.db_management force-reset --env prod
+# python -m app.core.db_management force-reset --env prod
