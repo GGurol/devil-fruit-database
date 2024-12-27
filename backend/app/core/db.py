@@ -165,4 +165,4 @@ def populate_db(json_file_path: str):
 
         session.commit()
 
-        return verify_db_population()
+        verify_db_population()
