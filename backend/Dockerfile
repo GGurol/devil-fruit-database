@@ -15,19 +15,21 @@ COPY ./simple_data.json /app/data/simple_data.json
 
 # Development stage
 FROM base as development
-CMD ["fastapi", "run", "./main.py", "--port", "8000"]
 
-# Production stage
-FROM base as production
-
-# # Install PostgreSQL
+# Install PostgreSQL
 RUN apt-get update && apt-get install -y postgresql postgresql-contrib
 
-# # Create data dir
+# Create data directory
 RUN mkdir -p /var/lib/postgresql/data && chown -R postgres:postgres /var/lib/postgresql/data
 
-# # Start script
+# Start script
 COPY start.sh /app/start.sh
 RUN chmod +x /app/start.sh
 
-CMD ["/app/start.sh"]
+CMD ["fastapi", "run", "./main.py", "--port", "8000"]
+
+# Production stage
+# FROM base as production
+
+
+# CMD ["/app/start.sh"]

@@ -146,10 +146,11 @@ jobs:
             --image "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/${{ env.SERVICE }}:latest" \
             --region ${{ env.REGION }} \
             --tasks 1 \
-            --command "service postgresql start && python -m app.core.db_management force-reset --env prod"
+            --set-env-vars "ENVIRONMENT=prod,POSTGRES_SERVER=localhost" \
+            --command "/app/start.sh"
 
           gcloud run jobs execute ${JOB_NAME} --region ${{ env.REGION }} --wait
-      
+
       # - name: Execute DB Management Commands
       #   run: |
       #     docker run --rm -it \
