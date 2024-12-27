@@ -66,6 +66,7 @@ jobs:
             --image "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/${{ env.SERVICE }}:latest" \
             --region ${{ env.REGION }} \
             --tasks 1 \
+            --set-env-vars "ENVIRONMENT=${{ github.event.inputs.environment }},POSTGRES_SERVER=localhost,POSTGRES_PORT=5432,POSTGRES_DB=devil_fruit_db,POSTGRES_USER=${{ secrets.POSTGRES_USER }},POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}" \
             --command "python -m app.core.db_management ${COMMAND} --env ${{ github.event.inputs.environment }}"
 
           # Execute job and wait for completion
