@@ -1,4 +1,5 @@
 import json
+import time
 from uuid import UUID
 
 from sqlmodel import create_engine, SQLModel, Session
@@ -45,7 +46,18 @@ def load_json_data(json_file_path: str):
 
 
 def populate_db(json_file_path: str):
-    init_db()
+    # Wait for database to be ready
+    retries = 5
+    while retries > 0:
+        try:
+            init_db()
+            break
+        except Exception as e:
+            print(f"Database not ready, retrying... {e}")
+            retries -= 1
+            time.sleep(2)
+
+    print("Database ready, populating...")
 
     devil_fruits_data = load_json_data(json_file_path)
 
