@@ -1,7 +1,9 @@
 import json
+import os
 import time
 from uuid import UUID
 
+from sqlalchemy import text
 from sqlmodel import create_engine, SQLModel, Session, select
 
 from app.core.config import settings
@@ -62,7 +64,6 @@ def verify_db_population() -> bool:
             sample = session.exec(select(DevilFruit).limit(1)).first()
             print(f"\nSample Devil Fruit:")
             print(f"ID: {sample.fruit_id}")
-            print(f"Name: {sample.name}")
 
             return True
         except Exception as e:
@@ -75,6 +76,15 @@ def populate_db(json_file_path: str):
     retries = 5
     while retries > 0:
         try:
+            # Debug volume mount
+            pgdata = os.environ.get("PGDATA")
+            print(f"\nDebug Volume Information:")
+            print(f"PGDATA: {pgdata}")
+            print(f"PGDATA exists: {os.path.exists(pgdata)}")
+            print(f"PGDATA contents: {os.listdir(pgdata)}")
+            print(f"Mount points: {os.popen('df -h').read()}")
+            print(f"Directory permissions: {os.popen(f'ls -la {pgdata}').read()}")
+
             init_db()
             break
         except Exception as e:
@@ -163,6 +173,13 @@ def populate_db(json_file_path: str):
                     )
                     session.add(awakening)
 
+        print(f"Committing changes to database at: {os.environ.get('PGDATA')}")
         session.commit()
+        with engine.connect() as conn:
+            conn.execute(text("CHECKPOINT;"))
+            conn.execute(text("SELECT pg_sync_data();"))
+
+        print(f"\nVerifying data persistence:")
+        print(f"Database files: {os.listdir(pgdata + '/base')}")
 
         verify_db_population()
