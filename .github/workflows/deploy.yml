@@ -152,8 +152,8 @@ jobs:
             --image "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/${{ env.SERVICE }}:latest" \
             --region ${{ env.REGION }} \
             --tasks 1 \
-            --add-volume=name=db-data,type=cloud-storage,bucket=${{ env.PROJECT_ID }}-db
-            --add-volume-mount=volume=db-data,mount-path=/var/lib/postgresql/data/pgdata
+            --add-volume="name=db-data,type=cloud-storage,bucket=${{ env.PROJECT_ID }}-db" \
+            --add-volume-mount="volume=db-data,mount-path=/var/lib/postgresql/data/pgdata" \
             --set-env-vars "PYTHONPATH=../,PGDATA=/var/lib/postgresql/data/pgdata,ENVIRONMENT=${{ env.ENVIRONMENT }},POSTGRES_SERVER=${{ env.POSTGRES_SERVER }},POSTGRES_PORT=${{ env.POSTGRES_PORT }},POSTGRES_DB=${{ env.POSTGRES_DB }},POSTGRES_USER=${{ secrets.POSTGRES_USER }},POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}" \
             --command "/app/db_init.sh"
 
