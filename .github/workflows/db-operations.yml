@@ -67,7 +67,8 @@ jobs:
             --region ${{ env.REGION }} \
             --tasks 1 \
             --set-env-vars "PYTHONPATH=../,ENVIRONMENT=${{ github.event.inputs.environment }},POSTGRES_SERVER=localhost,POSTGRES_PORT=5432,POSTGRES_DB=devil_fruit_db,POSTGRES_USER=${{ secrets.POSTGRES_USER }},POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}" \
-            --command "python -m app.core.db_management ${COMMAND} --env ${{ github.event.inputs.environment }}"
+            --command "/app/db_ops.sh" \
+            --args "${{ github.event.inputs.operation }},${{ github.event.inputs.environment }}"
 
           # Execute job and wait for completion
           gcloud run jobs execute ${JOB_NAME} --region ${{ env.REGION }} --wait
