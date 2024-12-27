@@ -9,5 +9,9 @@ until pg_isready; do
   sleep 2
 done
 
+cd /app
+
+ls -la
+
 # Initialize database
 python -m app.core.db_management force-reset --env prod
