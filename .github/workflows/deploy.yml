@@ -133,13 +133,9 @@ jobs:
             --min-instances=0 
             --max-instances=1 
             --allow-unauthenticated
-            --service-account=${{ vars.WIF_SERVICE_ACCOUNT }}
             --add-volume=name=db-data,type=cloud-storage,bucket=${{ env.PROJECT_ID }}-db
             --add-volume-mount=volume=db-data,mount-path=/var/lib/postgresql/data/pgdata
-            --execution-environment=gen2
-            --use-http2
-            --vpc-connector=direct
-            --vpc-egress=all-traffic
+            --service-account=${{ vars.WIF_SERVICE_ACCOUNT }}
           env_vars: |
             PGDATA=/var/lib/postgresql/data/pgdata
             ENVIRONMENT=${{ env.ENVIRONMENT }}
