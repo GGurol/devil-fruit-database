@@ -135,7 +135,6 @@ jobs:
             --allow-unauthenticated
             --add-volume=name=db-data,type=cloud-storage,bucket=${{ env.PROJECT_ID }}-db
             --add-volume-mount=volume=db-data,mount-path=/var/lib/postgresql/data/pgdata
-            --service-account=${{ vars.WIF_SERVICE_ACCOUNT }}
           env_vars: |
             PGDATA=/var/lib/postgresql/data/pgdata
             ENVIRONMENT=${{ env.ENVIRONMENT }}
