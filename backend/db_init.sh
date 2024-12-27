@@ -4,7 +4,7 @@
 export PYTHONPATH=../
 
 # Set PostgreSQL environment variables
-export PGDATA=/var/lib/postgresql/data
+export PGDATA=/var/lib/postgresql/data/pgdata
 export PATH=$PATH:/usr/lib/postgresql/14/bin
 
 # Initialize PostgreSQL data directory if not exists
@@ -12,10 +12,14 @@ if [ ! -d "$PGDATA" ]; then
     mkdir -p "$PGDATA"
     chown postgres:postgres "$PGDATA"
     su - postgres -c "initdb -D $PGDATA"
+    chmod 700 "$PGDATA"
     
     # Configure pg_hba.conf
     echo "host all all all md5" >> "$PGDATA/pg_hba.conf"
     echo "local all all trust" >> "$PGDATA/pg_hba.conf"
+
+    # Update postgresql.conf to use new data directory
+    echo "data_directory = '$PGDATA'" >> "$PGDATA/postgresql.conf"
 fi
 
 # Start PostgreSQL as postgres user

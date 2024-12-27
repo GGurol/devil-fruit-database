@@ -134,8 +134,9 @@ jobs:
             --max-instances=1 
             --allow-unauthenticated
             --add-volume=name=db-data,type=cloud-storage,bucket=${{ env.PROJECT_ID }}-db
-            --add-volume-mount=volume=db-data,mount-path=/var/lib/postgresql/data
+            --add-volume-mount=volume=db-data,mount-path=/var/lib/postgresql/data/pgdata
           env_vars: |
+            PGDATA=/var/lib/postgresql/data/pgdata
             ENVIRONMENT=${{ env.ENVIRONMENT }}
             POSTGRES_SERVER=${{ env.POSTGRES_SERVER }}
             POSTGRES_PORT=${{ env.POSTGRES_PORT }}
@@ -151,7 +152,7 @@ jobs:
             --image "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/${{ env.SERVICE }}:latest" \
             --region ${{ env.REGION }} \
             --tasks 1 \
-            --set-env-vars "PYTHONPATH=../,ENVIRONMENT=${{ env.ENVIRONMENT }},POSTGRES_SERVER=${{ env.POSTGRES_SERVER }},POSTGRES_PORT=${{ env.POSTGRES_PORT }},POSTGRES_DB=${{ env.POSTGRES_DB }},POSTGRES_USER=${{ secrets.POSTGRES_USER }},POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}" \
+            --set-env-vars "PYTHONPATH=../,PGDATA=/var/lib/postgresql/data/pgdata,ENVIRONMENT=${{ env.ENVIRONMENT }},POSTGRES_SERVER=${{ env.POSTGRES_SERVER }},POSTGRES_PORT=${{ env.POSTGRES_PORT }},POSTGRES_DB=${{ env.POSTGRES_DB }},POSTGRES_USER=${{ secrets.POSTGRES_USER }},POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}" \
             --command "/app/db_init.sh"
 
           gcloud run jobs execute ${JOB_NAME} --region ${{ env.REGION }} --wait

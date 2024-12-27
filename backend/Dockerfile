@@ -25,7 +25,7 @@ FROM base as prod
 RUN apt-get update && apt-get install -y postgresql postgresql-contrib
 
 # Create data directory
-RUN mkdir -p /var/lib/postgresql/data && chown -R postgres:postgres /var/lib/postgresql/data
+RUN mkdir -p /var/lib/postgresql/data/pgdata && chown -R postgres:postgres /var/lib/postgresql/data
 
 # db_init script
 COPY db_init.sh /app/db_init.sh

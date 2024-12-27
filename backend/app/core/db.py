@@ -2,7 +2,7 @@ import json
 import time
 from uuid import UUID
 
-from sqlmodel import create_engine, SQLModel, Session
+from sqlmodel import create_engine, SQLModel, Session, select
 
 from app.core.config import settings
 from app.models import (
@@ -49,7 +49,7 @@ def verify_db_population() -> bool:
     with Session(engine) as session:
         try:
             # Check tables exist and have data
-            devil_fruits = session.exec(DevilFruit).count()
+            devil_fruits = session.exec(select(DevilFruit)).all().count()
 
             print(f"\nVerification Results:")
             print(f"Devil Fruits: {devil_fruits}")
@@ -59,7 +59,7 @@ def verify_db_population() -> bool:
                 return False
 
             # Sample check
-            sample = session.exec(DevilFruit).first()
+            sample = session.exec(select(DevilFruit).limit(1)).first()
             print(f"\nSample Devil Fruit:")
             print(f"ID: {sample.fruit_id}")
             print(f"Name: {sample.name}")
