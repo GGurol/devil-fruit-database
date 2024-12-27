@@ -21,7 +21,7 @@ cd /app
 pwd
 ls -la
 
-ls -la /core
+ls -la core
 
 cd ../
 
@@ -38,4 +38,4 @@ python -c "import sys; print('\n'.join(sys.path))"
 # ./app/core/db_management.py force-reset --env prod
 
 # Initialize database
-# python -m app.core.db_management force-reset --env prod
+python -m app.core.db_management force-reset --env prod
