@@ -15,7 +15,15 @@ done
 pwd
 ls -la
 
+
 cd /app
+
+pwd
+ls -la
+
+ls -la /core
+
+cd ../
 
 pwd
 ls -la
