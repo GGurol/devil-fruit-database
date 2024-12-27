@@ -17,8 +17,9 @@ if [ ! -d "$PGDATA" ]; then
     echo "local all all trust" >> "$PGDATA/pg_hba.conf"
 fi
 
-# Start PostgreSQL
-service postgresql start
+# Start PostgreSQL as postgres user
+su - postgres -c "pg_ctl -D $PGDATA -l /var/log/postgresql/postgresql.log start"
+echo "Starting PostgreSQL with user: postgres..."
 
 # Wait for PostgreSQL to be ready
 until pg_isready; do
