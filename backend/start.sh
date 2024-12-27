@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Set Python path to root directory
-export PYTHONPATH=/app
+export PYTHONPATH=../
 
 # Start PostgreSQL
 service postgresql start
@@ -13,23 +13,7 @@ until pg_isready; do
 done
 
 pwd
-ls -la
-
-
-cd /app
-
-pwd
-ls -la
-
-ls -la core
-
-cd ../
-
-pwd
-ls -la
-
-echo $PYTHONPATH
-python -c "import sys; print('\n'.join(sys.path))"
+ls -la 
 
 # Make script executable
 # chmod +x /app/app/core/db_management.py
