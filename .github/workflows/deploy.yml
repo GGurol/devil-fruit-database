@@ -138,6 +138,21 @@ jobs:
             POSTGRES_USER=${{ secrets.POSTGRES_USER }}
             POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
 
+      - name: Execute gcloud command
+        run: gcloud run exec ${{ env.SERVICE }} --command python -m app.core.db_management force-reset
+
+      # - name: Execute DB Management Commands
+      #   run: |
+      #     docker run --rm -it \
+      #       -e ENVIRONMENT=prod \
+      #       -e POSTGRES_SERVER=localhost \
+      #       -e POSTGRES_PORT=5432 \
+      #       -e POSTGRES_DB=devil_fruit_db \
+      #       -e POSTGRES_USER=${{ secrets.POSTGRES_USER }} \
+      #       -e POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} \
+      #       "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/${{ env.SERVICE }}:latest" \
+      #       python -m app.core.db_management force-reset
+
       - name: Show Output
         run:
           echo ${{ steps.deploy.outputs.url }}

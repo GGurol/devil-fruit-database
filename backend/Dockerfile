@@ -27,7 +27,7 @@ RUN apt-get update && apt-get install -y postgresql postgresql-contrib
 RUN mkdir -p /var/lib/postgresql/data && chown -R postgres:postgres /var/lib/postgresql/data
 
 # # Start script
-COPY start.sh ./start.sh
-RUN chmod +x ./start.sh
+COPY start.sh /app/start.sh
+RUN chmod +x /app/start.sh
 
-CMD ["./start.sh"]
+CMD ["/app/start.sh"]
