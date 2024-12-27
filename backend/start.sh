@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Set Python path to root directory
+export PYTHONPATH=/app
+
 # Start PostgreSQL
 service postgresql start
 
@@ -9,6 +12,12 @@ until pg_isready; do
   sleep 2
 done
 
+pwd
+ls -la
+
+cd /app
+
+pwd
 ls -la
 
 echo $PYTHONPATH
