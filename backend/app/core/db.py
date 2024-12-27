@@ -45,6 +45,31 @@ def load_json_data(json_file_path: str):
         return data["devil_fruits"]
 
 
+def verify_db_population() -> bool:
+    with Session(engine) as session:
+        try:
+            # Check tables exist and have data
+            devil_fruits = session.exec(DevilFruit).count()
+
+            print(f"\nVerification Results:")
+            print(f"Devil Fruits: {devil_fruits}")
+
+            if devil_fruits == 0:
+                print("ERROR: Data population failed - empty tables")
+                return False
+
+            # Sample check
+            sample = session.exec(DevilFruit).first()
+            print(f"\nSample Devil Fruit:")
+            print(f"ID: {sample.fruit_id}")
+            print(f"Name: {sample.name}")
+
+            return True
+        except Exception as e:
+            print(f"ERROR: Database verification failed - {str(e)}")
+            return False
+
+
 def populate_db(json_file_path: str):
     # Wait for database to be ready
     retries = 5
@@ -139,3 +164,5 @@ def populate_db(json_file_path: str):
                     session.add(awakening)
 
         session.commit()
+
+        return verify_db_population()
