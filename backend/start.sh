@@ -5,6 +5,7 @@ export PYTHONPATH=../
 
 # Set PostgreSQL environment variables
 export PGDATA=/var/lib/postgresql/data
+export PATH=$PATH:/usr/lib/postgresql/14/bin
 
 # Initialize PostgreSQL data directory if not exists
 if [ ! -d "$PGDATA" ]; then
@@ -18,13 +19,22 @@ if [ ! -d "$PGDATA" ]; then
 fi
 
 # Start PostgreSQL as postgres user
-su - postgres -c "pg_ctl -D $PGDATA -l /var/log/postgresql/postgresql.log start"
+# Start PostgreSQL as postgres user
+service postgresql start || su - postgres -c "pg_ctl -D $PGDATA -l /var/log/postgresql/postgresql.log start"
 echo "Starting PostgreSQL with user: postgres..."
 
-# Wait for PostgreSQL to be ready
+# Wait for PostgreSQL to be ready with timeout
+MAX_RETRIES=10
+RETRIES=0
+
 until pg_isready; do
-  echo "Waiting for PostgreSQL..."
-  sleep 2
+    RETRIES=$((RETRIES + 1))
+    if [ $RETRIES -eq $MAX_RETRIES ]; then
+        echo "ERROR: PostgreSQL failed to start after $MAX_RETRIES attempts"
+        exit 1
+    fi
+    echo "Waiting for PostgreSQL... Attempt $RETRIES of $MAX_RETRIES"
+    sleep 2
 done
 
 # Set postgres user password first
