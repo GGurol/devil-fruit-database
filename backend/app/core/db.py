@@ -49,12 +49,12 @@ def verify_db_population() -> bool:
     with Session(engine) as session:
         try:
             # Check tables exist and have data
-            devil_fruits = session.exec(select(DevilFruit)).all().count()
+            devil_fruits = session.exec(select(DevilFruit)).all()
 
             print(f"\nVerification Results:")
-            print(f"Devil Fruits: {devil_fruits}")
+            print(f"Devil Fruits: {len(devil_fruits)}")
 
-            if devil_fruits == 0:
+            if len(devil_fruits) == 0:
                 print("ERROR: Data population failed - empty tables")
                 return False
 
