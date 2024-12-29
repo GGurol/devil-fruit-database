@@ -153,7 +153,7 @@ jobs:
           JOB_NAME="db-init-${{ github.run_number }}"
 
           gcloud run jobs create ${JOB_NAME} \
-                      --service-account=${{ vars.WIF_SERVICE_ACCOUNT }}
+            --service-account=${{ vars.WIF_SERVICE_ACCOUNT }} \
             --image "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/${{ env.SERVICE }}:latest" \
             --region ${{ env.REGION }} \
             --tasks 1 \
