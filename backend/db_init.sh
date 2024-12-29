@@ -41,7 +41,7 @@ echo "Starting PostgreSQL with user: postgres..."
 MAX_RETRIES=10
 RETRIES=0
 
-until pg_isready; doå
+until pg_isready; do
     RETRIES=$((RETRIES + 1))
     if [ $RETRIES -eq $MAX_RETRIES ]; then
         echo "ERROR: PostgreSQL failed to start after $MAX_RETRIES attempts"
