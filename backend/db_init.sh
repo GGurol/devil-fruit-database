@@ -21,17 +21,18 @@ if [ ! -d "$PGDATA" ]; then
     # Update postgresql.conf to use new data directory
     echo "data_directory = '$PGDATA'" >> "$PGDATA/postgresql.conf"
 
-    # Confirm the new data directory
-    cat "$PGDATA/postgresql.conf" | grep data_directory
-
-    su - postgres -c "psql -c \"SHOW data_directory;\""
-
-    echo "synchronous_commit = on" >> "$PGDATA/postgresql.conf"
-    echo "fsync = on" >> "$PGDATA/postgresql.conf"
-    echo "full_page_writes = on" >> "$PGDATA/postgresql.conf"
-
-    su - postgres -c "psql -c \"SHOW all;\""
 fi
+
+# Confirm the new data directory
+cat "$PGDATA/postgresql.conf" | grep data_directory
+
+su - postgres -c "psql -c \"SHOW data_directory;\""
+
+echo "synchronous_commit = on" >> "$PGDATA/postgresql.conf"
+echo "fsync = on" >> "$PGDATA/postgresql.conf"
+echo "full_page_writes = on" >> "$PGDATA/postgresql.conf"
+
+su - postgres -c "psql -c \"SHOW all;\""
 
 # Start PostgreSQL as postgres user
 service postgresql start || su - postgres -c "pg_ctl -D $PGDATA -l /var/log/postgresql/postgresql.log start"
