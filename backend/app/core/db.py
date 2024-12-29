@@ -36,18 +36,8 @@ def drop_db():
 
 
 def get_session():
-    try:
-        with Session(engine) as session:
-            print(f"Database connection test - PGDATA: {os.environ.get('PGDATA')}")
-
-            # Test query
-            result = session.exec(text("SELECT 1")).one()
-            print(f"Database connection successful: {result}")
-
-            yield session
-    except Exception as e:
-        print(f"Database connection error: {e}")
-        raise
+    with Session(engine) as session:
+        yield session
 
 
 def load_json_data(json_file_path: str):

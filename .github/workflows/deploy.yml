@@ -8,6 +8,8 @@ on:
       - "frontend/**"
       - ".github/workflows/deploy.yml"
   pull_request:
+    # TODO: Change this so that it runs when the PR is opened or updated; types: [opened, synchronize]
+    # rather than build and not deploying on PRs, perform tests to ensure that the code is working as expected
     branches: [main]
     paths:
       - "backend/**"
@@ -31,7 +33,6 @@ env:
   POSTGRES_SERVER: localhost
   POSTGRES_PORT: 5432
   POSTGRES_DB: devil_fruit_db
-
 
 jobs:
   build:
@@ -137,7 +138,7 @@ jobs:
             --add-volume-mount=volume=db-data,mount-path=/var/lib/postgresql/data/pgdata
             --service-account=${{ vars.WIF_SERVICE_ACCOUNT }}
             --execution-environment=gen2 
-            --use-http2 
+            --use-http2
           env_vars: |
             PGDATA=/var/lib/postgresql/data/pgdata
             ENVIRONMENT=${{ env.ENVIRONMENT }}
@@ -150,8 +151,9 @@ jobs:
       - name: Initialize Database
         run: |
           JOB_NAME="db-init-${{ github.run_number }}"
-          
+
           gcloud run jobs create ${JOB_NAME} \
+            --service-account=${{ vars.WIF_SERVICE_ACCOUNT }}
             --image "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/${{ env.SERVICE }}:latest" \
             --region ${{ env.REGION }} \
             --tasks 1 \
@@ -161,6 +163,3 @@ jobs:
             --command "/app/db_init.sh"
 
           gcloud run jobs execute ${JOB_NAME} --region ${{ env.REGION }} --wait
-
-
-

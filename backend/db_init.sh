@@ -20,9 +20,19 @@ if [ ! -d "$PGDATA" ]; then
 
     # Update postgresql.conf to use new data directory
     echo "data_directory = '$PGDATA'" >> "$PGDATA/postgresql.conf"
+
+    # Confirm the new data directory
+    cat "$PGDATA/postgresql.conf" | grep data_directory
+
+    su - postgres -c "psql -c \"SHOW data_directory;\""
+
+    echo "synchronous_commit = on" >> "$PGDATA/postgresql.conf"
+    echo "fsync = on" >> "$PGDATA/postgresql.conf"
+    echo "full_page_writes = on" >> "$PGDATA/postgresql.conf"
+
+    su - postgres -c "psql -c \"SHOW all;\""
 fi
 
-# Start PostgreSQL as postgres user
 # Start PostgreSQL as postgres user
 service postgresql start || su - postgres -c "pg_ctl -D $PGDATA -l /var/log/postgresql/postgresql.log start"
 echo "Starting PostgreSQL with user: postgres..."
@@ -31,7 +41,7 @@ echo "Starting PostgreSQL with user: postgres..."
 MAX_RETRIES=10
 RETRIES=0
 
-until pg_isready; do
+until pg_isready; doå
     RETRIES=$((RETRIES + 1))
     if [ $RETRIES -eq $MAX_RETRIES ]; then
         echo "ERROR: PostgreSQL failed to start after $MAX_RETRIES attempts"
@@ -86,12 +96,6 @@ echo "SUCCESS: Connected with user $POSTGRES_USER"
 
 # Initialize database
 python -m app.core.db_management force-reset --env $ENVIRONMENT
-
-# Verify tables exist
-# if ! PGPASSWORD=$POSTGRES_PASSWORD psql -h localhost -U $POSTGRES_USER -d $POSTGRES_DB -c '\dt' | grep -q 'devil_fruit'; then
-#     echo "ERROR: Tables not created"
-#     exit 1
-# fi
 
 echo "Database setup completed successfully!"
 echo "Service running on port 8000"
