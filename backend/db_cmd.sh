@@ -8,7 +8,6 @@ echo "Initializing database in environment: $ENVIRONMENT"
 echo "Connection: $GCP_SQL_INSTANCE_CONNECTION_NAME"
 echo "Database: $POSTGRES_DB"
 echo "User: $POSTGRES_USER"
-echo "Password: $POSTGRES_PASSWORD"
 
 echo "Current directory: $(pwd)"
 

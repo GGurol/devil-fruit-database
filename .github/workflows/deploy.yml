@@ -130,7 +130,7 @@ jobs:
             --tasks 1 \
             --service-account=${{ vars.WIF_SERVICE_ACCOUNT }} \
             --set-cloudsql-instances=${{ env.PROJECT_ID }}:us-east1:devil-fruit-database-psql-id \
-            --set-env-vars="PYTHONPATH=../,ENVIRONMENT=${{ env.ENVIRONMENT }},GCP_SQL_INSTANCE_CONNECTION_NAME=${{ env.PROJECT_ID }}:us-east1:devil-fruit-database-psql-id,POSTGRES_SERVER=${{ env.POSTGRES_SERVER }}",POSTGRES_DB=${{ env.POSTGRES_DB }},POSTGRES_USER=${{ secrets.POSTGRES_USER }},POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} \
+            --set-env-vars="PYTHONPATH=../,ENVIRONMENT=${{ env.ENVIRONMENT }},GCP_SQL_INSTANCE_CONNECTION_NAME=${{ env.PROJECT_ID }}:us-east1:devil-fruit-database-psql-id,POSTGRES_SERVER=${{ env.POSTGRES_SERVER }}",POSTGRES_DB=${{ env.POSTGRES_DB }},POSTGRES_USER=${{ vars.POSTGRES_USER }},POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} \
             --command="/app/db_cmd.sh"
             
           gcloud run jobs execute ${JOB_NAME} --region ${{ env.REGION }} --wait
@@ -160,5 +160,5 @@ jobs:
             POSTGRES_SERVER=${{ env.POSTGRES_SERVER }}
             POSTGRES_PORT=${{ env.POSTGRES_PORT }}
             POSTGRES_DB=${{ env.POSTGRES_DB }}
-            POSTGRES_USER=${{ secrets.POSTGRES_USER }}
+            POSTGRES_USER=${{ vars.POSTGRES_USER }}
             POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
