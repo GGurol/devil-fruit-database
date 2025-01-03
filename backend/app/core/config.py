@@ -47,6 +47,8 @@ class Settings(BaseSettings):
                 drivername="postgresql+pg8000",
                 username=self.POSTGRES_USER,
                 password=self.POSTGRES_PASSWORD,
+                host=self.POSTGRES_SERVER,
+                port=self.POSTGRES_PORT,
                 database=self.POSTGRES_DB,
                 query={
                     "unix_sock": f"/cloudsql/{self.GCP_SQL_INSTANCE_CONNECTION_NAME}/.s.PGSQL.5432"

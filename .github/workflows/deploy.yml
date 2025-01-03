@@ -149,7 +149,7 @@ jobs:
             --min-instances=0 
             --max-instances=1 
             --allow-unauthenticated
-            --set-cloudsql-instances=${{ env.PROJECT_ID }}:us-east1:devil-fruit-database-psql-id
+            --add-cloudsql-instances=${{ env.PROJECT_ID }}:us-east1:devil-fruit-database-psql-id
             --service-account=${{ vars.WIF_SERVICE_ACCOUNT }}
             --execution-environment=gen2 
             --use-http2
