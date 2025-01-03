@@ -22,14 +22,8 @@ CMD ["fastapi", "run", "./main.py", "--port", "8000"]
 # Production stage
 FROM base AS prod
 
-# Install PostgreSQL
-RUN apt-get update && apt-get install -y postgresql postgresql-contrib
-
-# Create data directory
-RUN mkdir -p /var/lib/postgresql/data/pgdata && chown -R postgres:postgres /var/lib/postgresql/data
-
-# db_init script
-COPY db_init.sh /app/db_init.sh
-RUN chmod +x /app/db_init.sh
+# db_cmd script
+COPY db_cmd.sh /app/db_cmd.sh
+RUN chmod +x /app/db_cmd.sh
 
 CMD ["fastapi", "run", "./main.py", "--port", "8000"]
