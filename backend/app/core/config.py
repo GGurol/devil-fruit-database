@@ -3,6 +3,7 @@ from functools import lru_cache
 from pydantic import PostgresDsn, computed_field, model_validator
 from pydantic_core import MultiHostUrl
 from pydantic_settings import BaseSettings, SettingsConfigDict
+from sqlalchemy import URL
 
 from app.core.constants import Environment
 
@@ -34,9 +35,24 @@ class Settings(BaseSettings):
     POSTGRES_PASSWORD: str = ""
     POSTGRES_DB: str = ""
 
+    GCP_SQL_INSTANCE_CONNECTION_NAME: str = (
+        "devil-fruit-database-id:us-east1:devil-fruit-database-psql-id"
+    )
+
     @computed_field
     @property
     def SQLALCHEMY_DATABASE_URI(self) -> PostgresDsn:
+        if self.ENVIRONMENT.is_prod:
+            return URL.create(
+                drivername="postgresql+pg8000",
+                username=self.POSTGRES_USER,
+                password=self.POSTGRES_PASSWORD,
+                database=self.POSTGRES_DB,
+                query={
+                    "unix_sock": f"/cloudsql/{self.INSTANCE_CONNECTION_NAME}/.s.PGSQL.5432"
+                },
+            )
+
         return MultiHostUrl.build(
             scheme="postgresql",
             username=self.POSTGRES_USER,
