@@ -49,7 +49,7 @@ class Settings(BaseSettings):
                 password=self.POSTGRES_PASSWORD,
                 database=self.POSTGRES_DB,
                 query={
-                    "unix_sock": f"/cloudsql/{self.INSTANCE_CONNECTION_NAME}/.s.PGSQL.5432"
+                    "unix_sock": f"/cloudsql/{self.GCP_SQL_INSTANCE_CONNECTION_NAME}/.s.PGSQL.5432"
                 },
             )
 
