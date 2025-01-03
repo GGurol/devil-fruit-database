@@ -32,7 +32,7 @@ env:
   ENVIRONMENT: prod
   POSTGRES_SERVER: localhost
   POSTGRES_PORT: 5432
-  POSTGRES_DB: devil_fruit_db
+  POSTGRES_DB: devil-fruit-database-psql-db
 
 jobs:
   build:
