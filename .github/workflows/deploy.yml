@@ -152,7 +152,6 @@ jobs:
             --add-cloudsql-instances=${{ env.PROJECT_ID }}:us-east1:devil-fruit-database-psql-id
             --service-account=${{ vars.WIF_SERVICE_ACCOUNT }}
             --execution-environment=gen2 
-            --use-http2
           env_vars: |
             PGDATA=/var/lib/postgresql/data/pgdata
             GCP_SQL_INSTANCE_CONNECTION_NAME=${{ env.PROJECT_ID }}:us-east1:devil-fruit-database-psql-id
