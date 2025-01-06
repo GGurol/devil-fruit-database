@@ -3,8 +3,9 @@ import os
 import time
 from uuid import UUID
 
-from sqlalchemy import text
+from sqlalchemy import Engine
 from sqlmodel import create_engine, SQLModel, Session, select
+from google.cloud.sql.connector import Connector
 
 from app.core.config import settings
 from app.models import (
@@ -17,14 +18,44 @@ from app.models import (
 )
 
 
+# helper function to return SQLAlchemy connection pool
+def init_connection_pool(connector: Connector) -> Engine:
+    # Python Connector database connection function
+    def getconn():
+        conn = connector.connect(
+            settings.GCP_SQL_INSTANCE_CONNECTION_NAME,
+            "pg8000",
+            user=settings.POSTGRES_USER,
+            password=settings.POSTGRES_PASSWORD,
+            db=settings.POSTGRES_DB,
+            ip_type="public",
+        )
+        return conn
+
+    SQLALCHEMY_DATABASE_URI = f"postgresql+pg8000://"
+
+    engine = create_engine(SQLALCHEMY_DATABASE_URI, creator=getconn)
+    return engine
+
+
+# Initialize the Cloud SQL Python Connector
+connector = Connector()
+
+
 def get_engine_config():
     return {
         "echo": settings.ENVIRONMENT.is_dev,
     }
 
 
-# TODO: remove echo for prod, just for testing and learning purposes
-engine = create_engine(str(settings.SQLALCHEMY_DATABASE_URI), **get_engine_config())
+def set_engine():
+    if settings.ENVIRONMENT.is_prod:
+        return init_connection_pool(connector)
+
+    return create_engine(str(settings.SQLALCHEMY_DATABASE_URI), **get_engine_config())
+
+
+engine = set_engine()
 
 
 def init_db():
