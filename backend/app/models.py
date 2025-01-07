@@ -12,22 +12,21 @@ class FruitTypeEnum(str, Enum):
     MYTHICAL_ZOAN = "Mythical Zoan"
 
 
-class NameBase(SQLModel):
+class RomanizedName(SQLModel, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
     name: str = Field(index=True)
     is_spoiler: bool = False
 
     fruit_id: UUID = Field(foreign_key="devilfruit.fruit_id")
-
-
-class RomanizedName(NameBase, table=True):
-    id: Optional[int] = Field(default=None, primary_key=True)
-
     devil_fruit: "DevilFruit" = Relationship(back_populates="romanized_names")
 
 
-class TranslatedName(NameBase, table=True):
+class TranslatedName(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
+    name: str = Field(index=True)
+    is_spoiler: bool = False
 
+    fruit_id: UUID = Field(foreign_key="devilfruit.fruit_id")
     devil_fruit: "DevilFruit" = Relationship(back_populates="translated_names")
 
 
@@ -62,13 +61,7 @@ class User(SQLModel, table=True):
     devil_fruit: "DevilFruit" = Relationship(back_populates="users")
 
 
-class DevilFruitBase(SQLModel):
-    ability: str
-    awakened_ability: Optional[str] = None
-    is_canon: bool = True
-
-
-class DevilFruit(DevilFruitBase, table=True):
+class DevilFruit(SQLModel, table=True):
     fruit_id: UUID = Field(default=None, primary_key=True)
 
     romanized_names: list["RomanizedName"] = Relationship(back_populates="devil_fruit")
@@ -76,10 +69,16 @@ class DevilFruit(DevilFruitBase, table=True):
         back_populates="devil_fruit"
     )
     types: list["FruitTypeAssociation"] = Relationship(back_populates="devil_fruit")
+
+    ability: str
+    awakened_ability: Optional[str] = None
+
     users: list["User"] = Relationship(back_populates="devil_fruit")
 
+    is_canon: bool = True
 
-class DevilFruitSimple(DevilFruitBase):
+
+class DevilFruitSimple(SQLModel):
     fruit_id: Optional[UUID] = None
     names: Optional[dict] = None
     types: Optional[set] = None
@@ -87,27 +86,6 @@ class DevilFruitSimple(DevilFruitBase):
     awakened_ability: Optional[str] = None
     users: Optional[dict] = None
     is_canon: Optional[bool] = None
-
-    @classmethod
-    def sort_fields(cls, result: "DevilFruitSimple") -> OrderedDict:
-        ordered_fields = [
-            "fruit_id",
-            "names",
-            "types",
-            "ability",
-            "awakened_ability",
-            "users",
-            "is_canon",
-        ]
-
-        sorted_result = OrderedDict()
-        for field in ordered_fields:
-            if field in result:
-                sorted_result[field] = result[field]
-
-        print(sorted_result)
-
-        return sorted_result
 
     @classmethod
     def from_devil_fruit(
@@ -193,11 +171,19 @@ class UserRead(SQLModel):
     awakening: Optional[UserAwakeningRead] = None
 
 
-# relationship models
-class DevilFruitWithRelationships(DevilFruitBase):
+class DevilFruitRead(SQLModel):
     fruit_id: UUID
 
     romanized_names: list[RomanizedNameRead] = []
     translated_names: list[TranslatedNameRead] = []
     types: list[FruitTypeRead] = []
+
+    ability: str
+    awakened_ability: Optional[str] = None
+
     users: list[UserRead] = []
+
+    is_canon: bool = True
+
+
+# relationship models

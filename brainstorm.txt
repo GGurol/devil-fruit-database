@@ -1,8 +1,7 @@
 backend:
 
-> fruit
+> devil fruit
     > id: UUID, primary key
-
     > names: { 
         romanized_names: [{
             name: str

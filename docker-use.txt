@@ -1,8 +1,0 @@
-# Normal startup (without db-populate)
-docker compose up
-
-# With database setup + population
-docker compose --profile populate up
-
-# With database setup + population + build
-docker compose --profile populate up --build

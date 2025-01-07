@@ -1,8 +1,8 @@
 import json
 import os
 import time
-from uuid import UUID
 
+from uuid import UUID
 from sqlalchemy import Engine
 from sqlmodel import create_engine, SQLModel, Session, select
 from google.cloud.sql.connector import Connector
@@ -38,10 +38,6 @@ def init_connection_pool(connector: Connector) -> Engine:
     return engine
 
 
-# Initialize the Cloud SQL Python Connector
-connector = Connector()
-
-
 def get_engine_config():
     return {
         "echo": settings.ENVIRONMENT.is_dev,
@@ -50,6 +46,9 @@ def get_engine_config():
 
 def set_engine():
     if settings.ENVIRONMENT.is_prod:
+        # Initialize the Cloud SQL Python Connector when using prod environment
+        connector = Connector()
+
         return init_connection_pool(connector)
 
     return create_engine(str(settings.SQLALCHEMY_DATABASE_URI), **get_engine_config())
@@ -195,7 +194,6 @@ def populate_db(json_file_path: str):
                     )
                     session.add(awakening)
 
-        print(f"Committing changes to database at: {os.environ.get('PGDATA')}")
         session.commit()
 
         verify_db_population()

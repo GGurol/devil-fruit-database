@@ -6,7 +6,7 @@ from sqlmodel import Session, or_, select
 from app.models import (
     DevilFruit,
     DevilFruitSimple,
-    DevilFruitWithRelationships,
+    DevilFruitRead,
     FruitTypeAssociation,
     RomanizedName,
     TranslatedName,
@@ -21,7 +21,7 @@ router = APIRouter(tags=["Devil Fruits"])
 # devil fruit routes
 @router.get(
     "/",
-    response_model=list[DevilFruitWithRelationships],
+    response_model=list[DevilFruitRead],
 )
 def read_devil_fruits(
     *,
@@ -83,7 +83,7 @@ def read_devil_fruits_simple(
 
 @router.get(
     "/fruit-id/{fruit_id}",
-    response_model=DevilFruitWithRelationships,
+    response_model=DevilFruitRead,
     tags=["Devil Fruits"],
 )
 def read_devil_fruit_by_id(*, session: Session = Depends(get_session), fruit_id: UUID):
@@ -96,7 +96,7 @@ def read_devil_fruit_by_id(*, session: Session = Depends(get_session), fruit_id:
 
 @router.get(
     "/name/{name}",
-    response_model=DevilFruitWithRelationships,
+    response_model=DevilFruitRead,
 )
 def read_devil_fruit_by_name(*, session: Session = Depends(get_session), name: str):
     devil_fruit = session.exec(
@@ -113,7 +113,7 @@ def read_devil_fruit_by_name(*, session: Session = Depends(get_session), name: s
 
 @router.get(
     "/user/{user}",
-    response_model=DevilFruitWithRelationships,
+    response_model=DevilFruitRead,
 )
 def read_devil_fruit_by_user(*, session: Session = Depends(get_session), user: str):
     devil_fruit = session.exec(
@@ -149,7 +149,7 @@ def read_devil_fruits_by_type(
 
 @router.get(
     "/search/{search_term}",
-    response_model=list[DevilFruitWithRelationships],
+    response_model=list[DevilFruitRead],
 )
 def search_devils_fruits(
     *,
