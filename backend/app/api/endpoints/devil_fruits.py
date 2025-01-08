@@ -7,6 +7,7 @@ from app.models import (
     DevilFruit,
     DevilFruitSimple,
     DevilFruitRead,
+    FieldSelection,
     FruitTypeAssociation,
     RomanizedName,
     TranslatedName,
@@ -34,7 +35,9 @@ def read_devil_fruits(
     if not devil_fruits:
         raise HTTPException(status_code=404, detail="No devil fruits found")
 
-    return devil_fruits
+    orm_devil_fruits = [DevilFruitRead.from_orm(df) for df in devil_fruits]
+
+    return orm_devil_fruits
 
 
 @router.get(
@@ -52,11 +55,11 @@ def read_devil_fruits_simple(
         default=True, description="Include a romanized and translated name"
     ),
     include_abilities: bool = Query(
-        default=False, description="Include fruits ablitites"
+        default=True, description="Include fruits ablitites"
     ),
-    include_type: bool = Query(default=False, description="Include the fruit type"),
+    include_type: bool = Query(default=True, description="Include the fruit type"),
     include_user: bool = Query(
-        default=False, description="Include current user of fruit"
+        default=True, description="Include current user of fruit"
     ),
     offset: int = Query(default=0, ge=0),
     limit: int = Query(default=100, le=100),
@@ -66,16 +69,17 @@ def read_devil_fruits_simple(
     if not devil_fruits:
         raise HTTPException(status_code=404, detail="No devil fruits found")
 
+    fields = FieldSelection(
+        include_metadata=include_metadata,
+        include_names=include_names,
+        include_types=include_type,
+        include_abilities=include_abilities,
+        include_users=include_user,
+    )
+
     simple_fruits = [
-        DevilFruitSimple.from_devil_fruit(
-            df,
-            include_metadata=include_metadata,
-            include_names=include_names,
-            include_abilites=include_abilities,
-            include_user=include_user,
-            include_type=include_type,
-        )
-        for df in devil_fruits
+        DevilFruitSimple.from_devil_fruit(devil_fruit, fields=fields)
+        for devil_fruit in devil_fruits
     ]
 
     return simple_fruits
@@ -91,7 +95,9 @@ def read_devil_fruit_by_id(*, session: Session = Depends(get_session), fruit_id:
     if not devil_fruit:
         raise HTTPException(status_code=404, detail="Devil fruit not found")
 
-    return devil_fruit
+    orm_devil_fruit = DevilFruitRead.from_orm(devil_fruit)
+
+    return orm_devil_fruit
 
 
 @router.get(
@@ -108,7 +114,9 @@ def read_devil_fruit_by_name(*, session: Session = Depends(get_session), name: s
     if not devil_fruit:
         raise HTTPException(status_code=404, detail="Devil fruit not found")
 
-    return devil_fruit
+    orm_devil_fruit = DevilFruitRead.from_orm(devil_fruit)
+
+    return orm_devil_fruit
 
 
 @router.get(
@@ -122,12 +130,14 @@ def read_devil_fruit_by_user(*, session: Session = Depends(get_session), user: s
     if not devil_fruit:
         raise HTTPException(status_code=404, detail="Devil fruit not found")
 
-    return devil_fruit
+    orm_devil_fruit = DevilFruitRead.from_orm(devil_fruit)
+
+    return orm_devil_fruit
 
 
 @router.get(
     "/type/{fruit_type}",
-    response_model=list[DevilFruitSimple],
+    response_model=list[DevilFruitRead],
 )
 def read_devil_fruits_by_type(
     *, session: Session = Depends(get_session), fruit_type: str
@@ -142,9 +152,9 @@ def read_devil_fruits_by_type(
     if not devil_fruits:
         raise HTTPException(status_code=404, detail="Devil fruits with type not found")
 
-    simple_fruits = [DevilFruitSimple.from_devil_fruit(df) for df in devil_fruits]
+    orm_devil_fruits = [DevilFruitRead.from_orm(df) for df in devil_fruits]
 
-    return simple_fruits
+    return orm_devil_fruits
 
 
 @router.get(
@@ -183,7 +193,9 @@ def search_devils_fruits(
             status_code=404, detail=f"No devil fruits found matching '{search_term}'"
         )
 
-    return devil_fruits
+    orm_devil_fruits = [DevilFruitRead.from_orm(df) for df in devil_fruits]
+
+    return orm_devil_fruits
 
 
 # TODO: Improve devil fruit create model to include relationships
