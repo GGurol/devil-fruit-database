@@ -39,7 +39,7 @@ const Table: FC<ITableProps> = ({ $alternate = false }) => {
                 <TableRow key={index}>
                   <TableData>
                     <DataList>
-                      {fruit.romanized_names.map((rname, rnameIndex) => (
+                      {fruit.names.romanized_names.map((rname, rnameIndex) => (
                         <DataItem key={rnameIndex}>
                           <DataText
                             $showSpoilers={showSpoilers}
@@ -54,7 +54,7 @@ const Table: FC<ITableProps> = ({ $alternate = false }) => {
                   </TableData>
                   <TableData>
                     <DataList>
-                      {fruit.translated_names.map((tname, tnameIndex) => (
+                      {fruit.names.translated_names.map((tname, tnameIndex) => (
                         <DataItem key={tnameIndex}>
                           <DataText
                             $showSpoilers={showSpoilers}
@@ -85,35 +85,30 @@ const Table: FC<ITableProps> = ({ $alternate = false }) => {
                   <TableData>{fruit.ability}</TableData>
 
                   <TableData>
-                    {fruit.users ? (
+                    {fruit.users.current_users ? (
                       <DataList>
-                        {fruit.users.filter((cuser) => cuser.is_current)
-                          .length > 0
-                          ? fruit.users
-                              .filter((cuser) => cuser.is_current)
-                              .map((cuser, cuserIndex) => (
-                                <DataItem key={cuserIndex}>
-                                  <DataText
-                                    $showSpoilers={showSpoilers}
-                                    $useSpoilerBlock={cuser.is_spoiler}
-                                    $awakening={{
-                                      $isAwakend: cuser.awakening.is_awakened,
-                                      $isSpoiler: cuser.awakening.is_spoiler,
-                                    }}
-                                    $isArtificial={cuser.is_artificial}
-                                    title={
-                                      cuser.awakening.is_awakened
-                                        ? "Awakened"
-                                        : cuser.is_artificial
-                                        ? "Artificial"
-                                        : ""
-                                    }
-                                  >
-                                    {cuser.user}
-                                  </DataText>
-                                </DataItem>
-                              ))
-                          : "None"}
+                        {fruit.users.current_users.map((cuser, cuserIndex) => (
+                          <DataItem key={cuserIndex}>
+                            <DataText
+                              $showSpoilers={showSpoilers}
+                              $useSpoilerBlock={cuser.is_spoiler}
+                              $awakening={{
+                                $isAwakend: cuser.awakening.is_awakened,
+                                $isSpoiler: cuser.awakening.is_spoiler,
+                              }}
+                              $isArtificial={cuser.is_artificial}
+                              title={
+                                cuser.awakening.is_awakened
+                                  ? "Awakened"
+                                  : cuser.is_artificial
+                                  ? "Artificial"
+                                  : ""
+                              }
+                            >
+                              {cuser.user}
+                            </DataText>
+                          </DataItem>
+                        ))}
                       </DataList>
                     ) : (
                       "None"
@@ -121,35 +116,25 @@ const Table: FC<ITableProps> = ({ $alternate = false }) => {
                   </TableData>
 
                   <TableData>
-                    {fruit.users ? (
+                    {fruit.users.previous_users ? (
                       <DataList>
-                        {fruit.users.filter((puser) => !puser.is_current)
-                          .length > 0
-                          ? fruit.users
-                              .filter((puser) => !puser.is_current)
-                              .map((puser, puserIndex) => (
-                                <DataItem key={puserIndex}>
-                                  <DataText
-                                    $showSpoilers={showSpoilers}
-                                    $useSpoilerBlock={puser.is_spoiler}
-                                    $awakening={{
-                                      $isAwakend: puser.awakening.is_awakened,
-                                      $isSpoiler: puser.awakening.is_spoiler,
-                                    }}
-                                    $isArtificial={puser.is_artificial}
-                                    title={
-                                      puser.awakening.is_awakened
-                                        ? "Awakened"
-                                        : puser.is_artificial
-                                        ? "Artificial"
-                                        : ""
-                                    }
-                                  >
-                                    {puser.user}
-                                  </DataText>
-                                </DataItem>
-                              ))
-                          : "None"}
+                        {fruit.users.previous_users.map((puser, puserIndex) => (
+                          <DataItem key={puserIndex}>
+                            <DataText
+                              $showSpoilers={showSpoilers}
+                              $useSpoilerBlock={puser.is_spoiler}
+                              $awakening={{
+                                $isAwakend: puser.awakening.is_awakened,
+                                $isSpoiler: puser.awakening.is_spoiler,
+                              }}
+                              title={
+                                puser.awakening.is_awakened ? "Awakened" : ""
+                              }
+                            >
+                              {puser.user}
+                            </DataText>
+                          </DataItem>
+                        ))}
                       </DataList>
                     ) : (
                       "None"

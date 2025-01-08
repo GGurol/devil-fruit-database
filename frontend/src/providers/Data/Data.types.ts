@@ -32,20 +32,31 @@ export interface IFruitData {
 }
 export interface INewFruitData {
   fruit_id: string;
-  romanized_names: { name: string; is_spoiler: boolean }[];
-  translated_names: { name: string; is_spoiler: boolean }[];
+  names: {
+    romanized_names: { name: string; is_spoiler: boolean }[];
+    translated_names: { name: string; is_spoiler: boolean }[];
+  };
   types: { type: string; is_spoiler: boolean }[];
   ability: string;
   awakened_ability: string | null;
-  users:
-    | {
-        user: string;
-        is_artificial: boolean;
-        is_current: boolean;
-        is_spoiler: boolean;
-        awakening: { is_awakened: boolean; is_spoiler: boolean };
-      }[]
-    | null;
+  users: {
+    current_users:
+      | {
+          user: string;
+          is_artificial: boolean;
+          is_spoiler: boolean;
+          awakening: { is_awakened: boolean; is_spoiler: boolean };
+        }[]
+      | null;
+    previous_users:
+      | {
+          user: string;
+          is_artificial: boolean;
+          is_spoiler: boolean;
+          awakening: { is_awakened: boolean; is_spoiler: boolean };
+        }[]
+      | null;
+  };
   is_canon: boolean;
 }
 
