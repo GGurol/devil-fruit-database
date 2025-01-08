@@ -12,7 +12,7 @@ import {
 import { HeaderExtraSmall } from "../Header/Header.styled";
 import { useDataContext } from "../../providers/Data/Data.context";
 import { useModalContext } from "../../providers/Modal/Modal.context";
-import { useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 const Export = () => {
   const theme = useTheme();
@@ -25,7 +25,17 @@ const Export = () => {
     return JSON.stringify(filteredFruitData, null, 2);
   }, [filteredFruitData]);
 
-  const handleCopyClick = () => {
+  const codeBlockRef = useRef<HTMLPreElement>(null);
+
+  useEffect(() => {
+    document.addEventListener("keydown", handleKeydown);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeydown);
+    };
+  }, []);
+
+  const handleCopyClick = useCallback(() => {
     navigator.clipboard
       .writeText(code)
       .then(() => {
@@ -36,13 +46,13 @@ const Export = () => {
         }, 2500);
       })
       .catch((err) => {
+        console.error("Failed to copy:", err);
+
         setCopied(false);
-
-        console.error(err);
       });
-  };
+  }, [code]);
 
-  const handleDownloadClick = () => {
+  const handleDownloadClick = useCallback(() => {
     const file = new Blob([code], { type: "application/json" });
 
     // using the blob URL to create a download link
@@ -63,7 +73,35 @@ const Export = () => {
 
     // remove the link element from the body
     URL.revokeObjectURL(url);
-  };
+  }, [code]);
+
+  const handleKeydown = useCallback(
+    (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        closeModal();
+      }
+
+      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "a") {
+        const codeBlock = codeBlockRef.current;
+
+        if (codeBlock) {
+          event.preventDefault();
+
+          const selection = window.getSelection();
+          const range = document.createRange();
+
+          range.selectNodeContents(codeBlock);
+          selection?.removeAllRanges();
+          selection?.addRange(range);
+        }
+      }
+
+      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "c") {
+        handleCopyClick();
+      }
+    },
+    [closeModal, handleCopyClick]
+  );
 
   return (
     <ExportContainer
@@ -85,7 +123,7 @@ const Export = () => {
         />
       </ExportHeaderWrapper>
       <ExportCodeBlock>
-        <CodeBlock>{code}</CodeBlock>
+        <CodeBlock ref={codeBlockRef}>{code}</CodeBlock>
       </ExportCodeBlock>
       <ExportActionsWrapper>
         <Button
