@@ -9,7 +9,3 @@ htmlcov
 
 # Dotenvs
 .env
-
-# Database
-data/
-data/*
