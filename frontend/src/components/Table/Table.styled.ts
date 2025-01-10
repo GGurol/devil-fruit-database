@@ -53,7 +53,23 @@ export const TableContainer = styled.div`
   }
 `;
 
-const TableWrapper = styled.table`
+export const EmptyContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+`;
+
+export const EmptyContent = styled.div``;
+
+export const EmptyBodyText = styled.p`
+  ${({ theme }) => theme.bodySmall}
+  color: ${({ theme }) => theme.commonForeground["fg-disabled"]};
+`;
+
+export const TableWrapper = styled.table`
   width: 100%;
 
   border-collapse: collapse;
@@ -171,5 +187,3 @@ export const DataText = styled.p<IDataTextProps>`
     ${$useSpoilerBlock && spoilerBlockStyles($showSpoilers, theme)};
   `}
 `;
-
-export default TableWrapper;

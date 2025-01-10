@@ -11,8 +11,8 @@ RUN pip install --no-cache-dir --upgrade -r /app/requirements.txt
 COPY ./app /app
 
 # copy data files to data dir
-COPY ./simple_data.json /app/data/simple_data.json
-COPY ./dfa-devil_fruits.json /app/data/dfa-devil_fruits.json
+COPY ./app/data/simple_data.json /app/data/simple_data.json
+COPY ./app/data/dfa-devil_fruits.json /app/data/dfa-devil_fruits.json
 
 # Development stage
 FROM base AS dev

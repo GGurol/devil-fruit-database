@@ -1,4 +1,5 @@
 import { useTheme } from "styled-components";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 
 import Button from "../Button/Button";
 
@@ -12,20 +13,19 @@ import {
 import { HeaderExtraSmall } from "../Header/Header.styled";
 import { useDataContext } from "../../providers/Data/Data.context";
 import { useModalContext } from "../../providers/Modal/Modal.context";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCopy } from "../../hooks/useCopy/useCopy";
 
 const Export = () => {
   const theme = useTheme();
   const { filteredFruitData } = useDataContext();
   const { closeModal } = useModalContext();
+  const { copied, copyToClipboard } = useCopy();
 
-  const [copied, setCopied] = useState(false);
+  const codeBlockRef = useRef<HTMLPreElement>(null);
 
   const code = useMemo(() => {
     return JSON.stringify(filteredFruitData, null, 2);
   }, [filteredFruitData]);
-
-  const codeBlockRef = useRef<HTMLPreElement>(null);
 
   useEffect(() => {
     document.addEventListener("keydown", handleKeydown);
@@ -36,20 +36,7 @@ const Export = () => {
   }, []);
 
   const handleCopyClick = useCallback(() => {
-    navigator.clipboard
-      .writeText(code)
-      .then(() => {
-        setCopied(true);
-
-        setTimeout(() => {
-          setCopied(false);
-        }, 2500);
-      })
-      .catch((err) => {
-        console.error("Failed to copy:", err);
-
-        setCopied(false);
-      });
+    copyToClipboard(code);
   }, [code]);
 
   const handleDownloadClick = useCallback(() => {
@@ -58,20 +45,16 @@ const Export = () => {
     // using the blob URL to create a download link
     const url = URL.createObjectURL(file);
 
-    // create a link element
     const element = document.createElement("a");
 
-    // set the link element's properties
     element.href = url;
     element.download = "devil-fruit-database.json";
 
-    // append the link element to the body
     document.body.appendChild(element);
 
     // simulate a click event on the link element
     element.click();
 
-    // remove the link element from the body
     URL.revokeObjectURL(url);
   }, [code]);
 
