@@ -1,4 +1,4 @@
-import { FC, Fragment, useCallback } from "react";
+import { ChangeEvent, FC, Fragment, useCallback } from "react";
 import { useDataContext } from "../../providers/Data/Data.context";
 
 import {
@@ -6,8 +6,11 @@ import {
   DataList,
   DataText,
   EmptyBodyText,
+  EmptyBodyTextContainer,
   EmptyContainer,
   EmptyContent,
+  EmptyHeaderText,
+  EmptyTextContent,
   TableBody,
   TableContainer,
   TableData,
@@ -19,10 +22,23 @@ import {
 import { ITableProps } from "./Table.types";
 
 import Spinner from "../Spinner/Spinner";
+import Button from "../Button/Button";
+import Sticker from "../Sticker/Sticker";
+
+import sticker from "../../assets/Luffy+Zoro.png";
 
 const Table: FC<ITableProps> = ({ $alternate = false }) => {
-  const { filteredFruitData, showSpoilers, isLoading, searchState } =
-    useDataContext();
+  const {
+    filteredFruitData,
+    showSpoilers,
+    isLoading,
+    searchState,
+    handleSearch,
+  } = useDataContext();
+
+  const handleClearSearch = useCallback(() => {
+    handleSearch({ target: { value: "" } } as ChangeEvent<HTMLInputElement>);
+  }, [handleSearch]);
 
   const handleTableState = useCallback(() => {
     if (isLoading) {
@@ -33,7 +49,21 @@ const Table: FC<ITableProps> = ({ $alternate = false }) => {
       return (
         <EmptyContainer>
           <EmptyContent>
-            <EmptyBodyText>No results found. Please try again.</EmptyBodyText>
+            <Sticker src={sticker} />
+            <EmptyTextContent>
+              <EmptyHeaderText>No Devil fruits found</EmptyHeaderText>
+              <EmptyBodyTextContainer>
+                <EmptyBodyText>
+                  Your search did not match any devil fruits. Please try again.
+                </EmptyBodyText>
+              </EmptyBodyTextContainer>
+            </EmptyTextContent>
+            <Button
+              onClick={handleClearSearch}
+              $variant={{ variantName: "Outline" }}
+            >
+              Clear search
+            </Button>
           </EmptyContent>
         </EmptyContainer>
       );
@@ -166,7 +196,14 @@ const Table: FC<ITableProps> = ({ $alternate = false }) => {
         </TableWrapper>
       </Fragment>
     );
-  }, [$alternate, filteredFruitData, isLoading, searchState, showSpoilers]);
+  }, [
+    $alternate,
+    filteredFruitData,
+    handleClearSearch,
+    isLoading,
+    searchState,
+    showSpoilers,
+  ]);
 
   return (
     <Fragment>

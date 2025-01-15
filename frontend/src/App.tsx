@@ -92,7 +92,7 @@ export const App: FC = () => {
                 checked={showSpoilers}
               />
               <Checkbox
-                name="show-noncanon "
+                name="show-noncanon"
                 $variant="AccentPrimary"
                 $label={{ hasLabel: true, labelText: "Show Non-Canon" }}
                 $handleState={handleShowNonCanon}

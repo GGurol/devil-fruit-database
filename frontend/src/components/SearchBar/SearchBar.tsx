@@ -3,11 +3,12 @@ import Textfield from "../Textfield/Textfield";
 import { useDataContext } from "../../providers/Data/Data.context";
 
 const SearchBar: FC = () => {
-  const { handleSearch } = useDataContext();
+  const { searchQuery, handleSearch } = useDataContext();
 
   return (
     <Textfield
       placeholder="Search"
+      value={searchQuery}
       $icon={{
         hasIcon: true,
         iconStyle: {
@@ -15,7 +16,7 @@ const SearchBar: FC = () => {
           fontSize: "20px",
         },
       }}
-      onChange={handleSearch}
+      handleInputChange={handleSearch}
     />
   );
 };

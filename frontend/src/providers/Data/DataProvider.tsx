@@ -1,4 +1,12 @@
-import { ChangeEvent, FC, PropsWithChildren, useMemo, useState } from "react";
+import {
+  ChangeEvent,
+  FC,
+  PropsWithChildren,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 
 import { useQuery } from "react-query";
 
@@ -358,8 +366,38 @@ import { INewFruitData } from "./Data.types";
 const BASE_URL = "https://devil-fruit-database-crs-qehiib5lra-ue.a.run.app/api";
 
 export const DataProvider: FC<PropsWithChildren> = ({ children }) => {
-  const [showSpoilers, setShowSpoilers] = useState<boolean>(false);
-  const [showNonCanon, setShowNonCanon] = useState<boolean>(true);
+  const [showSpoilers, setShowSpoilers] = useState<boolean>(() => {
+    const currState = localStorage.getItem("spoilers");
+
+    if (currState === "true") {
+      return true;
+    }
+
+    if (currState === "false") {
+      return false;
+    }
+
+    return false;
+  });
+
+  const [showNonCanon, setShowNonCanon] = useState<boolean>(() => {
+    const currState = localStorage.getItem("canon");
+
+    if (currState === "true") {
+      return true;
+    }
+
+    if (currState === "false") {
+      return false;
+    }
+
+    return true;
+  });
+
+  useEffect(() => {
+    localStorage.setItem("spoilers", String(showSpoilers));
+    localStorage.setItem("canon", String(showNonCanon));
+  }, [showNonCanon, showSpoilers]);
 
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [searchState, setSearchState] = useState<boolean>(true);
@@ -380,44 +418,46 @@ export const DataProvider: FC<PropsWithChildren> = ({ children }) => {
   });
 
   const filteredFruitData = useMemo(() => {
-    let tempData = devilFruits;
+    if (isLoading) return [];
+    if (isError) return [];
 
-    if (!searchQuery) {
-      return !showNonCanon
-        ? (tempData = tempData?.filter(
-            (fruit: INewFruitData) => fruit.is_canon
-          ))
-        : tempData;
-    }
+    let filteredData = devilFruits;
 
+    // Filter by 'canon' status
     if (!showNonCanon) {
-      tempData = tempData?.filter((fruit: INewFruitData) => fruit.is_canon);
+      filteredData = filteredData.filter(
+        (fruit: INewFruitData) => fruit.is_canon
+      );
     }
 
-    tempData = tempData?.filter((fruit: INewFruitData) => {
-      const searchableFields = [
-        ...fruit.names.romanized_names.map((rname) => rname.name),
-        ...fruit.names.translated_names.map((tname) => tname.name),
-        ...(fruit.users.current_users?.map((cuser) => cuser.user) || []),
-        ...(fruit.users.previous_users?.map((puser) => puser.user) || []),
-      ].map((field) => field?.toLowerCase());
+    // Filter by search query
+    if (searchQuery) {
+      filteredData = filteredData.filter((fruit: INewFruitData) => {
+        const searchableFields = [
+          ...fruit.names.romanized_names.map((rname) => rname.name),
+          ...fruit.names.translated_names.map((tname) => tname.name),
+          ...(fruit.users.current_users?.map((cuser) => cuser.user) || []),
+          ...(fruit.users.previous_users?.map((puser) => puser.user) || []),
+        ].map((field) => field?.toLowerCase());
 
-      return searchableFields.some((field) => field?.includes(searchQuery));
-    });
+        return searchableFields.some((field) => field?.includes(searchQuery));
+      });
+    }
 
-    setSearchState(tempData?.length > 0);
+    setSearchState(filteredData.length > 0);
 
-    return tempData;
-  }, [devilFruits, searchQuery, showNonCanon]);
+    return filteredData;
+  }, [devilFruits, isError, isLoading, searchQuery, showNonCanon]);
 
-  const handleShowSpoilers = () => {
+  const handleShowSpoilers = useCallback(() => {
     setShowSpoilers(!showSpoilers);
-  };
+  }, [showSpoilers]);
 
-  const handleShowNonCanon = () => {
+  const handleShowNonCanon = useCallback(() => {
     setShowNonCanon(!showNonCanon);
-  };
+  }, [showNonCanon]);
 
+  // If planning on updating to backend search, debounce search
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
     const query = e.target.value.toLowerCase();
     setSearchQuery(query);
@@ -430,6 +470,7 @@ export const DataProvider: FC<PropsWithChildren> = ({ children }) => {
     isLoading,
     isError,
     searchState,
+    searchQuery,
     handleSearch,
     handleShowSpoilers,
     handleShowNonCanon,

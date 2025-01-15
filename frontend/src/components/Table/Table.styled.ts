@@ -57,16 +57,52 @@ export const EmptyContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
+  gap: 8px;
 
   width: 100%;
   height: 100%;
 `;
 
-export const EmptyContent = styled.div``;
+export const EmptyContent = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 24px;
+`;
 
-export const EmptyBodyText = styled.p`
+export const EmptyTextContent = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 12px;
+`;
+
+export const EmptyHeaderText = styled.p`
+  ${({ theme }) => theme.label}
+  color: ${({ theme }) => theme.foreground["fg-primary"]};
+`;
+
+export const EmptyBodyTextContainer = styled.div`
   ${({ theme }) => theme.bodySmall}
   color: ${({ theme }) => theme.commonForeground["fg-disabled"]};
+
+  text-align: center;
+
+  max-width: 256px;
+`;
+
+export const EmptyBodyText = styled.span``;
+
+export const EmptySearchQuery = styled.div`
+  max-width: 15ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  background-color: red;
 `;
 
 export const TableWrapper = styled.table`
