@@ -23,8 +23,8 @@ export const SpinnerDiv = styled.div`
   border-radius: 100%;
 
   background: conic-gradient(
-    rgba(191, 219, 254, 0) 30%,
-    rgba(191, 219, 254, 1) 100%
+    rgba(0, 0, 0, 0) 30%,
+    ${({ theme }) => theme.interactive["interactive-focus"]} 100%
   );
 
   animation: ${spin} 1s linear infinite;

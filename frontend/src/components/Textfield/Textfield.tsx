@@ -1,7 +1,15 @@
-import { forwardRef, useState } from "react";
+import {
+  ChangeEvent,
+  forwardRef,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import TextfieldInput, {
   TextfieldContainer,
-  TextfieldIconContainer,
+  TextfieldLeftIconContainer,
+  TextfieldRightIconContainer,
 } from "./Textfield.styled";
 import { Icon } from "../Icon/Icon";
 import { ITextfieldProps } from "./Textfield.types";
@@ -9,24 +17,55 @@ import { useTheme } from "styled-components";
 
 const Textfield = forwardRef<HTMLInputElement, ITextfieldProps>(
   (props, ref) => {
-    const { $icon, ...rest } = props;
+    const { value = "", handleInputChange, $icon, ...rest } = props;
 
     const theme = useTheme();
 
-    const [fieldFocus, setFieldFocus] = useState<boolean>(false);
+    const inputRef = useRef<HTMLInputElement>(null);
 
-    const handleFieldFocus = () => {
+    const [fieldFocus, setFieldFocus] = useState<boolean>(false);
+    const [fieldValue, setFieldValue] = useState<string>(value);
+
+    useEffect(() => {
+      setFieldValue(value);
+    }, [value]);
+
+    const handleFieldFocus = useCallback(() => {
       setFieldFocus(!fieldFocus);
+    }, [fieldFocus]);
+
+    const handleFieldBlur = useCallback(() => {
+      setFieldFocus(false);
+    }, []);
+
+    const handleFieldChange = (e: ChangeEvent<HTMLInputElement>) => {
+      const newValue = e.target.value;
+      setFieldValue(newValue);
+
+      handleInputChange?.(e);
     };
 
-    const handleFieldBlur = () => {
-      setFieldFocus(false);
+    const handleClearField = () => {
+      const inputElement = inputRef?.current;
+      if (inputElement) {
+        inputElement.value = "";
+        inputElement.dispatchEvent(
+          new Event("change", {
+            bubbles: true,
+          })
+        );
+
+        setFieldValue("");
+        handleInputChange?.({
+          target: { value: "" },
+        } as ChangeEvent<HTMLInputElement>);
+      }
     };
 
     return (
-      <TextfieldContainer>
+      <TextfieldContainer ref={ref}>
         {$icon?.hasIcon && (
-          <TextfieldIconContainer>
+          <TextfieldLeftIconContainer>
             <Icon
               iconName={$icon.iconStyle.iconName}
               fontSize={$icon.iconStyle.fontSize}
@@ -36,15 +75,31 @@ const Textfield = forwardRef<HTMLInputElement, ITextfieldProps>(
                   : theme.foreground["fg-tertiary"]
               }
             />
-          </TextfieldIconContainer>
+          </TextfieldLeftIconContainer>
         )}
         <TextfieldInput
           {...rest}
-          ref={ref}
+          ref={inputRef}
           onFocus={handleFieldFocus}
           onBlur={handleFieldBlur}
+          onChange={handleFieldChange}
+          value={fieldValue}
           $icon={$icon}
         />
+
+        {fieldValue && (
+          <TextfieldRightIconContainer onClick={handleClearField}>
+            <Icon
+              iconName={"Cross"}
+              fontSize={"24px"}
+              fill={
+                fieldFocus
+                  ? theme.foreground["fg-primary"]
+                  : theme.foreground["fg-tertiary"]
+              }
+            />
+          </TextfieldRightIconContainer>
+        )}
       </TextfieldContainer>
     );
   }

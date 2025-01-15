@@ -67,6 +67,7 @@ export interface IDataState {
   showSpoilers: boolean;
   showNonCanon: boolean;
   searchState: boolean;
+  searchQuery: string;
   handleSearch: (e: ChangeEvent<HTMLInputElement>) => void;
   handleShowSpoilers: () => void;
   handleShowNonCanon: () => void;

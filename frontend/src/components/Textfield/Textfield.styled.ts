@@ -9,13 +9,46 @@ export const TextfieldContainer = styled.div`
   cursor: text;
 `;
 
-export const TextfieldIconContainer = styled.span`
+export const TextfieldLeftIconContainer = styled.span`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   position: absolute;
 
-  top: 55%;
+  top: 50%;
+  left: 8px;
+
   transform: translateY(-50%);
 
-  left: 16px;
+  padding: 4px;
+`;
+
+export const TextfieldRightIconContainer = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  position: absolute;
+
+  top: 50%;
+  right: 8px;
+
+  transform: translateY(-50%);
+
+  padding: 4px;
+
+  background: none;
+  border: none;
+
+  cursor: pointer;
+
+  opacity: 0.6;
+  transition: opacity 0.2s ease;
+
+  &:hover {
+    opacity: 1;
+  }
 `;
 
 const TextfieldInput = styled.input.attrs({ type: "text" })<ITextfieldProps>`
@@ -26,10 +59,10 @@ const TextfieldInput = styled.input.attrs({ type: "text" })<ITextfieldProps>`
   ${({ $icon }) =>
     $icon?.hasIcon
       ? css`
-          padding: 8px 16px 8px 42px;
+          padding: 8px 42px;
         `
       : css`
-          padding: 8px 16px;
+          padding: 8px 42px 8px 16px;
         `}
 
   box-sizing: border-box;
