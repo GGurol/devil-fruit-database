@@ -33,8 +33,14 @@ import { useModalContext } from "./providers/Modal/Modal.context";
 export const App: FC = () => {
   const theme = useTheme();
   const { mode, toggleMode } = useThemeContext();
-  const { showSpoilers, showNonCanon, handleShowSpoilers, handleShowNonCanon } =
-    useDataContext();
+  const {
+    showSpoilers,
+    showNonCanon,
+    isLoading,
+    isError,
+    handleShowSpoilers,
+    handleShowNonCanon,
+  } = useDataContext();
   const { isModalOpen, modalContent, openModal } = useModalContext();
 
   return (
@@ -60,6 +66,7 @@ export const App: FC = () => {
               {mode === "light" ? "Dark Mode" : "Light Mode"}
             </Button>
             <Button
+              disabled={isError || isLoading}
               onClick={() => openModal(<Export />)}
               $variant={{
                 variantName: "Solid",

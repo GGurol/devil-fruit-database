@@ -54,7 +54,8 @@ const Table: FC<ITableProps> = ({ $alternate = false }) => {
               <EmptyHeaderText>No Devil fruits found</EmptyHeaderText>
               <EmptyBodyTextContainer>
                 <EmptyBodyText>
-                  Your search did not match any devil fruits. Please try again.
+                  Your search didn't match any devil fruits or users. Please try
+                  again.
                 </EmptyBodyText>
               </EmptyBodyTextContainer>
             </EmptyTextContent>

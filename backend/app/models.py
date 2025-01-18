@@ -144,8 +144,8 @@ class UserRead(SQLModel):
 
 
 class UsersRead(SQLModel):
-    current_users: list[UserRead] = []
-    previous_users: list[UserRead] = []
+    current_users: Optional[list[UserRead]] = None
+    previous_users: Optional[list[UserRead]] = None
 
 
 class DevilFruitRead(SQLModel):
@@ -163,6 +163,9 @@ class DevilFruitRead(SQLModel):
 
     @classmethod
     def from_orm(cls, df: DevilFruit):
+        current_users = [u for u in df.users if u.is_current]
+        previous_users = [u for u in df.users if not u.is_current]
+
         devil_fruit_dict = {
             "fruit_id": df.fruit_id,
             "ability": df.ability,
@@ -173,8 +176,8 @@ class DevilFruitRead(SQLModel):
             },
             "types": df.types,
             "users": {
-                "current_users": [u for u in df.users if u.is_current],
-                "previous_users": [u for u in df.users if not u.is_current],
+                "current_users": current_users or None,
+                "previous_users": previous_users or None,
             },
             "is_canon": df.is_canon,
         }

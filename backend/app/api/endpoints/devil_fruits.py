@@ -23,12 +23,13 @@ router = APIRouter(tags=["Devil Fruits"])
 @router.get(
     "/",
     response_model=list[DevilFruitRead],
+    response_model_exclude_none=True,
 )
 def read_devil_fruits(
     *,
     session: Session = Depends(get_session),
     offset: int = Query(default=0, ge=0),
-    limit: int = Query(default=100, le=100),
+    limit: int | None = Query(default=None, ge=1),
 ):
     devil_fruits = session.exec(select(DevilFruit).offset(offset).limit(limit)).all()
 
@@ -62,7 +63,7 @@ def read_devil_fruits_simple(
         default=True, description="Include current user of fruit"
     ),
     offset: int = Query(default=0, ge=0),
-    limit: int = Query(default=100, le=100),
+    limit: int | None = Query(default=None, ge=1),
 ):
     devil_fruits = session.exec(select(DevilFruit).offset(offset).limit(limit)).all()
 
@@ -165,7 +166,7 @@ def search_devils_fruits(
     *,
     session: Session = Depends(get_session),
     search_term: str = Path(..., min_length=3),
-    limit: int = Query(default=100, le=100),
+    limit: int | None = Query(default=None, ge=1),
 ):
     """
     Search devil fruits by name using fuzzy matching.

@@ -70,6 +70,9 @@ export const EmptyContent = styled.div`
   justify-content: center;
   flex-direction: column;
   gap: 24px;
+
+  padding-top: 24px;
+  padding-bottom: 24px;
 `;
 
 export const EmptyTextContent = styled.div`
@@ -91,7 +94,7 @@ export const EmptyBodyTextContainer = styled.div`
 
   text-align: center;
 
-  max-width: 256px;
+  max-width: 300px;
 `;
 
 export const EmptyBodyText = styled.span``;

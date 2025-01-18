@@ -19,6 +19,12 @@ export const ButtonStyles: IButtonStyles = {
 
       transition: border-color 100ms ease-in;
     }
+
+    &:disabled {
+      cursor: not-allowed;
+
+      opacity: 0.4;
+    }
   `,
   Solid: css`
     background-color: ${({ theme }) =>
@@ -40,6 +46,12 @@ export const ButtonStyles: IButtonStyles = {
 
       transition: background-color 100ms ease-in;
     }
+
+    &:disabled {
+      cursor: not-allowed;
+
+      opacity: 0.4;
+    }
   `,
   IconOutline: css`
     background-color: ${({ theme }) => theme.background["bg-primary"]};
@@ -59,6 +71,12 @@ export const ButtonStyles: IButtonStyles = {
         theme.commonInteractive["interactive-primary"]};
 
       transition: border-color 100ms ease-in;
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+
+      opacity: 0.4;
     }
   `,
   IconSolid: css`
@@ -82,6 +100,12 @@ export const ButtonStyles: IButtonStyles = {
         theme.commonInteractive["interactive-primary-active"]};
 
       transition: background-color 100ms ease-in;
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+
+      opacity: 0.4;
     }
   `,
 };

@@ -27,17 +27,9 @@ const Export = () => {
     return JSON.stringify(filteredFruitData, null, 2);
   }, [filteredFruitData]);
 
-  useEffect(() => {
-    document.addEventListener("keydown", handleKeydown);
-
-    return () => {
-      document.removeEventListener("keydown", handleKeydown);
-    };
-  }, []);
-
   const handleCopyClick = useCallback(() => {
     copyToClipboard(code);
-  }, [code]);
+  }, [code, copyToClipboard]);
 
   const handleDownloadClick = useCallback(() => {
     const file = new Blob([code], { type: "application/json" });
@@ -85,6 +77,14 @@ const Export = () => {
     },
     [closeModal, handleCopyClick]
   );
+
+  useEffect(() => {
+    document.addEventListener("keydown", handleKeydown);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeydown);
+    };
+  }, [handleKeydown]);
 
   return (
     <ExportContainer
