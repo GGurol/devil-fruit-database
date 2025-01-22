@@ -29,6 +29,7 @@ import Export from "./components/Export/Export";
 
 import { Header } from "./components/Header/Header.styled";
 import { useModalContext } from "./providers/Modal/Modal.context";
+import Dropdown from "./components/Dropdown/Dropdown";
 
 export const App: FC = () => {
   const theme = useTheme();
@@ -112,7 +113,9 @@ export const App: FC = () => {
           </BodyActionsWrapper>
           <BodyContentWrapper>
             <Table $alternate={false} />
+
             <Legend />
+            <Dropdown />
           </BodyContentWrapper>
         </BodyWrapper>
       </ContentWrapper>

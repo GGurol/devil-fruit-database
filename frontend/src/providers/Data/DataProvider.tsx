@@ -14,7 +14,7 @@ import { DataContext } from "./Data.context";
 import { INewFruitData } from "./Data.types";
 
 // const BASE_URL = "https://devil-fruit-database-crs-qehiib5lra-ue.a.run.app/api";
-const DEV_BASE_URL = "http://0.0.0.0:8000/api";
+const DEV_BASE_URL = "http://localhost:8000/api";
 
 export const DataProvider: FC<PropsWithChildren> = ({ children }) => {
   const [showSpoilers, setShowSpoilers] = useState<boolean>(() => {
