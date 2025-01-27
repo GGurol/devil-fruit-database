@@ -30,6 +30,7 @@ export interface IFruitData {
   };
   is_canon: boolean;
 }
+
 export interface INewFruitData {
   fruit_id: string;
   names: {
@@ -62,6 +63,7 @@ export interface INewFruitData {
 
 export interface IDataState {
   filteredFruitData: INewFruitData[] | null | undefined;
+  resultsCount: number;
   isLoading: boolean;
   isError: boolean;
   showSpoilers: boolean;

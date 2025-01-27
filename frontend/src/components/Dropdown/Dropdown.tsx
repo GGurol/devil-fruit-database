@@ -1,30 +1,77 @@
-import { Fragment, useCallback, useState } from "react";
+import { FC, useCallback, useEffect, useRef, useState } from "react";
+import {
+  DropdownContainer,
+  DropdownItem,
+  DropdownList,
+} from "./Dropdown.styled";
+import { IDropdownProps } from "./Dropdown.types";
 import Button from "../Button/Button";
 
-const Dropdown = () => {
+const Dropdown: FC<IDropdownProps> = (props) => {
+  const { options, onChange } = props;
+
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [headerWidth, setHeaderWidth] = useState<number>(0);
+
+  const [selectedValue, setSelectedValue] = useState<number>(options[0]);
 
   const toggleDropdownState = useCallback(() => {
     setIsOpen(!isOpen);
   }, [isOpen]);
 
+  const handleSelection = useCallback(
+    (value: number) => {
+      setSelectedValue(value);
+      onChange(value);
+
+      const popover = document.getElementById("dropdown-list");
+      if (popover) {
+        popover.hidePopover();
+      }
+
+      setIsOpen(false);
+    },
+    [onChange]
+  );
+
+  useEffect(() => {
+    if (buttonRef.current) {
+      setHeaderWidth(buttonRef.current.offsetWidth);
+    }
+  }, [isOpen]);
+
   return (
-    <Fragment>
+    <DropdownContainer>
       <Button
+        ref={buttonRef}
         onClick={toggleDropdownState}
+        popovertarget="dropdown-list"
         $variant={{ variantName: "Outline" }}
-        // $minwidth={{ desktop: "132px", mobile: "auto" }}
-        // $fillContainer={false}
         $icon={{
           hasIcon: true,
           iconStyle: {
             iconName: isOpen ? "CaretUp" : "CaretDown",
           },
         }}
+        style={{ anchorName: "--dropdown" }}
       >
-        000
+        {selectedValue}
       </Button>
-    </Fragment>
+
+      <DropdownList popover="auto" id="dropdown-list" width={headerWidth}>
+        {options.map((option) => (
+          <DropdownItem
+            key={option}
+            value={option}
+            onClick={() => handleSelection(option)}
+          >
+            {option}
+          </DropdownItem>
+        ))}
+      </DropdownList>
+    </DropdownContainer>
   );
 };
 

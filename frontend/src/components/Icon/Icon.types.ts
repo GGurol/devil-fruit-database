@@ -3,7 +3,10 @@ import { ComponentType, SVGProps } from "react";
 import * as Icons from "./src/index";
 
 export type TIconComponents =
+  | "Adjust"
   | "CaretDown"
+  | "CaretLeft"
+  | "CaretRight"
   | "CaretUp"
   | "Check"
   | "CheckCircle"

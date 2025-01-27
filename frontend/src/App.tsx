@@ -26,15 +26,17 @@ import Legend from "./components/Legend/Legend";
 import SearchBar from "./components/SearchBar/SearchBar";
 import Modal from "./components/Modal/Modal";
 import Export from "./components/Export/Export";
+import Pagination from "./components/Pagination/Pagination";
 
 import { Header } from "./components/Header/Header.styled";
 import { useModalContext } from "./providers/Modal/Modal.context";
-import Dropdown from "./components/Dropdown/Dropdown";
+import FooterWrapper from "./components/Wrappers/FooterWrapper";
 
 export const App: FC = () => {
   const theme = useTheme();
   const { mode, toggleMode } = useThemeContext();
   const {
+    resultsCount,
     showSpoilers,
     showNonCanon,
     isLoading,
@@ -109,13 +111,28 @@ export const App: FC = () => {
             </ToggleWrapper>
             <SearchActionsWrapper>
               <SearchBar />
+              <Button
+                disabled={isError || isLoading}
+                onClick={() => openModal(<div>Filters</div>)}
+                $variant={{
+                  variantName: "IconOutline",
+                }}
+                $icon={{
+                  hasIcon: true,
+                  iconStyle: {
+                    iconName: "Adjust",
+                  },
+                }}
+              />
             </SearchActionsWrapper>
           </BodyActionsWrapper>
           <BodyContentWrapper>
             <Table $alternate={false} />
 
-            <Legend />
-            <Dropdown />
+            <FooterWrapper>
+              <Legend />
+              <Pagination results={resultsCount} options={[25, 50, 75, 100]} />
+            </FooterWrapper>
           </BodyContentWrapper>
         </BodyWrapper>
       </ContentWrapper>

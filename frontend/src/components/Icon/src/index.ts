@@ -1,4 +1,7 @@
+export { default as Adjust } from "./Adjust";
 export { default as CaretDown } from "./CaretDown";
+export { default as CaretLeft } from "./CaretLeft";
+export { default as CaretRight } from "./CaretRight";
 export { default as CaretUp } from "./CaretUp";
 export { default as Check } from "./Check";
 export { default as CheckCircle } from "./CheckCircle";

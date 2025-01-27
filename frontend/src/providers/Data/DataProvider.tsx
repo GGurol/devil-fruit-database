@@ -5,6 +5,7 @@ import {
   useCallback,
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from "react";
 
@@ -17,6 +18,8 @@ import { INewFruitData } from "./Data.types";
 const DEV_BASE_URL = "http://localhost:8000/api";
 
 export const DataProvider: FC<PropsWithChildren> = ({ children }) => {
+  const filteredDevilFruitsCount = useRef<number>(0);
+
   const [showSpoilers, setShowSpoilers] = useState<boolean>(() => {
     const currState = localStorage.getItem("spoilers");
 
@@ -77,7 +80,7 @@ export const DataProvider: FC<PropsWithChildren> = ({ children }) => {
     if (isLoading) return [];
     if (isError) return [];
 
-    let filteredData = devilFruits;
+    let filteredData: INewFruitData[] = devilFruits;
 
     // Filter by 'canon' status
     if (!showNonCanon) {
@@ -102,6 +105,8 @@ export const DataProvider: FC<PropsWithChildren> = ({ children }) => {
 
     setSearchState(filteredData.length > 0);
 
+    filteredDevilFruitsCount.current = filteredData.length;
+
     return filteredData;
   }, [devilFruits, isError, isLoading, searchQuery, showNonCanon]);
 
@@ -121,6 +126,7 @@ export const DataProvider: FC<PropsWithChildren> = ({ children }) => {
 
   const value = {
     filteredFruitData,
+    resultsCount: filteredDevilFruitsCount.current,
     showSpoilers,
     showNonCanon,
     isLoading,
