@@ -53,6 +53,32 @@ export const ButtonStyles: IButtonStyles = {
       opacity: 0.4;
     }
   `,
+  Text: css`
+    background-color: transparent;
+    border: none;
+
+    color: ${({ theme }) => theme.commonInteractive["interactive-primary"]};
+
+    &:hover {
+      color: ${({ theme }) =>
+        theme.commonInteractive["interactive-primary-hover"]};
+
+      transition: color 100ms ease-in;
+    }
+
+    &:active {
+      color: ${({ theme }) =>
+        theme.commonInteractive["interactive-primary-active"]};
+
+      transition: color 100ms ease-in;
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+
+      opacity: 0.4;
+    }
+  `,
   IconOutline: css`
     background-color: ${({ theme }) => theme.background["bg-primary"]};
     ${({ theme }) => theme.commonBorder};

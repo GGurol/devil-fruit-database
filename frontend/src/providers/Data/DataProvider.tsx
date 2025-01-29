@@ -56,6 +56,9 @@ export const DataProvider: FC<PropsWithChildren> = ({ children }) => {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [searchState, setSearchState] = useState<boolean>(true);
 
+  const [selectedTypeFilters, setSelectedTypeFilters] = useState<string[]>([]);
+  const [selectedUserFilters, setSelectedUserFilters] = useState<string[]>([]);
+
   // TODO: Implement search functionality with backend api call, though frontend might be faster, will need to test
 
   const {
@@ -75,6 +78,14 @@ export const DataProvider: FC<PropsWithChildren> = ({ children }) => {
     refetchOnWindowFocus: false,
     refetchOnReconnect: true,
   });
+
+  const handleTypeFilter = useCallback((types: string[]) => {
+    setSelectedTypeFilters(types);
+  }, []);
+
+  const handleUserFilter = useCallback((filters: string[]) => {
+    setSelectedUserFilters(filters);
+  }, []);
 
   const filteredFruitData = useMemo(() => {
     if (isLoading) return [];
@@ -103,12 +114,46 @@ export const DataProvider: FC<PropsWithChildren> = ({ children }) => {
       });
     }
 
+    if (selectedTypeFilters.length > 0) {
+      filteredData = filteredData.filter((fruit) =>
+        fruit.types.some((type) => selectedTypeFilters.includes(type.type))
+      );
+    }
+
+    if (selectedUserFilters.length > 0) {
+      filteredData = filteredData.filter((fruit) => {
+        const currentUsers = fruit.users.current_users || [];
+        const previousUsers = fruit.users.previous_users || [];
+        const allUsers = [...currentUsers, ...previousUsers];
+
+        return selectedUserFilters.every((filter) => {
+          if (filter === "Artificial") {
+            return allUsers.some((user) => user.is_artificial);
+          }
+
+          if (filter === "Awakened") {
+            return allUsers.some((user) => user.awakening?.is_awakened);
+          }
+
+          return false;
+        });
+      });
+    }
+
     setSearchState(filteredData.length > 0);
 
     filteredDevilFruitsCount.current = filteredData.length;
 
     return filteredData;
-  }, [devilFruits, isError, isLoading, searchQuery, showNonCanon]);
+  }, [
+    devilFruits,
+    isError,
+    isLoading,
+    searchQuery,
+    selectedTypeFilters,
+    selectedUserFilters,
+    showNonCanon,
+  ]);
 
   const handleShowSpoilers = useCallback(() => {
     setShowSpoilers(!showSpoilers);
@@ -133,9 +178,13 @@ export const DataProvider: FC<PropsWithChildren> = ({ children }) => {
     isError,
     searchState,
     searchQuery,
+    selectedTypeFilters,
+    selectedUserFilters,
     handleSearch,
     handleShowSpoilers,
     handleShowNonCanon,
+    handleTypeFilter,
+    handleUserFilter,
   };
 
   return <DataContext.Provider value={value}>{children}</DataContext.Provider>;

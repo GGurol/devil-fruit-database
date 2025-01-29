@@ -43,7 +43,7 @@ const Checkbox = forwardRef<HTMLInputElement, ICheckboxWrapperProps>(
         $handleState={$handleState}
         ref={ref}
       >
-        {$label?.hasLabel && (
+        {$label?.hasLabel && $label.ascendingLabel && (
           <CheckboxLabel htmlFor={`checkbox-${name}-label`}>
             {$label.labelText}
           </CheckboxLabel>
@@ -68,6 +68,12 @@ const Checkbox = forwardRef<HTMLInputElement, ICheckboxWrapperProps>(
             </CheckIconOverlay>
           )}
         </CheckboxInputWrapper>
+
+        {$label?.hasLabel && !$label.ascendingLabel && (
+          <CheckboxLabel htmlFor={`checkbox-${name}-label`}>
+            {$label.labelText}
+          </CheckboxLabel>
+        )}
       </CheckboxWrapper>
     );
   }

@@ -31,6 +31,7 @@ import Pagination from "./components/Pagination/Pagination";
 import { Header } from "./components/Header/Header.styled";
 import { useModalContext } from "./providers/Modal/Modal.context";
 import FooterWrapper from "./components/Wrappers/FooterWrapper";
+import Filters from "./components/Filters/Filters";
 
 export const App: FC = () => {
   const theme = useTheme();
@@ -97,33 +98,29 @@ export const App: FC = () => {
               <Checkbox
                 name="show-spoilers"
                 $variant="AccentPrimary"
-                $label={{ hasLabel: true, labelText: "Show Spoilers" }}
+                $label={{
+                  hasLabel: true,
+                  ascendingLabel: true,
+                  labelText: "Show Spoilers",
+                }}
                 $handleState={handleShowSpoilers}
                 checked={showSpoilers}
               />
               <Checkbox
                 name="show-noncanon"
                 $variant="AccentPrimary"
-                $label={{ hasLabel: true, labelText: "Show Non-Canon" }}
+                $label={{
+                  hasLabel: true,
+                  ascendingLabel: true,
+                  labelText: "Show Non-Canon",
+                }}
                 $handleState={handleShowNonCanon}
                 checked={showNonCanon}
               />
             </ToggleWrapper>
             <SearchActionsWrapper>
               <SearchBar />
-              <Button
-                disabled={isError || isLoading}
-                onClick={() => openModal(<div>Filters</div>)}
-                $variant={{
-                  variantName: "IconOutline",
-                }}
-                $icon={{
-                  hasIcon: true,
-                  iconStyle: {
-                    iconName: "Adjust",
-                  },
-                }}
-              />
+              <Filters />
             </SearchActionsWrapper>
           </BodyActionsWrapper>
           <BodyContentWrapper>

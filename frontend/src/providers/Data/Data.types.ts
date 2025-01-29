@@ -70,7 +70,11 @@ export interface IDataState {
   showNonCanon: boolean;
   searchState: boolean;
   searchQuery: string;
+  selectedTypeFilters: string[];
+  selectedUserFilters: string[];
   handleSearch: (e: ChangeEvent<HTMLInputElement>) => void;
   handleShowSpoilers: () => void;
   handleShowNonCanon: () => void;
+  handleTypeFilter: (types: string[]) => void;
+  handleUserFilter: (filters: string[]) => void;
 }
