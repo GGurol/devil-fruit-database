@@ -2,11 +2,17 @@ import { ButtonHTMLAttributes } from "react";
 import { CSSProp } from "styled-components";
 import { IIconProps } from "../Icon/Icon.types";
 
-export type TButtonVariants = "Outline" | "Solid" | "IconOutline" | "IconSolid";
+export type TButtonVariants =
+  | "Outline"
+  | "Solid"
+  | "Text"
+  | "IconOutline"
+  | "IconSolid";
 
 export interface IButtonStyles {
   Outline: CSSProp;
   Solid: CSSProp;
+  Text: CSSProp;
   IconOutline: CSSProp;
   IconSolid: CSSProp;
 }

@@ -26,15 +26,26 @@ import Legend from "./components/Legend/Legend";
 import SearchBar from "./components/SearchBar/SearchBar";
 import Modal from "./components/Modal/Modal";
 import Export from "./components/Export/Export";
+import Pagination from "./components/Pagination/Pagination";
 
 import { Header } from "./components/Header/Header.styled";
 import { useModalContext } from "./providers/Modal/Modal.context";
+import FooterWrapper from "./components/Wrappers/FooterWrapper";
+import Filters from "./components/Filters/Filters";
 
 export const App: FC = () => {
   const theme = useTheme();
   const { mode, toggleMode } = useThemeContext();
-  const { showSpoilers, showNonCanon, handleShowSpoilers, handleShowNonCanon } =
-    useDataContext();
+  const {
+    totalItems,
+    showSpoilers,
+    showNonCanon,
+    isLoading,
+    isError,
+    itemsPerPageOptions,
+    handleShowSpoilers,
+    handleShowNonCanon,
+  } = useDataContext();
   const { isModalOpen, modalContent, openModal } = useModalContext();
 
   return (
@@ -60,6 +71,7 @@ export const App: FC = () => {
               {mode === "light" ? "Dark Mode" : "Light Mode"}
             </Button>
             <Button
+              disabled={isError || isLoading}
               onClick={() => openModal(<Export />)}
               $variant={{
                 variantName: "Solid",
@@ -87,25 +99,38 @@ export const App: FC = () => {
               <Checkbox
                 name="show-spoilers"
                 $variant="AccentPrimary"
-                $label={{ hasLabel: true, labelText: "Show Spoilers" }}
+                $label={{
+                  hasLabel: true,
+                  ascendingLabel: true,
+                  labelText: "Show Spoilers",
+                }}
                 $handleState={handleShowSpoilers}
                 checked={showSpoilers}
               />
               <Checkbox
                 name="show-noncanon"
                 $variant="AccentPrimary"
-                $label={{ hasLabel: true, labelText: "Show Non-Canon" }}
+                $label={{
+                  hasLabel: true,
+                  ascendingLabel: true,
+                  labelText: "Show Non-Canon",
+                }}
                 $handleState={handleShowNonCanon}
                 checked={showNonCanon}
               />
             </ToggleWrapper>
             <SearchActionsWrapper>
               <SearchBar />
+              <Filters />
             </SearchActionsWrapper>
           </BodyActionsWrapper>
           <BodyContentWrapper>
             <Table $alternate={false} />
-            <Legend />
+
+            <FooterWrapper>
+              <Legend />
+              <Pagination results={totalItems} options={itemsPerPageOptions} />
+            </FooterWrapper>
           </BodyContentWrapper>
         </BodyWrapper>
       </ContentWrapper>

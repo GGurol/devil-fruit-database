@@ -11,11 +11,13 @@ export type TCheckboxVariants = keyof ICheckboxStyles;
 
 interface ICheckboxBaseLabelConfig {
   hasLabel?: false;
+  ascendingLabel?: boolean;
   labelText?: string;
 }
 
 interface ICheckboxLabelConfig {
   hasLabel?: true;
+  ascendingLabel: boolean;
   labelText: string;
 }
 

@@ -26,10 +26,6 @@ const Textfield = forwardRef<HTMLInputElement, ITextfieldProps>(
     const [fieldFocus, setFieldFocus] = useState<boolean>(false);
     const [fieldValue, setFieldValue] = useState<string>(value);
 
-    useEffect(() => {
-      setFieldValue(value);
-    }, [value]);
-
     const handleFieldFocus = useCallback(() => {
       setFieldFocus(!fieldFocus);
     }, [fieldFocus]);
@@ -61,6 +57,10 @@ const Textfield = forwardRef<HTMLInputElement, ITextfieldProps>(
         } as ChangeEvent<HTMLInputElement>);
       }
     };
+
+    useEffect(() => {
+      setFieldValue(value);
+    }, [value]);
 
     return (
       <TextfieldContainer ref={ref}>

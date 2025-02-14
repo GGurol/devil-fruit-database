@@ -12,20 +12,22 @@ export const TableContainer = styled.div`
   flex: 1 0 0;
 
   width: 100%;
+  height: 100%;
 
   min-height: 128px;
-  max-height: 100%;
+
+  position: relative;
 
   border-radius: 2px;
   ${({ theme }) => theme.commonBorder};
 
   overflow-y: auto;
-
-  scrollbar-gutter: auto;
+  scrollbar-gutter: stable;
 
   &::-webkit-scrollbar {
     width: 12px;
     height: 12px;
+    background-color: transparent;
   }
 
   &::-webkit-scrollbar-thumb {
@@ -45,11 +47,19 @@ export const TableContainer = styled.div`
   }
 
   &::-webkit-scrollbar-corner {
-    background: none;
+    background: transparent;
   }
+
+  /* Firefox scrollbar styling */
+  /* scrollbar-width: thin; */
+  /* scrollbar-color: ${({ theme }) =>
+    `${theme.background["bg-tertiary"]} ${theme.background["bg-secondary"]}`}; */
 
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet.max}) {
     overflow-x: auto;
+
+    /* Add momentum scrolling for touch devices */
+    -webkit-overflow-scrolling: touch;
   }
 `;
 
@@ -61,7 +71,28 @@ export const EmptyContainer = styled.div`
   gap: 8px;
 
   width: 100%;
-  height: 100%;
+  min-height: 100%;
+
+  padding: 24px 16px;
+
+  &::before,
+  &::after {
+    content: "";
+    display: block;
+    position: sticky;
+    width: 100%;
+    height: 10px;
+    background: inherit;
+    left: 0px;
+  }
+
+  &::before {
+    top: 0px;
+  }
+
+  &::after {
+    bottom: 0px;
+  }
 `;
 
 export const EmptyContent = styled.div`
@@ -70,6 +101,11 @@ export const EmptyContent = styled.div`
   justify-content: center;
   flex-direction: column;
   gap: 24px;
+
+  padding: 24px;
+
+  max-width: 100%;
+  max-height: 100%;
 `;
 
 export const EmptyTextContent = styled.div`
@@ -78,6 +114,12 @@ export const EmptyTextContent = styled.div`
   justify-content: center;
   flex-direction: column;
   gap: 12px;
+
+  max-width: 100%;
+
+  padding: 0 16px;
+
+  text-align: center;
 `;
 
 export const EmptyHeaderText = styled.p`
@@ -89,20 +131,23 @@ export const EmptyBodyTextContainer = styled.div`
   ${({ theme }) => theme.bodySmall}
   color: ${({ theme }) => theme.commonForeground["fg-disabled"]};
 
-  text-align: center;
+  max-width: 100%;
 
-  max-width: 256px;
+  padding: 0 16px;
+
+  text-align: center;
 `;
 
 export const EmptyBodyText = styled.span``;
 
 export const EmptySearchQuery = styled.div`
-  max-width: 15ch;
+  max-width: 100%;
+
+  padding: 0 16px;
+
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-
-  background-color: red;
 `;
 
 export const TableWrapper = styled.table`
