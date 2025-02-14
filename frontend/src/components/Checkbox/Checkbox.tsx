@@ -1,4 +1,4 @@
-import { ChangeEvent, forwardRef, useState } from "react";
+import { ChangeEvent, forwardRef } from "react";
 import { ICheckboxWrapperProps } from "./Checkbox.types";
 import CheckboxWrapper, {
   CheckboxInput,
