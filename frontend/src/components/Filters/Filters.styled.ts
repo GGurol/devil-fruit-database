@@ -31,8 +31,52 @@ export const FiltersPopoverContainer = styled.div`
 
   z-index: 10;
 
-  @media (max-width: 768px) {
-    /* display: none;  */
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet.max}) {
+    display: none;
+  }
+`;
+
+export const FiltersOverlay = styled.div`
+  display: none;
+  position: fixed;
+
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  width: 100%;
+  height: 100%;
+
+  background-color: ${({ theme }) =>
+    theme.commonBackground["bg-modal-overlay"]};
+
+  z-index: 5;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet.max}) {
+    display: block;
+  }
+`;
+
+export const FiltersMobileContainer = styled.div`
+  display: none;
+  position: fixed;
+
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  padding: 16px;
+
+  border-radius: 4px 4px 0 0;
+  ${({ theme }) => theme.commonBorder}
+
+  background-color: ${({ theme }) => theme.background["bg-primary"]};
+
+  z-index: 10;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet.max}) {
+    display: block;
   }
 `;
 
@@ -48,6 +92,10 @@ export const FilterSectionsContainer = styled.div<{ $isLandscape: boolean }>`
   flex-direction: ${({ $isLandscape }) => ($isLandscape ? "row" : "column")};
   align-items: flex-start;
   gap: 24px;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile.max}) {
+    flex-direction: column;
+  }
 `;
 
 export const FilterSection = styled.div`

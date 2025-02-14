@@ -5,7 +5,6 @@ import {
   useCallback,
   useEffect,
   useMemo,
-  useRef,
   useState,
 } from "react";
 
@@ -14,11 +13,24 @@ import { useQuery } from "react-query";
 import { DataContext } from "./Data.context";
 import { INewFruitData } from "./Data.types";
 
-// const BASE_URL = "https://devil-fruit-database-crs-qehiib5lra-ue.a.run.app/api";
-const DEV_BASE_URL = "http://localhost:8000/api";
+// const BASE_URL = "https://devil-fruit-database-crs-qehiib5lra-ue.a.run.app";
+const DEV_BASE_URL = "http://localhost:8000";
 
 export const DataProvider: FC<PropsWithChildren> = ({ children }) => {
-  const filteredDevilFruitsCount = useRef<number>(0);
+  // TODO: Implement search functionality with backend api call, though frontend might be faster, will need to test
+
+  const [totalItems, setTotalItems] = useState<number>(0);
+
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [searchState, setSearchState] = useState<boolean>(true);
+
+  const [selectedTypeFilters, setSelectedTypeFilters] = useState<string[]>([]);
+  const [selectedUserFilters, setSelectedUserFilters] = useState<string[]>([]);
+
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [itemsPerPage, setItemsPerPage] = useState<number>(25);
+
+  const [allDevilFruits, setAllDevilFruits] = useState<INewFruitData[]>([]);
 
   const [showSpoilers, setShowSpoilers] = useState<boolean>(() => {
     const currState = localStorage.getItem("spoilers");
@@ -53,14 +65,6 @@ export const DataProvider: FC<PropsWithChildren> = ({ children }) => {
     localStorage.setItem("canon", String(showNonCanon));
   }, [showNonCanon, showSpoilers]);
 
-  const [searchQuery, setSearchQuery] = useState<string>("");
-  const [searchState, setSearchState] = useState<boolean>(true);
-
-  const [selectedTypeFilters, setSelectedTypeFilters] = useState<string[]>([]);
-  const [selectedUserFilters, setSelectedUserFilters] = useState<string[]>([]);
-
-  // TODO: Implement search functionality with backend api call, though frontend might be faster, will need to test
-
   const {
     data: devilFruits,
     isLoading,
@@ -68,7 +72,7 @@ export const DataProvider: FC<PropsWithChildren> = ({ children }) => {
   } = useQuery({
     queryKey: ["devilFruits"],
     queryFn: async () => {
-      const response = await fetch(`${DEV_BASE_URL}/devil-fruits/`, {});
+      const response = await fetch(`${DEV_BASE_URL}/api/devil-fruits/`, {});
       // await new Promise((resolve) => setTimeout(resolve, 5000));
 
       return await response.json();
@@ -77,6 +81,9 @@ export const DataProvider: FC<PropsWithChildren> = ({ children }) => {
     refetchOnMount: true,
     refetchOnWindowFocus: false,
     refetchOnReconnect: true,
+    onSuccess: (data) => {
+      setAllDevilFruits(data);
+    },
   });
 
   const handleTypeFilter = useCallback((types: string[]) => {
@@ -91,7 +98,7 @@ export const DataProvider: FC<PropsWithChildren> = ({ children }) => {
     if (isLoading) return [];
     if (isError) return [];
 
-    let filteredData: INewFruitData[] = devilFruits;
+    let filteredData: INewFruitData[] = allDevilFruits;
 
     // Filter by 'canon' status
     if (!showNonCanon) {
@@ -140,13 +147,12 @@ export const DataProvider: FC<PropsWithChildren> = ({ children }) => {
       });
     }
 
+    setTotalItems(filteredData.length);
     setSearchState(filteredData.length > 0);
-
-    filteredDevilFruitsCount.current = filteredData.length;
 
     return filteredData;
   }, [
-    devilFruits,
+    allDevilFruits,
     isError,
     isLoading,
     searchQuery,
@@ -154,6 +160,20 @@ export const DataProvider: FC<PropsWithChildren> = ({ children }) => {
     selectedUserFilters,
     showNonCanon,
   ]);
+
+  const paginatedFruitData = useMemo(() => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+
+    return filteredFruitData.slice(startIndex, endIndex);
+  }, [currentPage, filteredFruitData, itemsPerPage]);
+
+  const itemsPerPageOptions = useMemo(() => {
+    if (totalItems <= 25) return [10, 25];
+    if (totalItems <= 50) return [25, 50];
+    if (totalItems <= 100) return [25, 50, 100];
+    return [25, 50, 75, 100];
+  }, [totalItems]);
 
   const handleShowSpoilers = useCallback(() => {
     setShowSpoilers(!showSpoilers);
@@ -167,11 +187,26 @@ export const DataProvider: FC<PropsWithChildren> = ({ children }) => {
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
     const query = e.target.value.toLowerCase();
     setSearchQuery(query);
+
+    setCurrentPage(1);
+
+    // TODO: reset filters on search?
+    // setSelectedTypeFilters([]);
+    // setSelectedUserFilters([]);
   };
 
+  const handlePageChange = useCallback((page: number) => {
+    setCurrentPage(page);
+  }, []);
+
+  const handleItemsPerPageChange = useCallback((items: number) => {
+    setItemsPerPage(items);
+    setCurrentPage(1);
+  }, []);
+
   const value = {
-    filteredFruitData,
-    resultsCount: filteredDevilFruitsCount.current,
+    filteredFruitData: paginatedFruitData,
+    totalItems,
     showSpoilers,
     showNonCanon,
     isLoading,
@@ -180,11 +215,16 @@ export const DataProvider: FC<PropsWithChildren> = ({ children }) => {
     searchQuery,
     selectedTypeFilters,
     selectedUserFilters,
+    currentPage,
+    itemsPerPage,
+    itemsPerPageOptions,
     handleSearch,
     handleShowSpoilers,
     handleShowNonCanon,
     handleTypeFilter,
     handleUserFilter,
+    handlePageChange,
+    handleItemsPerPageChange,
   };
 
   return <DataContext.Provider value={value}>{children}</DataContext.Provider>;

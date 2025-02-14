@@ -63,7 +63,7 @@ export interface INewFruitData {
 
 export interface IDataState {
   filteredFruitData: INewFruitData[] | null | undefined;
-  resultsCount: number;
+  totalItems: number;
   isLoading: boolean;
   isError: boolean;
   showSpoilers: boolean;
@@ -72,9 +72,14 @@ export interface IDataState {
   searchQuery: string;
   selectedTypeFilters: string[];
   selectedUserFilters: string[];
+  currentPage: number;
+  itemsPerPage: number;
+  itemsPerPageOptions: number[];
   handleSearch: (e: ChangeEvent<HTMLInputElement>) => void;
   handleShowSpoilers: () => void;
   handleShowNonCanon: () => void;
   handleTypeFilter: (types: string[]) => void;
   handleUserFilter: (filters: string[]) => void;
+  handlePageChange: (page: number) => void;
+  handleItemsPerPageChange: (items: number) => void;
 }

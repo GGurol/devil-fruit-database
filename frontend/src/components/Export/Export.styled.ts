@@ -7,7 +7,7 @@ export const ExportContainer = styled.div`
   gap: 32px;
 
   width: 80%;
-  height: 60%;
+  height: 80%;
 
   padding: 24px;
 

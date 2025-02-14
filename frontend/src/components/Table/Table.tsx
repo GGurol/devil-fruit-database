@@ -1,4 +1,11 @@
-import { ChangeEvent, FC, Fragment, useCallback } from "react";
+import {
+  ChangeEvent,
+  FC,
+  Fragment,
+  useCallback,
+  useEffect,
+  useRef,
+} from "react";
 import { useDataContext } from "../../providers/Data/Data.context";
 
 import {
@@ -33,8 +40,17 @@ const Table: FC<ITableProps> = ({ $alternate = false }) => {
     showSpoilers,
     isLoading,
     searchState,
+    currentPage,
     handleSearch,
   } = useDataContext();
+
+  const tableRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (tableRef.current) {
+      tableRef.current.scrollTo({ left: 0, top: 0, behavior: "instant" });
+    }
+  }, [currentPage]);
 
   const handleClearSearch = useCallback(() => {
     handleSearch({ target: { value: "" } } as ChangeEvent<HTMLInputElement>);
@@ -208,7 +224,7 @@ const Table: FC<ITableProps> = ({ $alternate = false }) => {
 
   return (
     <Fragment>
-      <TableContainer>{handleTableState()}</TableContainer>
+      <TableContainer ref={tableRef}>{handleTableState()}</TableContainer>
     </Fragment>
   );
 };

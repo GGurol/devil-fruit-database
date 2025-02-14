@@ -1,4 +1,4 @@
-import { forwardRef, useState } from "react";
+import { ChangeEvent, forwardRef, useState } from "react";
 import { ICheckboxWrapperProps } from "./Checkbox.types";
 import CheckboxWrapper, {
   CheckboxInput,
@@ -18,23 +18,21 @@ const Checkbox = forwardRef<HTMLInputElement, ICheckboxWrapperProps>(
       name,
       width = "20px",
       height = "20px",
-      checked,
+      checked = false,
+      onChange,
       ...rest
     } = props;
 
     const theme = useTheme();
 
-    const [isChecked, setIsChecked] = useState<boolean>(() => {
-      if (checked) {
-        return checked;
+    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+      if (onChange) {
+        onChange(event);
       }
 
-      return false;
-    });
-
-    const handleChange = () => {
-      setIsChecked(!isChecked);
-      $handleState();
+      if ($handleState) {
+        $handleState();
+      }
     };
 
     return (
@@ -55,10 +53,10 @@ const Checkbox = forwardRef<HTMLInputElement, ICheckboxWrapperProps>(
             width={width}
             height={height}
             id={`checkbox-${name}-label`}
-            checked={isChecked}
+            checked={checked}
             onChange={handleChange}
           />
-          {isChecked && (
+          {checked && (
             <CheckIconOverlay>
               <Icon
                 iconName="Check"

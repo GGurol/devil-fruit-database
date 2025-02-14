@@ -8,14 +8,14 @@ import { IDropdownProps } from "./Dropdown.types";
 import Button from "../Button/Button";
 
 const Dropdown: FC<IDropdownProps> = (props) => {
-  const { options, onChange } = props;
+  const { options, selectedValue, onChange } = props;
 
   const buttonRef = useRef<HTMLButtonElement>(null);
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [headerWidth, setHeaderWidth] = useState<number>(0);
 
-  const [selectedValue, setSelectedValue] = useState<number>(options[0]);
+  const [dropdownValue, setDropdownValue] = useState<number>(options[0]);
 
   const toggleDropdownState = useCallback(() => {
     setIsOpen(!isOpen);
@@ -23,7 +23,7 @@ const Dropdown: FC<IDropdownProps> = (props) => {
 
   const handleSelection = useCallback(
     (value: number) => {
-      setSelectedValue(value);
+      setDropdownValue(value);
       onChange(value);
 
       const popover = document.getElementById("dropdown-list");
@@ -42,6 +42,10 @@ const Dropdown: FC<IDropdownProps> = (props) => {
     }
   }, [isOpen]);
 
+  useEffect(() => {
+    setDropdownValue(selectedValue);
+  }, [selectedValue]);
+
   return (
     <DropdownContainer>
       <Button
@@ -57,7 +61,7 @@ const Dropdown: FC<IDropdownProps> = (props) => {
         }}
         style={{ anchorName: "--dropdown" }}
       >
-        {selectedValue}
+        {dropdownValue}
       </Button>
 
       <DropdownList popover="auto" id="dropdown-list" width={headerWidth}>

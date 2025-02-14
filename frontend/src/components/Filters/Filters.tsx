@@ -1,4 +1,4 @@
-import { FC, useCallback, useRef, useState } from "react";
+import { FC, useCallback, useEffect, useRef, useState } from "react";
 import { IFilterProps } from "./Filters.types";
 import {
   FilterActionsContainer,
@@ -9,6 +9,8 @@ import {
   FilterSectionHeader,
   FilterSectionItems,
   FilterSectionsContainer,
+  FiltersMobileContainer,
+  FiltersOverlay,
   FiltersPopoverContainer,
 } from "./Filters.styled";
 
@@ -24,6 +26,8 @@ const Filters: FC<IFilterProps> = ({ $isLandscape = true }) => {
     selectedUserFilters: globalUserFilters,
     handleTypeFilter,
     handleUserFilter,
+    handlePageChange,
+    handleItemsPerPageChange,
   } = useDataContext();
 
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -57,6 +61,9 @@ const Filters: FC<IFilterProps> = ({ $isLandscape = true }) => {
     handleTypeFilter(localSelectedTypeFilters);
     handleUserFilter(localSelectedUserFilters);
 
+    handlePageChange(1);
+    handleItemsPerPageChange(25);
+
     const popover = document.getElementById("filters-container");
     if (popover) {
       popover.hidePopover();
@@ -64,6 +71,8 @@ const Filters: FC<IFilterProps> = ({ $isLandscape = true }) => {
 
     setIsOpen(false);
   }, [
+    handleItemsPerPageChange,
+    handlePageChange,
     handleTypeFilter,
     handleUserFilter,
     localSelectedTypeFilters,
@@ -87,6 +96,152 @@ const Filters: FC<IFilterProps> = ({ $isLandscape = true }) => {
     handleUserFilter,
   ]);
 
+  useEffect(() => {
+    setLocalSelectedTypeFilters(globalTypeFilters);
+  }, [globalTypeFilters]);
+
+  useEffect(() => {
+    setLocalSelectedUserFilters(globalUserFilters);
+  }, [globalUserFilters]);
+
+  const filterContent = () => {
+    return (
+      <FilterContentContainer>
+        <FilterSectionsContainer $isLandscape={$isLandscape}>
+          <FilterSection>
+            <FilterSectionHeader>Types</FilterSectionHeader>
+            <FilterSectionItems>
+              {/* Auto generate items, using fruit types */}
+              <Checkbox
+                name="type-1"
+                $variant="AccentPrimary"
+                $label={{
+                  hasLabel: true,
+                  ascendingLabel: false,
+                  labelText: "Zoan",
+                }}
+                checked={localSelectedTypeFilters.includes("Zoan")}
+                $handleState={() => handleTypeCheckboxChange("Zoan")}
+              />
+              <Checkbox
+                name="type-2"
+                $variant="AccentPrimary"
+                $label={{
+                  hasLabel: true,
+                  ascendingLabel: false,
+                  labelText: "Ancient Zoan",
+                }}
+                checked={localSelectedTypeFilters.includes("Ancient Zoan")}
+                $handleState={() => handleTypeCheckboxChange("Ancient Zoan")}
+              />
+              <Checkbox
+                name="type-3"
+                $variant="AccentPrimary"
+                $label={{
+                  hasLabel: true,
+                  ascendingLabel: false,
+                  labelText: "Mythical Zoan",
+                }}
+                checked={localSelectedTypeFilters.includes("Mythical Zoan")}
+                $handleState={() => handleTypeCheckboxChange("Mythical Zoan")}
+              />
+              <Checkbox
+                name="type-4"
+                $variant="AccentPrimary"
+                $label={{
+                  hasLabel: true,
+                  ascendingLabel: false,
+                  labelText: "Logia",
+                }}
+                checked={localSelectedTypeFilters.includes("Logia")}
+                $handleState={() => handleTypeCheckboxChange("Logia")}
+              />
+              <Checkbox
+                name="type-5"
+                $variant="AccentPrimary"
+                $label={{
+                  hasLabel: true,
+                  ascendingLabel: false,
+                  labelText: "Paramecia",
+                }}
+                checked={localSelectedTypeFilters.includes("Paramecia")}
+                $handleState={() => handleTypeCheckboxChange("Paramecia")}
+              />
+              <Checkbox
+                name="type-6"
+                $variant="AccentPrimary"
+                $label={{
+                  hasLabel: true,
+                  ascendingLabel: false,
+                  labelText: "Special Paramecia",
+                }}
+                checked={localSelectedTypeFilters.includes("Special Paramecia")}
+                $handleState={() =>
+                  handleTypeCheckboxChange("Special Paramecia")
+                }
+              />
+              <Checkbox
+                name="type-7"
+                $variant="AccentPrimary"
+                $label={{
+                  hasLabel: true,
+                  ascendingLabel: false,
+                  labelText: "Undetermined",
+                }}
+                checked={localSelectedTypeFilters.includes("Undetermined")}
+                $handleState={() => handleTypeCheckboxChange("Undetermined")}
+              />
+            </FilterSectionItems>
+          </FilterSection>
+          <FilterSection>
+            <FilterSectionHeader>User</FilterSectionHeader>
+            <FilterSectionItems>
+              {/* Auto generate items, using fruit types */}
+              <Checkbox
+                name="user-1"
+                $variant="AccentPrimary"
+                $label={{
+                  hasLabel: true,
+                  ascendingLabel: false,
+                  labelText: "Awakened",
+                }}
+                checked={localSelectedUserFilters.includes("Awakened")}
+                $handleState={() => handleUserCheckboxChange("Awakened")}
+              />
+              <Checkbox
+                name="user-2"
+                $variant="AccentPrimary"
+                $label={{
+                  hasLabel: true,
+                  ascendingLabel: false,
+                  labelText: "Artificial",
+                }}
+                checked={localSelectedUserFilters.includes("Artificial")}
+                $handleState={() => handleUserCheckboxChange("Artificial")}
+              />
+            </FilterSectionItems>
+          </FilterSection>
+        </FilterSectionsContainer>
+
+        <FilterBottomContainer>
+          <Divider />
+          <FilterActionsContainer>
+            <Button onClick={handleCancel} $variant={{ variantName: "Text" }}>
+              Cancel
+            </Button>
+            <Button
+              onClick={handleApplyFilters}
+              $variant={{ variantName: "Solid" }}
+              style={{ flex: $isLandscape ? "" : "1 0 0" }}
+            >
+              Apply Filters
+            </Button>
+          </FilterActionsContainer>
+        </FilterBottomContainer>
+      </FilterContentContainer>
+    );
+  };
+
   return (
     <FiltersContainer>
       <Button
@@ -106,116 +261,20 @@ const Filters: FC<IFilterProps> = ({ $isLandscape = true }) => {
       />
 
       <FiltersPopoverContainer popover="auto" id="filters-container">
-        <FilterContentContainer>
-          <FilterSectionsContainer $isLandscape={$isLandscape}>
-            <FilterSection>
-              <FilterSectionHeader>Types</FilterSectionHeader>
-              <FilterSectionItems>
-                {/* Auto generate items, using fruit types */}
-                <Checkbox
-                  name="type-1"
-                  $variant="AccentPrimary"
-                  $label={{
-                    hasLabel: true,
-                    ascendingLabel: false,
-                    labelText: "Zoan",
-                  }}
-                  $handleState={() => handleTypeCheckboxChange("Zoan")}
-                  checked={localSelectedTypeFilters.includes("Zoan")}
-                />
-                <Checkbox
-                  name="type-2"
-                  $variant="AccentPrimary"
-                  $label={{
-                    hasLabel: true,
-                    ascendingLabel: false,
-                    labelText: "Mythical Zoan",
-                  }}
-                  $handleState={() => handleTypeCheckboxChange("Mythical Zoan")}
-                  checked={localSelectedTypeFilters.includes("Mythical Zoan")}
-                />
-                <Checkbox
-                  name="type-3"
-                  $variant="AccentPrimary"
-                  $label={{
-                    hasLabel: true,
-                    ascendingLabel: false,
-                    labelText: "Logia",
-                  }}
-                  $handleState={() => handleTypeCheckboxChange("Logia")}
-                  checked={localSelectedTypeFilters.includes("Logia")}
-                />
-                <Checkbox
-                  name="type-4"
-                  $variant="AccentPrimary"
-                  $label={{
-                    hasLabel: true,
-                    ascendingLabel: false,
-                    labelText: "Paramecia",
-                  }}
-                  $handleState={() => handleTypeCheckboxChange("Paramecia")}
-                  checked={localSelectedTypeFilters.includes("Paramecia")}
-                />
-                <Checkbox
-                  name="type-5"
-                  $variant="AccentPrimary"
-                  $label={{
-                    hasLabel: true,
-                    ascendingLabel: false,
-                    labelText: "Undetermined",
-                  }}
-                  $handleState={() => handleTypeCheckboxChange("Undetermined")}
-                  checked={localSelectedTypeFilters.includes("Undetermined")}
-                />
-              </FilterSectionItems>
-            </FilterSection>
-            <FilterSection>
-              <FilterSectionHeader>User</FilterSectionHeader>
-              <FilterSectionItems>
-                {/* Auto generate items, using fruit types */}
-                <Checkbox
-                  name="user-1"
-                  $variant="AccentPrimary"
-                  $label={{
-                    hasLabel: true,
-                    ascendingLabel: false,
-                    labelText: "Awakened",
-                  }}
-                  $handleState={() => handleUserCheckboxChange("Awakened")}
-                  checked={localSelectedUserFilters.includes("Awakened")}
-                />
-                <Checkbox
-                  name="user-2"
-                  $variant="AccentPrimary"
-                  $label={{
-                    hasLabel: true,
-                    ascendingLabel: false,
-                    labelText: "Artificial",
-                  }}
-                  $handleState={() => handleUserCheckboxChange("Artificial")}
-                  checked={localSelectedUserFilters.includes("Artificial")}
-                />
-              </FilterSectionItems>
-            </FilterSection>
-          </FilterSectionsContainer>
-
-          <FilterBottomContainer>
-            <Divider />
-            <FilterActionsContainer>
-              <Button onClick={handleCancel} $variant={{ variantName: "Text" }}>
-                Cancel
-              </Button>
-              <Button
-                onClick={handleApplyFilters}
-                $variant={{ variantName: "Solid" }}
-                style={{ flex: $isLandscape ? "" : "1 0 0" }}
-              >
-                Apply Filters
-              </Button>
-            </FilterActionsContainer>
-          </FilterBottomContainer>
-        </FilterContentContainer>
+        {filterContent()}
       </FiltersPopoverContainer>
+
+      {isOpen && (
+        <FiltersOverlay onClick={handleCancel}>
+          <FiltersMobileContainer
+            onClick={(event: React.MouseEvent<HTMLDivElement>) =>
+              event.stopPropagation()
+            }
+          >
+            {filterContent()}
+          </FiltersMobileContainer>
+        </FiltersOverlay>
+      )}
     </FiltersContainer>
   );
 };

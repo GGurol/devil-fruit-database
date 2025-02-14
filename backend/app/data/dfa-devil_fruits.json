@@ -18,7 +18,7 @@
       },
       "types": [
         {
-          "type": "Unknown",
+          "type": "Undetermined",
           "is_spoiler": false
         }
       ],
@@ -57,7 +57,7 @@
       },
       "types": [
         {
-          "type": "Unknown",
+          "type": "Undetermined",
           "is_spoiler": false
         }
       ],
@@ -96,7 +96,7 @@
       },
       "types": [
         {
-          "type": "Unknown",
+          "type": "Undetermined",
           "is_spoiler": false
         }
       ],
@@ -135,7 +135,7 @@
       },
       "types": [
         {
-          "type": "Unknown",
+          "type": "Undetermined",
           "is_spoiler": false
         }
       ],
@@ -2455,7 +2455,7 @@
       ],
       "abilities": {
         "ability": "Allows the user to become a full Holstein cow or half-cow hybrid.",
-        "awakened_ability": "Unknown"
+        "awakened_ability": "Undetermined"
       },
       "users": {
         "current_users": [
@@ -2494,7 +2494,7 @@
       ],
       "abilities": {
         "ability": "Allows the user to become a full koala or half-koala hybrid.",
-        "awakened_ability": "Unknown"
+        "awakened_ability": "Undetermined"
       },
       "users": {
         "current_users": [
@@ -2533,7 +2533,7 @@
       ],
       "abilities": {
         "ability": "Allows the user to become a full rhinoceros or half-rhinoceros hybrid.",
-        "awakened_ability": "Unknown"
+        "awakened_ability": "Undetermined"
       },
       "users": {
         "current_users": [
@@ -2572,7 +2572,7 @@
       ],
       "abilities": {
         "ability": "Allows the user to become a full zebra or half-zebra hybrid.",
-        "awakened_ability": "Unknown"
+        "awakened_ability": "Undetermined"
       },
       "users": {
         "current_users": [

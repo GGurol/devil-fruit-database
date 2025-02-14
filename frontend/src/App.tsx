@@ -37,11 +37,12 @@ export const App: FC = () => {
   const theme = useTheme();
   const { mode, toggleMode } = useThemeContext();
   const {
-    resultsCount,
+    totalItems,
     showSpoilers,
     showNonCanon,
     isLoading,
     isError,
+    itemsPerPageOptions,
     handleShowSpoilers,
     handleShowNonCanon,
   } = useDataContext();
@@ -128,7 +129,7 @@ export const App: FC = () => {
 
             <FooterWrapper>
               <Legend />
-              <Pagination results={resultsCount} options={[25, 50, 75, 100]} />
+              <Pagination results={totalItems} options={itemsPerPageOptions} />
             </FooterWrapper>
           </BodyContentWrapper>
         </BodyWrapper>
