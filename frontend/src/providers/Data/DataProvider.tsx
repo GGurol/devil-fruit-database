@@ -13,8 +13,8 @@ import { useQuery } from "react-query";
 import { DataContext } from "./Data.context";
 import { INewFruitData } from "./Data.types";
 
-// const BASE_URL = "https://devil-fruit-database-crs-qehiib5lra-ue.a.run.app";
-const DEV_BASE_URL = "http://localhost:8000";
+const BASE_URL = "https://devil-fruit-database-crs-qehiib5lra-ue.a.run.app";
+// const DEV_BASE_URL = "http://localhost:8000";
 
 export const DataProvider: FC<PropsWithChildren> = ({ children }) => {
   // TODO: Implement search functionality with backend api call, though frontend might be faster, will need to test
@@ -65,14 +65,10 @@ export const DataProvider: FC<PropsWithChildren> = ({ children }) => {
     localStorage.setItem("canon", String(showNonCanon));
   }, [showNonCanon, showSpoilers]);
 
-  const {
-    data: devilFruits,
-    isLoading,
-    isError,
-  } = useQuery({
+  const { isLoading, isError } = useQuery({
     queryKey: ["devilFruits"],
     queryFn: async () => {
-      const response = await fetch(`${DEV_BASE_URL}/api/devil-fruits/`, {});
+      const response = await fetch(`${BASE_URL}/api/devil-fruits/`, {});
       // await new Promise((resolve) => setTimeout(resolve, 5000));
 
       return await response.json();
