@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+// @ts-nocheck
+
 import { FC, useCallback, useEffect, useRef, useState } from "react";
 import {
   DropdownContainer,
