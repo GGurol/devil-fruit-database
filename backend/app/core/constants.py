@@ -19,5 +19,5 @@ class Environment(str, Enum):
 DATA_FILES: Dict[Environment, str] = {
     Environment.DEV: "data/dfa-devil_fruits.json",
     Environment.STAGING: "data/simple_data.json",
-    Environment.PROD: "data/simple_data.json",
+    Environment.PROD: "data/dfa-devil_fruits.json",
 }
