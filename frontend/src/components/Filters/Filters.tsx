@@ -1,10 +1,8 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-// @ts-nocheck
-
 import { FC, useCallback, useEffect, useRef, useState } from "react";
 import { IFilterProps } from "./Filters.types";
 import {
   FilterActionsContainer,
+  FilterActionsRight,
   FilterBottomContainer,
   FilterContentContainer,
   FiltersContainer,
@@ -12,7 +10,6 @@ import {
   FilterSectionHeader,
   FilterSectionItems,
   FilterSectionsContainer,
-  FiltersMobileContainer,
   FiltersOverlay,
   FiltersPopoverContainer,
 } from "./Filters.styled";
@@ -29,10 +26,12 @@ const Filters: FC<IFilterProps> = ({ $isLandscape = true }) => {
     selectedUserFilters: globalUserFilters,
     handleTypeFilter,
     handleUserFilter,
+    handleResetFilters,
     handlePageChange,
     handleItemsPerPageChange,
   } = useDataContext();
 
+  const containerRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -67,10 +66,10 @@ const Filters: FC<IFilterProps> = ({ $isLandscape = true }) => {
     handlePageChange(1);
     handleItemsPerPageChange(25);
 
-    const popover = document.getElementById("filters-container");
-    if (popover) {
-      popover.hidePopover();
-    }
+    // const popover = document.getElementById("filters-container");
+    // if (popover) {
+    //   popover.hidePopover();
+    // }
 
     setIsOpen(false);
   }, [
@@ -86,10 +85,10 @@ const Filters: FC<IFilterProps> = ({ $isLandscape = true }) => {
     handleTypeFilter(globalTypeFilters);
     handleUserFilter(globalUserFilters);
 
-    const popover = document.getElementById("filters-container");
-    if (popover) {
-      popover.hidePopover();
-    }
+    // const popover = document.getElementById("filters-container");
+    // if (popover) {
+    //   popover.hidePopover();
+    // }
 
     setIsOpen(false);
   }, [
@@ -107,6 +106,23 @@ const Filters: FC<IFilterProps> = ({ $isLandscape = true }) => {
     setLocalSelectedUserFilters(globalUserFilters);
   }, [globalUserFilters]);
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(event.target as Node) &&
+        isOpen
+      ) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen]);
+
   const filterContent = () => {
     return (
       <FilterContentContainer>
@@ -116,6 +132,7 @@ const Filters: FC<IFilterProps> = ({ $isLandscape = true }) => {
             <FilterSectionItems>
               {/* Auto generate items, using fruit types */}
               <Checkbox
+                id="type-1"
                 name="type-1"
                 $variant="AccentPrimary"
                 $label={{
@@ -127,6 +144,7 @@ const Filters: FC<IFilterProps> = ({ $isLandscape = true }) => {
                 $handleState={() => handleTypeCheckboxChange("Zoan")}
               />
               <Checkbox
+                id="type-2"
                 name="type-2"
                 $variant="AccentPrimary"
                 $label={{
@@ -138,6 +156,7 @@ const Filters: FC<IFilterProps> = ({ $isLandscape = true }) => {
                 $handleState={() => handleTypeCheckboxChange("Ancient Zoan")}
               />
               <Checkbox
+                id="type-3"
                 name="type-3"
                 $variant="AccentPrimary"
                 $label={{
@@ -149,6 +168,7 @@ const Filters: FC<IFilterProps> = ({ $isLandscape = true }) => {
                 $handleState={() => handleTypeCheckboxChange("Mythical Zoan")}
               />
               <Checkbox
+                id="type-4"
                 name="type-4"
                 $variant="AccentPrimary"
                 $label={{
@@ -160,6 +180,7 @@ const Filters: FC<IFilterProps> = ({ $isLandscape = true }) => {
                 $handleState={() => handleTypeCheckboxChange("Logia")}
               />
               <Checkbox
+                id="type-5"
                 name="type-5"
                 $variant="AccentPrimary"
                 $label={{
@@ -171,6 +192,7 @@ const Filters: FC<IFilterProps> = ({ $isLandscape = true }) => {
                 $handleState={() => handleTypeCheckboxChange("Paramecia")}
               />
               <Checkbox
+                id="type-6"
                 name="type-6"
                 $variant="AccentPrimary"
                 $label={{
@@ -184,6 +206,7 @@ const Filters: FC<IFilterProps> = ({ $isLandscape = true }) => {
                 }
               />
               <Checkbox
+                id="type-7"
                 name="type-7"
                 $variant="AccentPrimary"
                 $label={{
@@ -201,6 +224,7 @@ const Filters: FC<IFilterProps> = ({ $isLandscape = true }) => {
             <FilterSectionItems>
               {/* Auto generate items, using fruit types */}
               <Checkbox
+                id="user-1"
                 name="user-1"
                 $variant="AccentPrimary"
                 $label={{
@@ -212,6 +236,7 @@ const Filters: FC<IFilterProps> = ({ $isLandscape = true }) => {
                 $handleState={() => handleUserCheckboxChange("Awakened")}
               />
               <Checkbox
+                id="user-2"
                 name="user-2"
                 $variant="AccentPrimary"
                 $label={{
@@ -229,16 +254,27 @@ const Filters: FC<IFilterProps> = ({ $isLandscape = true }) => {
         <FilterBottomContainer>
           <Divider />
           <FilterActionsContainer>
-            <Button onClick={handleCancel} $variant={{ variantName: "Text" }}>
-              Cancel
-            </Button>
             <Button
-              onClick={handleApplyFilters}
-              $variant={{ variantName: "Solid" }}
-              style={{ flex: $isLandscape ? "" : "1 0 0" }}
+              onClick={handleResetFilters}
+              $variant={{ variantName: "Text" }}
             >
-              Apply Filters
+              Reset Filters
             </Button>
+            <FilterActionsRight>
+              <Button
+                onClick={handleCancel}
+                $variant={{ variantName: "Outline" }}
+              >
+                Cancel
+              </Button>
+              <Button
+                onClick={handleApplyFilters}
+                $variant={{ variantName: "Solid" }}
+                style={{ flex: $isLandscape ? "" : "1 0 0" }}
+              >
+                Apply Filters
+              </Button>
+            </FilterActionsRight>
           </FilterActionsContainer>
         </FilterBottomContainer>
       </FilterContentContainer>
@@ -246,11 +282,10 @@ const Filters: FC<IFilterProps> = ({ $isLandscape = true }) => {
   };
 
   return (
-    <FiltersContainer>
+    <FiltersContainer ref={containerRef}>
       <Button
         ref={buttonRef}
         onClick={toggleFiltersState}
-        popovertarget="filters-container"
         $variant={{
           variantName: "IconOutline",
         }}
@@ -260,24 +295,15 @@ const Filters: FC<IFilterProps> = ({ $isLandscape = true }) => {
             iconName: "Adjust",
           },
         }}
-        style={{ anchorName: "--filters" }}
       />
 
-      <FiltersPopoverContainer popover="auto" id="filters-container">
-        {filterContent()}
-      </FiltersPopoverContainer>
-
       {isOpen && (
-        <FiltersOverlay onClick={handleCancel}>
-          <FiltersMobileContainer
-            onClick={(event: React.MouseEvent<HTMLDivElement>) =>
-              event.stopPropagation()
-            }
-          >
-            {filterContent()}
-          </FiltersMobileContainer>
-        </FiltersOverlay>
+        <FiltersPopoverContainer id="filters-container">
+          {filterContent()}
+        </FiltersPopoverContainer>
       )}
+
+      {isOpen && <FiltersOverlay onClick={handleCancel} />}
     </FiltersContainer>
   );
 };

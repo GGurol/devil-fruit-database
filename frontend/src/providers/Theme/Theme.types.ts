@@ -74,6 +74,9 @@ export interface IThemeBreakpoints {
 
 export interface IThemeCommonStyles {
   commonBorder: CSSProp;
+  commonShadowSm: CSSProp;
+  commonShadowMd: CSSProp;
+  commonShadowLg: CSSProp;
 }
 
 // dont forget to update the themeVars const, when adding a new component

@@ -12,6 +12,7 @@ import {
   DataItem,
   DataList,
   DataText,
+  EmptyActionsContainer,
   EmptyBodyText,
   EmptyBodyTextContainer,
   EmptyContainer,
@@ -41,6 +42,7 @@ const Table: FC<ITableProps> = ({ $alternate = false }) => {
     isLoading,
     searchState,
     currentPage,
+    handleResetFilters,
     handleSearch,
   } = useDataContext();
 
@@ -75,12 +77,20 @@ const Table: FC<ITableProps> = ({ $alternate = false }) => {
                 </EmptyBodyText>
               </EmptyBodyTextContainer>
             </EmptyTextContent>
-            <Button
-              onClick={handleClearSearch}
-              $variant={{ variantName: "Outline" }}
-            >
-              Clear search
-            </Button>
+            <EmptyActionsContainer>
+              <Button
+                onClick={handleClearSearch}
+                $variant={{ variantName: "Outline" }}
+              >
+                Clear Search
+              </Button>
+              <Button
+                onClick={handleResetFilters}
+                $variant={{ variantName: "Solid" }}
+              >
+                Reset Filters
+              </Button>
+            </EmptyActionsContainer>
           </EmptyContent>
         </EmptyContainer>
       );

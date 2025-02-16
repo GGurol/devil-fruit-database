@@ -6,14 +6,13 @@ export const FiltersContainer = styled.div`
 
 export const FiltersPopoverContainer = styled.div`
   position: absolute;
-  position-anchor: --filters;
 
   padding: 0;
   margin: 0;
   inset: auto;
 
-  top: anchor(bottom);
-  right: anchor(right);
+  top: 100%;
+  right: 0;
 
   width: fit-content;
   min-width: 256px;
@@ -31,13 +30,25 @@ export const FiltersPopoverContainer = styled.div`
 
   z-index: 10;
 
+  ${({ theme }) => theme.commonShadowSm}
+
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet.max}) {
-    display: none;
+    position: fixed; // Switch to fixed positioning for mobile
+
+    top: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    width: 100%;
+
+    border-radius: 4px 4px 0 0;
   }
 `;
 
 export const FiltersOverlay = styled.div`
   display: none;
+
   position: fixed;
 
   top: 0;
@@ -60,6 +71,7 @@ export const FiltersOverlay = styled.div`
 
 export const FiltersMobileContainer = styled.div`
   display: none;
+
   position: fixed;
 
   bottom: 0;
@@ -129,8 +141,15 @@ export const FilterBottomContainer = styled.div`
 
 export const FilterActionsContainer = styled.div`
   display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  align-self: stretch;
+`;
+
+export const FilterActionsRight = styled.div`
+  display: flex;
   justify-content: flex-end;
-  align-items: space;
+  align-items: flex-start;
   align-self: stretch;
   gap: 8px;
 `;

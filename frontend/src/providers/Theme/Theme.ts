@@ -191,6 +191,18 @@ const commonStyles: IThemeCommonStyles = {
   commonBorder: css`
     border: 1px solid ${({ theme }) => theme.border["border-primary"]};
   `,
+  commonShadowSm: css`
+    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1),
+      0px 1px 2px 0px rgba(0, 0, 0, 0.06);
+  `,
+  commonShadowMd: css`
+    box-shadow: 0px 4px 8px -2px rgba(0, 0, 0, 0.1),
+      0px 2px 4px -2px rgba(0, 0, 0, 0.06);
+  `,
+  commonShadowLg: css`
+    box-shadow: 0px 12px 16px -4px rgba(0, 0, 0, 0.08),
+      0px 4px 6px -2px rgba(0, 0, 0, 0.03);
+  `,
 };
 
 export const themeVars: ITheme = {

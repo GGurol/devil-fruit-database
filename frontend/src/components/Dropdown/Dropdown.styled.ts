@@ -6,7 +6,6 @@ export const DropdownContainer = styled.div`
 
 export const DropdownList = styled.ul<{ width: number }>`
   position: absolute;
-  position-anchor: --dropdown;
 
   width: ${({ width }) => width}px;
   height: fit-content;
@@ -17,8 +16,12 @@ export const DropdownList = styled.ul<{ width: number }>`
   margin: 0;
   inset: auto;
 
-  bottom: anchor(top);
-  right: anchor(right);
+  /* Used for popover api, not yet available for all browsers */
+  /* position-anchor: --dropdown; */
+  /* bottom: anchor(top); */
+  /* right: anchor(right); */
+
+  bottom: 100%;
 
   margin-bottom: 8px;
 
@@ -57,6 +60,8 @@ export const DropdownList = styled.ul<{ width: number }>`
   }
 
   z-index: 10;
+
+  ${({ theme }) => theme.commonShadowSm}
 `;
 
 export const DropdownItem = styled.li`

@@ -90,6 +90,11 @@ export const DataProvider: FC<PropsWithChildren> = ({ children }) => {
     setSelectedUserFilters(filters);
   }, []);
 
+  const handleResetFilters = useCallback(() => {
+    setSelectedTypeFilters([]);
+    setSelectedUserFilters([]);
+  }, []);
+
   const filteredFruitData = useMemo(() => {
     if (isLoading) return [];
     if (isError) return [];
@@ -219,6 +224,7 @@ export const DataProvider: FC<PropsWithChildren> = ({ children }) => {
     handleShowNonCanon,
     handleTypeFilter,
     handleUserFilter,
+    handleResetFilters,
     handlePageChange,
     handleItemsPerPageChange,
   };

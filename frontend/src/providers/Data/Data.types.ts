@@ -80,6 +80,7 @@ export interface IDataState {
   handleShowNonCanon: () => void;
   handleTypeFilter: (types: string[]) => void;
   handleUserFilter: (filters: string[]) => void;
+  handleResetFilters: () => void;
   handlePageChange: (page: number) => void;
   handleItemsPerPageChange: (items: number) => void;
 }

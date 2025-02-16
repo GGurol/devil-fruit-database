@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-// @ts-nocheck
-
 import { FC, useCallback, useEffect, useRef, useState } from "react";
 import {
   DropdownContainer,
@@ -13,6 +10,7 @@ import Button from "../Button/Button";
 const Dropdown: FC<IDropdownProps> = (props) => {
   const { options, selectedValue, onChange } = props;
 
+  const containerRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -21,18 +19,18 @@ const Dropdown: FC<IDropdownProps> = (props) => {
   const [dropdownValue, setDropdownValue] = useState<number>(options[0]);
 
   const toggleDropdownState = useCallback(() => {
-    setIsOpen(!isOpen);
-  }, [isOpen]);
+    setIsOpen((prev) => !prev);
+  }, []);
 
   const handleSelection = useCallback(
     (value: number) => {
       setDropdownValue(value);
       onChange(value);
 
-      const popover = document.getElementById("dropdown-list");
-      if (popover) {
-        popover.hidePopover();
-      }
+      // const popover = document.getElementById("dropdown-list");
+      // if (popover) {
+      //   popover.hidePopover();
+      // }
 
       setIsOpen(false);
     },
@@ -49,12 +47,29 @@ const Dropdown: FC<IDropdownProps> = (props) => {
     setDropdownValue(selectedValue);
   }, [selectedValue]);
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(event.target as Node) &&
+        isOpen
+      ) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen]);
+
   return (
-    <DropdownContainer>
+    <DropdownContainer ref={containerRef}>
       <Button
         ref={buttonRef}
         onClick={toggleDropdownState}
-        popovertarget="dropdown-list"
+        // popovertarget="dropdown-list"
         $variant={{ variantName: "Outline" }}
         $icon={{
           hasIcon: true,
@@ -62,22 +77,28 @@ const Dropdown: FC<IDropdownProps> = (props) => {
             iconName: isOpen ? "CaretUp" : "CaretDown",
           },
         }}
-        style={{ anchorName: "--dropdown" }}
+        // style={{ anchorName: "--dropdown" }}
       >
         {dropdownValue}
       </Button>
 
-      <DropdownList popover="auto" id="dropdown-list" width={headerWidth}>
-        {options.map((option) => (
-          <DropdownItem
-            key={option}
-            value={option}
-            onClick={() => handleSelection(option)}
-          >
-            {option}
-          </DropdownItem>
-        ))}
-      </DropdownList>
+      {isOpen && (
+        <DropdownList
+          // popover="auto"
+          id="dropdown-list"
+          width={headerWidth}
+        >
+          {options.map((option) => (
+            <DropdownItem
+              key={option}
+              value={option}
+              onClick={() => handleSelection(option)}
+            >
+              {option}
+            </DropdownItem>
+          ))}
+        </DropdownList>
+      )}
     </DropdownContainer>
   );
 };

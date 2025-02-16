@@ -7,6 +7,7 @@ const SearchBar: FC = () => {
 
   return (
     <Textfield
+      id="search-bar"
       placeholder="Search"
       value={searchQuery}
       $icon={{
