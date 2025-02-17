@@ -9,6 +9,8 @@ import {
 } from "./Table.styles";
 
 export const TableContainer = styled.div`
+  position: relative;
+
   flex: 1 0 0;
 
   width: 100%;
@@ -16,13 +18,11 @@ export const TableContainer = styled.div`
 
   min-height: 128px;
 
-  position: relative;
-
   border-radius: 2px;
   ${({ theme }) => theme.commonBorder};
 
-  overflow-y: auto;
-  scrollbar-gutter: stable;
+  overflow: auto;
+  scrollbar-gutter: auto;
 
   &::-webkit-scrollbar {
     width: 12px;
@@ -33,9 +33,10 @@ export const TableContainer = styled.div`
   &::-webkit-scrollbar-thumb {
     box-shadow: inset 0 0 16px 16px
       ${({ theme }) => theme.background["bg-tertiary"]};
-    border: solid 3px ${({ theme }) => theme.background["bg-primary"]};
+    border: 3px solid ${({ theme }) => theme.background["bg-primary"]};
+    border-radius: 8px;
 
-    border-radius: 100px;
+    min-height: 40px;
   }
 
   &::-webkit-scrollbar-track {
@@ -43,22 +44,14 @@ export const TableContainer = styled.div`
       ${({ theme }) => theme.background["bg-secondary"]};
     border: solid 3px ${({ theme }) => theme.background["bg-primary"]};
 
-    border-radius: 100px;
+    border-radius: 8px;
   }
 
   &::-webkit-scrollbar-corner {
     background: transparent;
   }
 
-  /* Firefox scrollbar styling */
-  /* scrollbar-width: thin; */
-  /* scrollbar-color: ${({ theme }) =>
-    `${theme.background["bg-tertiary"]} ${theme.background["bg-secondary"]}`}; */
-
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet.max}) {
-    overflow-x: auto;
-
-    /* Add momentum scrolling for touch devices */
     -webkit-overflow-scrolling: touch;
   }
 `;
@@ -80,18 +73,21 @@ export const EmptyContainer = styled.div`
     content: "";
     display: block;
     position: sticky;
+
+    left: 0;
+
     width: 100%;
     height: 10px;
+
     background: inherit;
-    left: 0px;
   }
 
   &::before {
-    top: 0px;
+    top: 0;
   }
 
   &::after {
-    bottom: 0px;
+    bottom: 0;
   }
 `;
 
@@ -115,9 +111,9 @@ export const EmptyTextContent = styled.div`
   justify-content: center;
   gap: 12px;
 
-  max-width: 100%;
-
   padding: 0 16px;
+
+  max-width: 100%;
 
   text-align: center;
 `;
@@ -138,9 +134,9 @@ export const EmptyBodyTextContainer = styled.div`
   ${({ theme }) => theme.bodySmall}
   color: ${({ theme }) => theme.commonForeground["fg-disabled"]};
 
-  max-width: 100%;
-
   padding: 0 16px;
+
+  max-width: 100%;
 
   text-align: center;
 `;
@@ -148,9 +144,9 @@ export const EmptyBodyTextContainer = styled.div`
 export const EmptyBodyText = styled.span``;
 
 export const EmptySearchQuery = styled.div`
-  max-width: 100%;
-
   padding: 0 16px;
+
+  max-width: 100%;
 
   overflow: hidden;
   text-overflow: ellipsis;
@@ -160,7 +156,12 @@ export const EmptySearchQuery = styled.div`
 export const TableWrapper = styled.table`
   width: 100%;
 
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
+
+  /* Prevent layout shift, consistent cell sizing */
+  /* table-layout: fixed; */
+  /* box-sizing: border-box; */
 
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet.max}) {
     min-width: 600px;
@@ -172,9 +173,24 @@ export const TableThread = styled.thead`
 
   top: 0;
 
+  background-color: ${({ theme }) => theme.background["bg-primary"]};
+
   z-index: 1;
 
-  background-color: ${({ theme }) => theme.background["bg-primary"]};
+  isolation: isolate;
+
+  &::after {
+    content: "";
+    position: absolute;
+
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    height: 1px;
+
+    background-color: ${({ theme }) => theme.border["border-primary"]};
+  }
 `;
 
 export const TableBody = styled.tbody<ITableProps>`
@@ -196,6 +212,8 @@ export const TableRow = styled.tr`
 `;
 
 export const TableHeader = styled.th`
+  position: relative;
+
   color: ${({ theme }) => theme.foreground["fg-primary"]};
 
   padding: 8px 16px;
@@ -203,15 +221,38 @@ export const TableHeader = styled.th`
 
   ${({ theme }) => theme.label}
 
-  border-right: 1px solid ${({ theme }) => theme.border["border-primary"]};
-  border-bottom: 1px solid ${({ theme }) => theme.border["border-primary"]};
+  border: 0;
 
-  &:last-of-type {
-    border-right: none;
+  /* Prevent text wrapping by default */
+  /* white-space: nowrap; */
+  /* overflow: hidden; */
+  /* text-overflow: ellipsis; */
+
+  &::after {
+    content: "";
+    position: absolute;
+
+    right: 0;
+    bottom: 0;
+
+    width: 1px;
+    height: 100%;
+
+    background-color: ${({ theme }) => theme.border["border-primary"]};
+  }
+
+  &:last-child::after {
+    display: none;
+  }
+
+  tr & {
+    border-bottom: 1px solid ${({ theme }) => theme.border["border-primary"]};
   }
 `;
 
 export const TableData = styled.td`
+  position: relative;
+
   color: ${({ theme }) => theme.foreground["fg-primary"]};
 
   padding: 8px 16px;
@@ -220,11 +261,25 @@ export const TableData = styled.td`
 
   ${({ theme }) => theme.bodySmall}
 
-  border-right: 1px solid ${({ theme }) => theme.border["border-primary"]};
+  /* Improve cell content wrapping */
+  /* word-break: break-word; */
+  /* hyphens: auto; */
+
+  border: 0;
   border-bottom: 1px solid ${({ theme }) => theme.border["border-primary"]};
 
-  &:last-of-type {
-    border-right: none;
+  &::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: 1px;
+    background-color: ${({ theme }) => theme.border["border-primary"]};
+  }
+
+  &:last-child::after {
+    display: none;
   }
 `;
 

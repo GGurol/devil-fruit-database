@@ -2276,6 +2276,123 @@
       "is_canon": true
     },
     {
+      "fruit_id": "9e3331ba-ebfe-4b8e-a55b-c0ef5739cee8",
+      "names": {
+        "romanized_names": [
+          {
+            "name": "Inu Inu no Mi, Model: Hound",
+            "is_spoiler": false
+          }
+        ],
+        "translated_names": [
+          {
+            "name": "Dog-Dog Fruit, Hound Model",
+            "is_spoiler": false
+          }
+        ]
+      },
+      "types": [
+        {
+          "type": "Zoan",
+          "is_spoiler": false
+        }
+      ],
+      "abilities": {
+        "ability": "Allows its user to transform into a hound hybrid and a full hound at will.",
+        "awakened_ability": null
+      },
+      "users": {
+        "current_users": [
+          {
+            "user": "Hound",
+            "is_artificial": false,
+            "is_spoiler": false,
+            "awakening": { "is_awakened": false, "is_spoiler": false }
+          }
+        ],
+        "previous_users": null
+      },
+      "is_canon": true
+    },
+    {
+      "fruit_id": "a38bf851-d16f-49b6-bbd0-284615e377d3",
+      "names": {
+        "romanized_names": [
+          {
+            "name": "Batto Batto no Mi",
+            "is_spoiler": false
+          }
+        ],
+        "translated_names": [
+          {
+            "name": "Bat-Bat Fruit",
+            "is_spoiler": false
+          }
+        ]
+      },
+      "types": [
+        {
+          "type": "Zoan",
+          "is_spoiler": false
+        }
+      ],
+      "abilities": {
+        "ability": "Allows its user to transform into a bat hybrid and a full bat at will.",
+        "awakened_ability": null
+      },
+      "users": {
+        "current_users": [
+          {
+            "user": "Stussy",
+            "is_artificial": false,
+            "is_spoiler": false,
+            "awakening": { "is_awakened": false, "is_spoiler": false }
+          }
+        ],
+        "previous_users": null
+      },
+      "is_canon": true
+    },
+    {
+      "fruit_id": "2aeec3d5-81dd-4df0-bea9-04ccb77aca7e",
+      "names": {
+        "romanized_names": [
+          {
+            "name": "Rako Rako no Mi",
+            "is_spoiler": false
+          }
+        ],
+        "translated_names": [
+          {
+            "name": "N/A",
+            "is_spoiler": false
+          }
+        ]
+      },
+      "types": [
+        {
+          "type": "Zoan",
+          "is_spoiler": false
+        }
+      ],
+      "abilities": {
+        "ability": "Allows its user to transform into a sea otter hybrid and a full sea otter at will.",
+        "awakened_ability": null
+      },
+      "users": {
+        "current_users": [
+          {
+            "user": "Pomsky",
+            "is_artificial": false,
+            "is_spoiler": false,
+            "awakening": { "is_awakened": false, "is_spoiler": false }
+          }
+        ],
+        "previous_users": null
+      },
+      "is_canon": true
+    },
+    {
       "fruit_id": "a5381619-17c9-4d74-a84c-db5dd5442665",
       "names": {
         "romanized_names": [
@@ -6420,6 +6537,162 @@
       "is_canon": true
     },
     {
+      "fruit_id": "be414e4c-f632-4736-8e56-506f5196f0ba",
+      "names": {
+        "romanized_names": [
+          {
+            "name": "Nori Nori no Mi",
+            "is_spoiler": false
+          }
+        ],
+        "translated_names": [
+          {
+            "name": "Ride-Ride Fruit",
+            "is_spoiler": false
+          }
+        ]
+      },
+      "types": [
+        {
+          "type": "Paramecia",
+          "is_spoiler": false
+        }
+      ],
+      "abilities": {
+        "ability": "Allows the user to control anything or anyone they take a ride on, mechanical or otherwise, regardless of the target's own will or anything else influencing them.",
+        "awakened_ability": null
+      },
+      "users": {
+        "current_users": [
+          {
+            "user": "Bluegrass",
+            "is_artificial": false,
+            "is_spoiler": false,
+            "awakening": { "is_awakened": false, "is_spoiler": false }
+          }
+        ],
+        "previous_users": null
+      },
+      "is_canon": true
+    },
+    {
+      "fruit_id": "19a9b449-1511-44b5-8113-3c25b8bd2e77",
+      "names": {
+        "romanized_names": [
+          {
+            "name": "Tsutsu Tsutsu no Mi",
+            "is_spoiler": false
+          }
+        ],
+        "translated_names": [
+          {
+            "name": "N/A",
+            "is_spoiler": false
+          }
+        ]
+      },
+      "types": [
+        {
+          "type": "Paramecia",
+          "is_spoiler": false
+        }
+      ],
+      "abilities": {
+        "ability": "Grants the user the ability to manifest cannons from their head, using them to fire explosive projectiles at targets.",
+        "awakened_ability": null
+      },
+      "users": {
+        "current_users": [
+          {
+            "user": "Urban",
+            "is_artificial": false,
+            "is_spoiler": false,
+            "awakening": { "is_awakened": false, "is_spoiler": false }
+          }
+        ],
+        "previous_users": null
+      },
+      "is_canon": true
+    },
+    {
+      "fruit_id": "4c407618-f24b-4c49-a4ec-5e02b4c760e3",
+      "names": {
+        "romanized_names": [
+          {
+            "name": "Iku Iku no Mi",
+            "is_spoiler": false
+          }
+        ],
+        "translated_names": [
+          {
+            "name": "Grow-Grow Fruit",
+            "is_spoiler": false
+          }
+        ]
+      },
+      "types": [
+        {
+          "type": "Paramecia",
+          "is_spoiler": false
+        }
+      ],
+      "abilities": {
+        "ability": "Allows the user to make inanimate objects in their care grow larger as though they were living organisms.",
+        "awakened_ability": null
+      },
+      "users": {
+        "current_users": [
+          {
+            "user": "Biblo",
+            "is_artificial": false,
+            "is_spoiler": false,
+            "awakening": { "is_awakened": false, "is_spoiler": false }
+          }
+        ],
+        "previous_users": null
+      },
+      "is_canon": true
+    },
+    {
+      "fruit_id": "fcdb7010-7430-4325-b56a-fd162b8a5546",
+      "names": {
+        "romanized_names": [
+          {
+            "name": "Aro Aro no Mi",
+            "is_spoiler": false
+          }
+        ],
+        "translated_names": [
+          {
+            "name": "Arrow-Arrow Fruit",
+            "is_spoiler": false
+          }
+        ]
+      },
+      "types": [
+        {
+          "type": "Paramecia",
+          "is_spoiler": false
+        }
+      ],
+      "abilities": {
+        "ability": "Grants the user the ability to generate and control vectorial arrows capable of manipulating motion and its properties.",
+        "awakened_ability": null
+      },
+      "users": {
+        "current_users": [
+          {
+            "user": "Gunko",
+            "is_artificial": false,
+            "is_spoiler": false,
+            "awakening": { "is_awakened": false, "is_spoiler": false }
+          }
+        ],
+        "previous_users": null
+      },
+      "is_canon": true
+    },
+    {
       "fruit_id": "705c9a72-5dbe-4695-a055-2813e3ccf96f",
       "names": {
         "romanized_names": [
@@ -8351,6 +8624,84 @@
         "current_users": [
           {
             "user": "Lip Shark",
+            "is_artificial": false,
+            "is_spoiler": false,
+            "awakening": { "is_awakened": false, "is_spoiler": false }
+          }
+        ],
+        "previous_users": null
+      },
+      "is_canon": false
+    },
+    {
+      "fruit_id": "de93f541-297d-4abc-bf4f-c3eae0a33430",
+      "names": {
+        "romanized_names": [
+          {
+            "name": "Homi Homi no Mi",
+            "is_spoiler": false
+          }
+        ],
+        "translated_names": [
+          {
+            "name": "N/A",
+            "is_spoiler": false
+          }
+        ]
+      },
+      "types": [
+        {
+          "type": "Paramecia",
+          "is_spoiler": false
+        }
+      ],
+      "abilities": {
+        "ability": "Allows the user to make objects they hold fly to specific spot.",
+        "awakened_ability": null
+      },
+      "users": {
+        "current_users": [
+          {
+            "user": "Homming",
+            "is_artificial": false,
+            "is_spoiler": false,
+            "awakening": { "is_awakened": false, "is_spoiler": false }
+          }
+        ],
+        "previous_users": null
+      },
+      "is_canon": false
+    },
+    {
+      "fruit_id": "9da02a41-2b34-41ac-b720-d78e5f00f9fa",
+      "names": {
+        "romanized_names": [
+          {
+            "name": "Shuku Shuku no Mi",
+            "is_spoiler": false
+          }
+        ],
+        "translated_names": [
+          {
+            "name": "N/A",
+            "is_spoiler": false
+          }
+        ]
+      },
+      "types": [
+        {
+          "type": "Paramecia",
+          "is_spoiler": false
+        }
+      ],
+      "abilities": {
+        "ability": "Allows the user to compress things.",
+        "awakened_ability": null
+      },
+      "users": {
+        "current_users": [
+          {
+            "user": "Bolster",
             "is_artificial": false,
             "is_spoiler": false,
             "awakening": { "is_awakened": false, "is_spoiler": false }
