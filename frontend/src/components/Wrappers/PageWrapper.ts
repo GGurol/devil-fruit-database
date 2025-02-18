@@ -5,6 +5,7 @@ const PageWrapper = styled.div`
 
   width: 100vw;
   height: 100vh;
+  min-height: 100vh;
 
   overflow: hidden;
 
@@ -19,10 +20,12 @@ const PageWrapper = styled.div`
   }
 
   @media (max-width: ${({ theme }) =>
-      theme.breakpoints.tablet.max}) and (orientation: landscape) {
-    overflow-y: auto;
+      theme.breakpoints.tablet.max}) and ((max-height: 600px)) {
     height: auto;
     min-height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
   }
 `;
 

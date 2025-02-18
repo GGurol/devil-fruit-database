@@ -62,14 +62,16 @@ export const ExportCodeBlock = styled.div`
     box-shadow: inset 0 0 16px 16px ${({ theme }) => theme.alpha["400"]};
     border: solid 3px ${({ theme }) => theme.background["bg-tertiary"]};
 
-    border-radius: 100px;
+    border-radius: 8px;
+
+    min-height: 40px;
   }
 
   &::-webkit-scrollbar-track {
     box-shadow: inset 0 0 16px 16px ${({ theme }) => theme.alpha["200"]};
     border: solid 3px ${({ theme }) => theme.background["bg-tertiary"]};
 
-    border-radius: 100px;
+    border-radius: 8px;
   }
 
   &::-webkit-scrollbar-corner {

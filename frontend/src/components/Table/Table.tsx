@@ -227,6 +227,7 @@ const Table: FC<ITableProps> = ({ $alternate = false }) => {
     $alternate,
     filteredFruitData,
     handleClearSearch,
+    handleResetFilters,
     isLoading,
     searchState,
     showSpoilers,
