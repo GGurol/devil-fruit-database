@@ -47,15 +47,15 @@ async def global_expection_handler(request: Request, e: Exception):
     print(f"Error: {str(e)}")  # Add logging
     print(f"Traceback: {traceback.format_exc()}")  # Add logging
 
-    if settings.ENVIRONMENT.is_prod:
-        return JSONResponse(
-            status_code=500, content={"message": "Internal server error"}
-        )
-    else:
-        return JSONResponse(
-            status_code=500,
-            content={"message": str(e), "traceback": traceback.format_exc()},
-        )
+    # if settings.ENVIRONMENT.is_prod:
+    #     return JSONResponse(
+    #         status_code=500, content={"message": "Internal server error"}
+    #     )
+    # else:
+    return JSONResponse(
+        status_code=500,
+        content={"message": str(e), "traceback": traceback.format_exc()},
+    )
 
 
 @app.get("/")
