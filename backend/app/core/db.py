@@ -1,8 +1,10 @@
 import json
-import os
+import shutil
 import time
 
 from uuid import UUID
+from pathlib import Path
+from datetime import datetime
 from sqlalchemy import Engine
 from sqlmodel import create_engine, SQLModel, Session, select
 from google.cloud.sql.connector import Connector
@@ -18,39 +20,18 @@ from app.models import (
 )
 
 
-# helper function to return SQLAlchemy connection pool
-def init_connection_pool(connector: Connector) -> Engine:
-    # Python Connector database connection function
-    def getconn():
-        conn = connector.connect(
-            settings.GCP_SQL_INSTANCE_CONNECTION_NAME,
-            "pg8000",
-            user=settings.POSTGRES_USER,
-            password=settings.POSTGRES_PASSWORD,
-            db=settings.POSTGRES_DB,
-            ip_type="public",
-        )
-        return conn
-
-    SQLALCHEMY_DATABASE_URI = f"postgresql+pg8000://"
-
-    engine = create_engine(SQLALCHEMY_DATABASE_URI, creator=getconn)
-    return engine
-
-
 def get_engine_config():
     return {
+        "connect_args": {
+            "check_same_thread": False,
+        },
         "echo": settings.ENVIRONMENT.is_dev,
     }
 
 
 def set_engine():
-    if settings.ENVIRONMENT.is_prod:
-        # Initialize the Cloud SQL Python Connector when using prod environment
-        connector = Connector()
-
-        return init_connection_pool(connector)
-
+    db_path = Path(settings.SQLITE_DB_PATH)
+    db_path.parent.mkdir(parents=True, exist_ok=True)
     return create_engine(str(settings.SQLALCHEMY_DATABASE_URI), **get_engine_config())
 
 
@@ -58,11 +39,41 @@ engine = set_engine()
 
 
 def init_db():
-    SQLModel.metadata.create_all(engine)
+    try:
+        SQLModel.metadata.create_all(engine)
+    except Exception as e:
+        print(f"Failed to initialize database: {e}")
+        raise
 
 
 def drop_db():
-    SQLModel.metadata.drop_all(engine)
+    db_path = Path(settings.SQLITE_DB_PATH)
+    if db_path.exists():
+        try:
+            db_path.unlink()
+            SQLModel.metadata.drop_all(engine)
+        except Exception as e:
+            print(f"Failed to drop database: {e}")
+            raise
+
+
+def backup_db():
+    db_path = Path(settings.SQLITE_DB_PATH)
+    if not db_path.exists():
+        raise FileNotFoundError(f"Database file not found: {db_path}")
+
+    backup_dir = Path("data/backups")
+    backup_dir.mkdir(parents=True, exist_ok=True)
+
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    backup_path = backup_dir / f"devil_fruits_{timestamp}.db"
+
+    try:
+        shutil.copy2(db_path, backup_path)
+        return backup_path
+    except Exception as e:
+        print(f"Failed to backup database: {e}")
+        raise
 
 
 def get_session():
@@ -197,3 +208,11 @@ def populate_db(json_file_path: str):
         session.commit()
 
         verify_db_population()
+
+
+def migrate_db(json_file_path: str):
+    if verify_db_population():
+        backup_db()
+
+    init_db()
+    populate_db(json_file_path)

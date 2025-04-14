@@ -5,11 +5,11 @@ export PYTHONPATH=../
 
 # Print execution info
 echo "Initializing database in environment: $ENVIRONMENT"
-echo "Connection: $GCP_SQL_INSTANCE_CONNECTION_NAME"
-echo "Database: $POSTGRES_DB"
-echo "User: $POSTGRES_USER"
 
 echo "Current directory: $(pwd)"
+
+# Create database directory if it doesn't exist
+mkdir -p /app/data/db
 
 # Execute database initialization
 python -m app.core.db_management force-reset --env $ENVIRONMENT

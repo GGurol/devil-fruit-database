@@ -1,5 +1,4 @@
-from pydantic import PostgresDsn, computed_field
-from pydantic_core import MultiHostUrl
+from pydantic import computed_field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 from app.core.constants import Environment
@@ -27,7 +26,7 @@ class Settings(BaseSettings):
     ALLOWED_METHODS: list[str] = ["*"]
     ALLOWED_HEADERS: list[str] = ["*"]
 
-    SQLITE_DB_PATH: str = "./devel_fruits.db"
+    SQLITE_DB_PATH: str = "data/db/devil_fruits.db"
 
     @computed_field
     @property
