@@ -15,12 +15,6 @@ on:
       - "frontend/**"
       - ".github/workflows/deploy.yml"
   workflow_dispatch:
-    inputs:
-      initialize_db:
-        description: "Initialize Database"
-        required: true
-        type: boolean
-        default: false
 
 permissions:
   id-token: write
@@ -104,7 +98,7 @@ jobs:
 
       # Database and service deployment
       - name: Initialize Database
-        if: github.event_name == 'workflow_dispatch' && github.event.inputs.initialize_db == 'true'
+        if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
         run: |-
           JOB_NAME="db-init-${{ github.run_number }}"
 

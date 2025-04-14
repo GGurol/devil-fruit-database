@@ -55,8 +55,12 @@ engine = set_engine()
 
 
 def init_db():
+    print("Initializing database...")
     try:
+        db_path = Path(settings.SQLITE_DB_PATH)
+        db_path.parent.mkdir(parents=True, exist_ok=True)
         SQLModel.metadata.create_all(engine)
+        print("Database initialized successfully")
     except Exception as e:
         print(f"Failed to initialize database: {e}")
         raise
