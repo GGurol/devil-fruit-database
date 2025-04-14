@@ -119,10 +119,6 @@ class DatabaseManager:
         file_path = cls.get_data_file(env, data_file)
         populate_db(file_path)
 
-        # Force sync
-        with engine.connect() as conn:
-            conn.execute(text("CHECKPOINT;"))
-
 
 # CLI commands
 @app.command()
