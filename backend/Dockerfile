@@ -9,7 +9,7 @@ RUN pip install --no-cache-dir --upgrade -r /app/requirements.txt
 
 # Create necessary directories
 RUN mkdir -p /app/data/db /app/data/backups && \
-    chmod -R 755 /app/data
+    chmod -R 777 /app/data
 
 # copy application code
 COPY ./app /app
