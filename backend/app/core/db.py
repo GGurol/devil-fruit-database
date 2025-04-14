@@ -21,17 +21,25 @@ from app.models import (
 
 
 def get_engine_config():
-    return {
+    config = {
         "connect_args": {
             "check_same_thread": False,
         },
         "echo": settings.ENVIRONMENT.is_dev,
     }
 
+    if settings.ENVIRONMENT.is_prod:
+        # SQLite read-only configuration
+        config["connect_args"].update(
+            {
+                "uri": True,
+            }
+        )
+
+    return config
+
 
 def set_engine():
-    db_path = Path(settings.SQLITE_DB_PATH)
-    db_path.parent.mkdir(parents=True, exist_ok=True)
     return create_engine(str(settings.SQLALCHEMY_DATABASE_URI), **get_engine_config())
 
 
@@ -39,8 +47,12 @@ engine = set_engine()
 
 
 def init_db():
+    print("Initializing database...")
     try:
+        db_path = Path(settings.SQLITE_DB_PATH)
+        db_path.parent.mkdir(parents=True, exist_ok=True)
         SQLModel.metadata.create_all(engine)
+        print("Database initialized successfully")
     except Exception as e:
         print(f"Failed to initialize database: {e}")
         raise
