@@ -1,68 +1,40 @@
 services:
-  db:
-    image: postgres
-    restart: always
-    volumes:
-      - app-db-data:/var/lib/postgresql/data/pgdata
-    env_file:
-      - .env
-    environment:
-      - PGDATA=/var/lib/postgresql/data/pgdata
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD?Variable not set}
-      - POSTGRES_USER=${POSTGRES_USER?Variable not set}
-      - POSTGRES_DB=${POSTGRES_DB?Variable not set}
-
   db-populate:
     build: 
       context: .
       target: dev
     command: python -m app.core.db_management force-reset --env ${ENVIRONMENT}
-    depends_on:
-      - db 
+    volumes:
+      - ./app:/app
+      - sqlite-db-data:/app/data/db
+      - ./app/data/backups:/app/data/backups
     env_file:
       - .env
     environment:
       - ENVIRONMENT=${ENVIRONMENT}
       - PYTHONPATH=../
-      - PGDATA=/var/lib/postgresql/data/pgdata
-      - POSTGRES_SERVER=db
-      - POSTGRES_PORT=${POSTGRES_PORT}
-      - POSTGRES_DB=${POSTGRES_DB}
-      - POSTGRES_USER=${POSTGRES_USER?Variable not set}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD?Variable not set}
     profiles:
       - populate
-        
-  adminer:
-    image: adminer
-    depends_on:
-      - db
-    restart: always
-    ports:
-      - 8080:8080
 
   backend:
     build: 
       context: .
       target: dev
     restart: no
-    depends_on:
-      - db
     container_name: devil-fruit-backend
+    volumes:
+      - ./app:/app
+      - sqlite-db-data:/app/data/db
+      - ./app/data/backups:/app/data/backups
     env_file:
       - .env
     environment:
       - DOMAIN=${DOMAIN}
       - ENVIRONMENT=${ENVIRONMENT}
       - PYTHONPATH=../
-      - PGDATA=/var/lib/postgresql/data/pgdata
-      - POSTGRES_SERVER=db
-      - POSTGRES_PORT=${POSTGRES_PORT}
-      - POSTGRES_DB=${POSTGRES_DB}
-      - POSTGRES_USER=${POSTGRES_USER?Variable not set}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD?Variable not set}
     ports:
       - 8000:8000
   
 volumes:
-  app-db-data:
+  sqlite-db-data:
+    name: devil-fruit-sqlite-data
