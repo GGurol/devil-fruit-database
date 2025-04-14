@@ -134,6 +134,6 @@ jobs:
             --allow-unauthenticated
             --service-account=${{ vars.WIF_SERVICE_ACCOUNT }}
             --execution-environment=gen2
-            --volume-mounts=/app/data/db:/app/data/db
+            --add-volume-mount=/app/data/db:/app/data/db
           env_vars: |
             ENVIRONMENT=${{ env.ENVIRONMENT }}
