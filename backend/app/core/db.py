@@ -21,12 +21,18 @@ from app.models import (
 
 
 def get_engine_config():
-    return {
+    config = {
         "connect_args": {
             "check_same_thread": False,
         },
         "echo": settings.ENVIRONMENT.is_dev,
     }
+
+    if settings.ENVIRONMENT.is_prod:
+        config["connect_args"]["uri"] = True
+        config["connect_args"]["mode"] = "ro"  # Read-only mode in production
+
+    return config
 
 
 def set_engine():
