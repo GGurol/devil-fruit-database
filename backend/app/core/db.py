@@ -29,8 +29,12 @@ def get_engine_config():
     }
 
     if settings.ENVIRONMENT.is_prod:
-        config["connect_args"]["uri"] = True
-        config["connect_args"]["mode"] = "ro"  # Read-only mode in production
+        # SQLite read-only configuration
+        config["connect_args"].update(
+            {
+                "uri": True,
+            }
+        )
 
     return config
 
@@ -38,6 +42,12 @@ def get_engine_config():
 def set_engine():
     db_path = Path(settings.SQLITE_DB_PATH)
     db_path.parent.mkdir(parents=True, exist_ok=True)
+
+    if settings.ENVIRONMENT.is_prod:
+        # Append read-only mode to SQLite URI
+        uri = f"sqlite:///{db_path}?mode=ro"
+        return create_engine(uri, **get_engine_config())
+
     return create_engine(str(settings.SQLALCHEMY_DATABASE_URI), **get_engine_config())
 
 
