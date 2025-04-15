@@ -7,7 +7,7 @@ from sqlmodel import Session, select
 from starlette.middleware.cors import CORSMiddleware
 
 from app.core.config import settings
-from app.core.db import get_session
+from app.core.db import download_db_from_gcs, get_session, upload_db_to_gcs
 
 from app.api.router import api_router
 
@@ -21,9 +21,20 @@ from app.models import (
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # on initializtion, do something
-    yield
+    
+    # only download the database in production
+    if settings.ENVIRONMENT.is_prod:
+        download_db_from_gcs()
+    
+    try:
+        yield
 
-    # on end, clean up stuff here
+        # on end, clean up stuff here
+    finally:
+        # only upload the database in production
+        if settings.ENVIRONMENT.is_prod:
+            upload_db_to_gcs()
+
 
 
 app = FastAPI(title=settings.PROJECT_NAME, lifespan=lifespan)

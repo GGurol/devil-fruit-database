@@ -28,9 +28,14 @@ class Settings(BaseSettings):
 
     SQLITE_DB_PATH: str = "data/db/devil_fruits.db"
 
+    GCS_BUCKET_NAME: str = "devil-fruit-database-id-db"
+    GCS_DB_PATH: str = "db/devil_fruits.db"
+
     @computed_field
     @property
     def SQLALCHEMY_DATABASE_URI(self) -> str:
+        if self.ENVIRONMENT.is_prod:
+            return f"sqlite:///{self.SQLITE_DB_PATH}?mode=ro"
         return f"sqlite:///{self.SQLITE_DB_PATH}"
 
 

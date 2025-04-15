@@ -28,7 +28,10 @@ env:
   GAR_LOCATION: us-east1
   REPOSITORY: devil-fruit-backend
   SERVICE: devil-fruit-database-crs
+  GCS_BUCKET_NAME: devil-fruit-database-id-db
+  GCS_DB_PATH: db/devil_fruits.db
   REGION: us-east1
+  SQLITE_DB_PATH: /app/data/db/devil_fruits.db
   ENVIRONMENT: prod
 
 jobs:
@@ -96,22 +99,6 @@ jobs:
           cache-to: type=gha,mode=max
           target: ${{ env.ENVIRONMENT }}
 
-      # Database and service deployment
-      - name: Initialize Database
-        if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
-        run: |-
-          JOB_NAME="db-init-${{ github.run_number }}"
-
-          gcloud run jobs create ${JOB_NAME} \
-            --image "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/${{ env.SERVICE }}:${{ github.sha }}" \
-            --region ${{ env.REGION }} \
-            --tasks 1 \
-            --service-account=${{ vars.WIF_SERVICE_ACCOUNT }} \
-            --set-env-vars="PYTHONPATH=../,ENVIRONMENT=${{ env.ENVIRONMENT }}" \
-            --command="/app/db_cmd.sh"
-            
-          gcloud run jobs execute ${JOB_NAME} --region ${{ env.REGION }} --wait
-
       - name: Deploy to Cloud Run
         if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
         uses: google-github-actions/deploy-cloudrun@v2.7.0
@@ -130,3 +117,6 @@ jobs:
             --execution-environment=gen2
           env_vars: |
             ENVIRONMENT=${{ env.ENVIRONMENT }}
+            GCS_BUCKET_NAME=${{ env.GCS_BUCKET_NAME }}
+            GCS_DB_PATH=${{ env.GCS_DB_PATH }}
+            SQLITE_DB_PATH=${{ env.SQLITE_DB_PATH }}
