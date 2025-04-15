@@ -1445,6 +1445,45 @@
       "is_canon": true
     },
     {
+      "fruit_id": "3d7601c6-ed20-4c42-8328-f3173eff823c",
+      "names": {
+        "romanized_names": [
+          {
+            "name": "Ryu Ryu no Mi, Model: Kirin",
+            "is_spoiler": false
+          }
+        ],
+        "translated_names": [
+          {
+            "name": "Dragon-Dragon Fruit, Kirin Model",
+            "is_spoiler": false
+          }
+        ]
+      },
+      "types": [
+        {
+          "type": "Mythical Zoan",
+          "is_spoiler": false
+        }
+      ],
+      "abilities": {
+        "ability": "Grants the power to transform into a qilin and half-qilin hybrid, which can put others to sleep and materialize their dreams.",
+        "awakened_ability": null
+      },
+      "users": {
+        "current_users": [
+          {
+            "user": "Rimoshifu Killingham",
+            "is_artificial": false,
+            "is_spoiler": false,
+            "awakening": { "is_awakened": false, "is_spoiler": false }
+          }
+        ],
+        "previous_users": null
+      },
+      "is_canon": true
+    },
+    {
       "fruit_id": "b2167a97-2bd9-4cf9-a16f-ba665c369ff4",
       "names": {
         "romanized_names": [
@@ -6683,6 +6722,45 @@
         "current_users": [
           {
             "user": "Gunko",
+            "is_artificial": false,
+            "is_spoiler": false,
+            "awakening": { "is_awakened": false, "is_spoiler": false }
+          }
+        ],
+        "previous_users": null
+      },
+      "is_canon": true
+    },
+    {
+      "fruit_id": "b9c8585d-48a6-42a5-996e-6a01bd49625c",
+      "names": {
+        "romanized_names": [
+          {
+            "name": "Iba Iba no Mi",
+            "is_spoiler": false
+          }
+        ],
+        "translated_names": [
+          {
+            "name": "Thorn-Thorn Fruit",
+            "is_spoiler": false
+          }
+        ]
+      },
+      "types": [
+        {
+          "type": "Paramecia",
+          "is_spoiler": false
+        }
+      ],
+      "abilities": {
+        "ability": "Grants the user the ability to generate and attach thorny vines around themself and other people.",
+        "awakened_ability": null
+      },
+      "users": {
+        "current_users": [
+          {
+            "user": "Shepherd Sommers",
             "is_artificial": false,
             "is_spoiler": false,
             "awakening": { "is_awakened": false, "is_spoiler": false }
