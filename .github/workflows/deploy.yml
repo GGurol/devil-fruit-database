@@ -15,12 +15,6 @@ on:
       - "frontend/**"
       - ".github/workflows/deploy.yml"
   workflow_dispatch:
-    inputs:
-      initialize_db:
-        description: "Initialize Database"
-        required: true
-        type: boolean
-        default: false
 
 permissions:
   id-token: write

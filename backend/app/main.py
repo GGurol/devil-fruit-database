@@ -53,15 +53,20 @@ app.add_middleware(
 @app.exception_handler(Exception)
 async def global_expection_handler(request: Request, e: Exception):
     """In PROD show minimal information in failed responses"""
-    if settings.ENVIRONMENT.is_prod:
-        return JSONResponse(
-            status_code=500, content={"message": "Internal server error"}
-        )
-    else:
-        return JSONResponse(
-            status_code=500,
-            content={"message": str(e), "traceback": traceback.format_exc()},
-        )
+
+    # TEMP
+    print(f"Error: {str(e)}")  # Add logging
+    print(f"Traceback: {traceback.format_exc()}")  # Add logging
+
+    # if settings.ENVIRONMENT.is_prod:
+    #     return JSONResponse(
+    #         status_code=500, content={"message": "Internal server error"}
+    #     )
+    # else:
+    return JSONResponse(
+        status_code=500,
+        content={"message": str(e), "traceback": traceback.format_exc()},
+    )
 
 
 @app.get("/")
@@ -71,7 +76,7 @@ def read_root():
 
 @app.get("/info")
 def read_info():
-    return {"title": settings.PROJECT_NAME, "db-server": settings.POSTGRES_SERVER}
+    return {"title": settings.PROJECT_NAME}
 
 
 @app.get("/info/devil-fruit/types/enum/", tags=["Info"])
