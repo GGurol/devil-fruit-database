@@ -28,7 +28,7 @@ class Settings(BaseSettings):
 
     SQLITE_DB_PATH: str = "data/db/devil_fruits.db"
 
-    GCS_BUCKET_NAME: str = "devil-fruit-database-bucket"
+    GCS_BUCKET_NAME: str = "devil-fruit-database-id-db"
     GCS_DB_PATH: str = "db/devil_fruits.db"
 
     @computed_field

@@ -5,9 +5,10 @@ import time
 from uuid import UUID
 from pathlib import Path
 from datetime import datetime
-from sqlalchemy import Engine
 from sqlmodel import create_engine, SQLModel, Session, select
-from google.cloud.sql.connector import Connector
+
+from google.cloud import storage
+
 
 from app.core.config import settings
 from app.models import (
@@ -221,10 +222,34 @@ def populate_db(json_file_path: str):
 
         verify_db_population()
 
+def download_db_from_gcs():
+    client = storage.Client()
+    bucket = client.bucket(settings.GCS_BUCKET_NAME)
+    blob = bucket.blob(settings.GCS_DB_PATH)
 
-def migrate_db(json_file_path: str):
-    if verify_db_population():
-        backup_db()
+    # Download the database file
+    db_path = Path(settings.SQLITE_DB_PATH)
+    db_path.parent.mkdir(parents=True, exist_ok=True)
 
-    init_db()
-    populate_db(json_file_path)
+    print(f"Downloading database from GCS: {settings.GCS_DB_PATH}")
+    blob.download_to_filename(db_path)
+
+    print(f"Database downloaded from GCS to {db_path}")
+
+def upload_db_to_gcs():
+    client = storage.Client()
+    bucket = client.bucket(settings.GCS_BUCKET_NAME)
+    blob = bucket.blob(settings.GCS_DB_PATH)
+
+    # Upload the database file
+    db_path = Path(settings.SQLITE_DB_PATH)
+    if db_path.exists():
+        print(f"Uploading database to GCS: {settings.GCS_DB_PATH}")
+        blob.upload_from_filename(db_path)
+        
+        print(f"Database uploaded to GCS: {settings.GCS_DB_PATH}")
+    else:
+        print(f"Database file not found: {db_path}")
+        
+
+
