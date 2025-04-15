@@ -115,6 +115,7 @@ jobs:
             --allow-unauthenticated
             --service-account=${{ vars.WIF_SERVICE_ACCOUNT }}
             --execution-environment=gen2
+            --timeout=600s
           env_vars: |
             ENVIRONMENT=${{ env.ENVIRONMENT }}
             GCS_BUCKET_NAME=${{ env.GCS_BUCKET_NAME }}

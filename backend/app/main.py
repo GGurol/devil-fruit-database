@@ -24,7 +24,11 @@ async def lifespan(app: FastAPI):
     
     # only download the database in production
     if settings.ENVIRONMENT.is_prod:
-        download_db_from_gcs()
+        try:
+            download_db_from_gcs()
+        except Exception as e:
+            print(f"Failed to download database: {e}")
+            raise
     
     try:
         yield
