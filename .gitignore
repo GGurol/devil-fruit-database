@@ -9,6 +9,9 @@
 *.sln
 *.sw?
 
+# Ignore SQLite database files
+*.db
+
 db/
 
 backup/

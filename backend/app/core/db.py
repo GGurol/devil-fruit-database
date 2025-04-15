@@ -46,12 +46,18 @@ def set_engine():
 
 engine = set_engine()
 
+def ensure_db_directory_exists():
+    """Ensure the database directory exists."""
+    db_path = Path(settings.SQLITE_DB_PATH)
+    if not db_path.parent.exists():
+        print(f"Creating database directory at {db_path.parent}")
+        db_path.parent.mkdir(parents=True, exist_ok=True)
 
 def init_db():
     print("Initializing database...")
     try:
-        db_path = Path(settings.SQLITE_DB_PATH)
-        db_path.parent.mkdir(parents=True, exist_ok=True)
+        ensure_db_directory_exists()
+
         SQLModel.metadata.create_all(engine)
         print("Database initialized successfully")
     except Exception as e:
@@ -75,8 +81,10 @@ def backup_db():
     if not db_path.exists():
         raise FileNotFoundError(f"Database file not found: {db_path}")
 
-    backup_dir = Path("data/backups")
-    backup_dir.mkdir(parents=True, exist_ok=True)
+    backup_dir = Path("backend/app/data/backups")
+    if not backup_dir.exists():
+        print(f"Creating backup directory at {backup_dir}")
+        backup_dir.mkdir(parents=True, exist_ok=True)
 
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     backup_path = backup_dir / f"devil_fruits_{timestamp}.db"
@@ -229,11 +237,16 @@ def download_db_from_gcs():
 
     # Download the database file
     db_path = Path(settings.SQLITE_DB_PATH)
-    db_path.parent.mkdir(parents=True, exist_ok=True)
+    ensure_db_directory_exists() 
+
+    if not blob.exists():
+        print(f"Database file not found in GCS: {settings.GCS_DB_PATH}")
+        print("Initializing a new database...")
+        init_db()
+        return
 
     print(f"Downloading database from GCS: {settings.GCS_DB_PATH}")
     blob.download_to_filename(db_path)
-
     print(f"Database downloaded from GCS to {db_path}")
 
 def upload_db_to_gcs():
