@@ -31,6 +31,8 @@ class Settings(BaseSettings):
     GCS_BUCKET_NAME: str = "devil-fruit-database-id-db"
     GCS_DB_PATH: str = "db/devil_fruits.db"
 
+    GOOGLE_APPLICATION_CREDENTIALS: str
+
     @computed_field
     @property
     def SQLALCHEMY_DATABASE_URI(self) -> str:

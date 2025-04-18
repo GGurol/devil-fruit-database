@@ -8,6 +8,9 @@ from datetime import datetime
 from sqlmodel import create_engine, SQLModel, Session, select
 
 from google.cloud import storage
+from google.auth import exceptions
+from google.auth.credentials import Credentials
+from google.oauth2 import service_account
 
 
 from app.core.config import settings
@@ -49,9 +52,9 @@ engine = set_engine()
 def ensure_db_directory_exists():
     """Ensure the database directory exists."""
     db_path = Path(settings.SQLITE_DB_PATH)
-    if not db_path.parent.exists():
-        print(f"Creating database directory at {db_path.parent}")
-        db_path.parent.mkdir(parents=True, exist_ok=True)
+    if not db_path.exists():
+        print(f"Creating database directory at {db_path}")
+        db_path.mkdir(parents=True, exist_ok=True)
 
 def init_db():
     print("Initializing database...")
@@ -133,7 +136,7 @@ def verify_db_population() -> bool:
             return False
 
 
-def populate_db(json_file_path: str):
+def populate_db(json_file_path: str, upload: bool = False):
     # Wait for database to be ready
     retries = 5
     while retries > 0:
@@ -228,10 +231,34 @@ def populate_db(json_file_path: str):
 
         session.commit()
 
-        verify_db_population()
+        db_populated = verify_db_population()
+
+        if db_populated and upload:
+            upload_db_to_gcs()  
+
+
+def get_gcs_client():
+    try:
+        if settings.GOOGLE_APPLICATION_CREDENTIALS:
+            credentials = service_account.Credentials.from_service_account_file(
+                settings.GOOGLE_APPLICATION_CREDENTIALS
+            )
+            return storage.Client(credentials=credentials)
+        else:
+            # Use Application Default Credentials (ADC)
+
+            # TODO: Will need to fix this for the docker container
+            return storage.Client()
+    except exceptions.DefaultCredentialsError as e:
+        print(f"Failed to load Google Cloud credentials: {e}")
+        raise
 
 def download_db_from_gcs():
-    client = storage.Client()
+    client = get_gcs_client()
+    if not client:
+        print("Failed to create GCS client.")
+        return
+    
     bucket = client.bucket(settings.GCS_BUCKET_NAME)
     blob = bucket.blob(settings.GCS_DB_PATH)
 
@@ -250,7 +277,11 @@ def download_db_from_gcs():
     print(f"Database downloaded from GCS to {db_path}")
 
 def upload_db_to_gcs():
-    client = storage.Client()
+    client = get_gcs_client()
+    if not client:
+        print("Failed to create GCS client.")
+        return
+    
     bucket = client.bucket(settings.GCS_BUCKET_NAME)
     blob = bucket.blob(settings.GCS_DB_PATH)
 

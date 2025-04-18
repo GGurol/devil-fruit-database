@@ -14,5 +14,7 @@
 
 db/
 
+auth/
+
 backup/
 backups/

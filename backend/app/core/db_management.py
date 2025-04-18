@@ -1,7 +1,6 @@
-from sqlalchemy import text
 import typer
 
-from typing import Dict, Optional
+from typing import Optional
 from sqlmodel import Session, select
 
 from app.core.constants import DATA_FILES, Environment
@@ -56,6 +55,7 @@ class DatabaseManager:
         env: Environment,
         populate: bool = False,
         force: bool = False,
+        upload: bool = False,
         data_file: Optional[str] = None,
     ) -> None:
         """Initialize the database and optionally populate it with data"""
@@ -72,11 +72,12 @@ class DatabaseManager:
         if populate:
             try:
                 file_path = cls.get_data_file(env, data_file)
-                populate_db(file_path)
+                populate_db(file_path, upload)
             except Exception as e:
                 raise typer.BadParameter(f"Error populating database: {e}")
         else:
             init_db()
+ 
 
     @classmethod
     def backup(cls) -> None:
@@ -104,7 +105,7 @@ class DatabaseManager:
         init_db()
 
     @classmethod
-    def force_reset(cls, env: Environment, data_file: Optional[str] = None):
+    def force_reset(cls, env: Environment, upload: bool = False, data_file: Optional[str] = None):
         """Force reset and populate the database without any confirmations"""
         if env.is_prod:
             typer.echo(
@@ -117,7 +118,7 @@ class DatabaseManager:
 
         # Initialize and populate with fresh data
         file_path = cls.get_data_file(env, data_file)
-        populate_db(file_path)
+        populate_db(file_path, upload)
 
 
 # CLI commands
@@ -126,11 +127,12 @@ def init(
     env: Environment = Environment.DEV,
     populate: bool = False,
     force: bool = False,
+    upload: bool = False,
     data_file: Optional[str] = None,
 ):
     """Initialize the database and optionally populate it with data"""
     try:
-        DatabaseManager.initialize(env, populate, force, data_file)
+        DatabaseManager.initialize(env, populate, force, upload, data_file)
         typer.echo(f"Database initialized for {env} environment.")
     except Exception as e:
         typer.echo(f"Error during initialization: {e}", err=True)
@@ -160,10 +162,10 @@ def reset(env: Environment = Environment.DEV):
 
 
 @app.command()
-def force_reset(env: Environment = Environment.DEV, data_file: Optional[str] = None):
+def force_reset(env: Environment = Environment.DEV, upload: bool = False, data_file: Optional[str] = None):
     """Force reset and populate the database without any confirmations"""
     try:
-        DatabaseManager.force_reset(env, data_file)
+        DatabaseManager.force_reset(env, upload, data_file)
         typer.echo(f"Database force reset and populated for {env} environment.")
     except Exception as e:
         typer.echo(f"Error during forced reset: {e}", err=True)
