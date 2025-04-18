@@ -121,3 +121,4 @@ jobs:
             GCS_BUCKET_NAME=${{ env.GCS_BUCKET_NAME }}
             GCS_DB_PATH=${{ env.GCS_DB_PATH }}
             SQLITE_DB_PATH=${{ env.SQLITE_DB_PATH }}
+            GOOGLE_APPLICATION_CREDENTIALS=${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
