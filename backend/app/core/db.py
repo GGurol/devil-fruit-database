@@ -1,4 +1,5 @@
 import json
+import os
 import shutil
 import time
 
@@ -264,8 +265,9 @@ def get_gcs_client():
     try:
         if settings.ENVIRONMENT.is_prod:
             print("Production environment detected, using Workload Identity...")
-            # Create client directly without explicit credentials
-            # This will use the Cloud Run service's identity
+            # Explicitly unset GOOGLE_APPLICATION_CREDENTIALS to force Workload Identity
+            if 'GOOGLE_APPLICATION_CREDENTIALS' in os.environ:
+                del os.environ['GOOGLE_APPLICATION_CREDENTIALS']
             return storage.Client(project=settings.GC_PROJECT_ID)
         else:
             print("Development environment detected, using Secret Manager...")

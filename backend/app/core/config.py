@@ -40,7 +40,7 @@ class Settings(BaseSettings):
     def GOOGLE_APPLICATION_CREDENTIALS(self) -> Optional[str]:
         if self.ENVIRONMENT.is_prod:
             return None
-        return "auth/devil-fruit-database-id-74c3321bcd94.json"
+        return "auth/devil-fruit-database-id-74c3321bcd94.json" if self.ENVIRONMENT.is_dev else None
 
     @computed_field
     @property
