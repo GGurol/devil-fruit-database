@@ -264,10 +264,9 @@ def get_gcs_client():
     try:
         if settings.ENVIRONMENT.is_prod:
             print("Production environment detected, using Workload Identity...")
-            credentials, project = default()
-            if not credentials.valid:
-                credentials.refresh(Request())
-            return storage.Client(credentials=credentials, project=settings.GC_PROJECT_ID)
+            # Create client directly without explicit credentials
+            # This will use the Cloud Run service's identity
+            return storage.Client(project=settings.GC_PROJECT_ID)
         else:
             print("Development environment detected, using Secret Manager...")
             service_account_key = get_service_account_key()

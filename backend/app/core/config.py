@@ -1,3 +1,4 @@
+from typing import Optional
 from pydantic import computed_field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -33,6 +34,13 @@ class Settings(BaseSettings):
 
     GCS_BUCKET_NAME: str = "devil-fruit-database-id-db"
     GCS_DB_PATH: str = "db/devil_fruits.db"
+
+    @computed_field
+    @property
+    def GOOGLE_APPLICATION_CREDENTIALS(self) -> Optional[str]:
+        if self.ENVIRONMENT.is_prod:
+            return None
+        return "auth/devil-fruit-database-id-74c3321bcd94.json"
 
     @computed_field
     @property
