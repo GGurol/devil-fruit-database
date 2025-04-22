@@ -27,11 +27,12 @@ class Settings(BaseSettings):
     ALLOWED_HEADERS: list[str] = ["*"]
 
     SQLITE_DB_PATH: str = "data/db/devil_fruits.db"
+    
+    GC_PROJECT_ID: str = "devil-fruit-database-id"
+    GC_SECRET_ID: str = "devil-fruit-service-account-key"
 
     GCS_BUCKET_NAME: str = "devil-fruit-database-id-db"
     GCS_DB_PATH: str = "db/devil_fruits.db"
-    
-    GOOGLE_APPLICATION_CREDENTIALS: str 
 
     @computed_field
     @property

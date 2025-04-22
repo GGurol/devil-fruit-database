@@ -8,13 +8,13 @@ services:
       - ./app:/app
       - sqlite-db-data:/app/data/db:rw
       - ./app/data/backups:/app/data/backups
-      - ${GOOGLE_APPLICATION_CREDENTIALS_LOCAL}:${GOOGLE_APPLICATION_CREDENTIALS}:ro
+      - ${GOOGLE_APPLICATION_CREDENTIALS}:/app/auth/devil-fruit-database-id-74c3321bcd94.json:ro
     env_file:
       - .env
     environment:
       - ENVIRONMENT=${ENVIRONMENT}
       - PYTHONPATH=../
-      - GOOGLE_APPLICATION_CREDENTIALS=${GOOGLE_APPLICATION_CREDENTIALS}
+      - GOOGLE_APPLICATION_CREDENTIALS=/app/auth/devil-fruit-database-id-74c3321bcd94.json
     profiles:
       - populate
 

@@ -7,11 +7,9 @@ from pathlib import Path
 from datetime import datetime
 from sqlmodel import create_engine, SQLModel, Session, select
 
-from google.cloud import storage
+from google.cloud import storage, secretmanager
 from google.auth import exceptions
-from google.auth.credentials import Credentials
 from google.oauth2 import service_account
-
 
 from app.core.config import settings
 from app.models import (
@@ -237,18 +235,30 @@ def populate_db(json_file_path: str, upload: bool = False):
             upload_db_to_gcs()  
 
 
+# GOOGLE CLOUD STORAGE
+
+def get_service_account_key():
+    print("Attempting to retrieve service account key from Secret Manager...")
+    client = secretmanager.SecretManagerServiceClient()
+    
+    name = f"projects/devil-fruit-database-id/secrets/devil-fruit-service-account-key/versions/latest"
+    response = client.access_secret_version(request={"name": name})
+    
+    payload = response.payload.data.decode("UTF-8")
+    if not payload:
+        print("Failed to retrieve service account key.")
+        return 
+    
+    print("Successfully retrieved service account key.")
+    return payload
+
 def get_gcs_client():
     try:
-        if settings.GOOGLE_APPLICATION_CREDENTIALS:
-            credentials = service_account.Credentials.from_service_account_file(
-                settings.GOOGLE_APPLICATION_CREDENTIALS
-            )
-            return storage.Client(credentials=credentials)
-        else:
-            # Use Application Default Credentials (ADC)
+        credentials = service_account.Credentials.from_service_account_info(
+            json.loads(get_service_account_key())
+        )
+        return storage.Client(credentials=credentials)
 
-            # TODO: Will need to fix this for the docker container
-            return storage.Client()
     except exceptions.DefaultCredentialsError as e:
         print(f"Failed to load Google Cloud credentials: {e}")
         raise
@@ -294,6 +304,7 @@ def upload_db_to_gcs():
         print(f"Database uploaded to GCS: {settings.GCS_DB_PATH}")
     else:
         print(f"Database file not found: {db_path}")
+
         
 
 

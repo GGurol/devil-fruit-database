@@ -8,9 +8,7 @@ from app.core.db import init_db, drop_db, populate_db, engine
 
 from app.models import DevilFruit
 
-
 app = typer.Typer()
-
 
 class DatabaseManager:
     @staticmethod
