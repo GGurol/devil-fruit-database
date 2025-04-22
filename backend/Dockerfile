@@ -1,5 +1,11 @@
 FROM python:3.10-slim AS base
 
+# Install necessary system packages
+RUN apt-get update && apt-get install -y \
+    curl \
+    gnupg \
+    && rm -rf /var/lib/apt/lists/*
+
 # Copy application code
 WORKDIR /app/
 COPY ./requirements.txt /app/requirements.txt
@@ -26,10 +32,11 @@ CMD ["fastapi", "run", "./main.py", "--port", "8000"]
 # Production stage
 FROM base AS prod
 
-# Install Google Cloud SDK
-RUN apt-get update && apt-get install -y curl gnupg && \
-    echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list && \
+# Install Google Cloud SDK for troubleshooting if needed
+RUN echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list && \
     curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key --keyring /usr/share/keyrings/cloud.google.gpg add - && \
-    apt-get update && apt-get install -y google-cloud-sdk
+    apt-get update && \
+    apt-get install -y google-cloud-sdk && \
+    rm -rf /var/lib/apt/lists/*
 
 CMD ["fastapi", "run", "./main.py", "--port", "8000"]

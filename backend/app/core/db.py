@@ -240,42 +240,45 @@ def populate_db(json_file_path: str, upload: bool = False):
 # GOOGLE CLOUD STORAGE
 
 def get_service_account_key():
+    """Retrieve service account key from Secret Manager."""
     print("Attempting to retrieve service account key from Secret Manager...")
-    client = secretmanager.SecretManagerServiceClient()
-    
-    name = f"projects/devil-fruit-database-id/secrets/devil-fruit-service-account-key/versions/latest"
-    response = client.access_secret_version(request={"name": name})
-    
-    payload = response.payload.data.decode("UTF-8")
-    if not payload:
-        print("Failed to retrieve service account key.")
-        raise ValueError("Service account key is empty.")
-    
-    print("Successfully retrieved service account key.")
-    return json.loads(payload)
+    try:
+        credentials, _ = default()
+        client = secretmanager.SecretManagerServiceClient(credentials=credentials)
+        
+        name = f"projects/{settings.GC_PROJECT_ID}/secrets/{settings.GC_SECRET_ID}/versions/latest"
+        response = client.access_secret_version(request={"name": name})
+        
+        payload = response.payload.data.decode("UTF-8")
+        if not payload:
+            raise ValueError("Service account key is empty")
+        
+        print("Successfully retrieved service account key")
+        return json.loads(payload)
+    except Exception as e:
+        print(f"Failed to retrieve service account key: {e}")
+        raise
 
 def get_gcs_client():
+    print("Initializing GCS client...")
     try:
-        # First try to use default credentials (works in Cloud Run)
-        credentials, project = default()
-        
-        # If running locally, credentials might need scope
-        if not credentials.valid:
-            credentials.refresh(Request())
-            
-        return storage.Client(credentials=credentials)
-    except Exception as e:
-        print(f"Failed to use default credentials, attempting Secret Manager: {e}")
-        try:
-            # Fallback to Secret Manager approach
+        if settings.ENVIRONMENT.is_prod:
+            print("Production environment detected, using Workload Identity...")
+            credentials, project = default()
+            if not credentials.valid:
+                credentials.refresh(Request())
+            return storage.Client(credentials=credentials, project=settings.GC_PROJECT_ID)
+        else:
+            print("Development environment detected, using Secret Manager...")
             service_account_key = get_service_account_key()
             credentials = service_account.Credentials.from_service_account_info(
-                service_account_key
+                service_account_key,
+                scopes=['https://www.googleapis.com/auth/cloud-platform']
             )
-            return storage.Client(credentials=credentials)
-        except Exception as e:
-            print(f"Failed to initialize GCS client: {e}")
-            raise
+            return storage.Client(credentials=credentials, project=settings.GC_PROJECT_ID)
+    except Exception as e:
+        print(f"Failed to initialize GCS client: {e}")
+        raise
 
 def download_db_from_gcs():
     client = get_gcs_client()
@@ -319,6 +322,6 @@ def upload_db_to_gcs():
     else:
         print(f"Database file not found: {db_path}")
 
-        
+
 
 
