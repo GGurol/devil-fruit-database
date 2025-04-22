@@ -8,7 +8,9 @@ from datetime import datetime
 from sqlmodel import create_engine, SQLModel, Session, select
 
 from google.cloud import storage, secretmanager
-from google.auth import exceptions
+from google.auth import default, exceptions, impersonated_credentials, load_credentials_from_file
+from google.auth.transport.requests import Request
+from google.auth.credentials import Credentials
 from google.oauth2 import service_account
 
 from app.core.config import settings
@@ -247,21 +249,33 @@ def get_service_account_key():
     payload = response.payload.data.decode("UTF-8")
     if not payload:
         print("Failed to retrieve service account key.")
-        return 
+        raise ValueError("Service account key is empty.")
     
     print("Successfully retrieved service account key.")
-    return payload
+    return json.loads(payload)
 
 def get_gcs_client():
     try:
-        credentials = service_account.Credentials.from_service_account_info(
-            json.loads(get_service_account_key())
-        )
+        # First try to use default credentials (works in Cloud Run)
+        credentials, project = default()
+        
+        # If running locally, credentials might need scope
+        if not credentials.valid:
+            credentials.refresh(Request())
+            
         return storage.Client(credentials=credentials)
-
-    except exceptions.DefaultCredentialsError as e:
-        print(f"Failed to load Google Cloud credentials: {e}")
-        raise
+    except Exception as e:
+        print(f"Failed to use default credentials, attempting Secret Manager: {e}")
+        try:
+            # Fallback to Secret Manager approach
+            service_account_key = get_service_account_key()
+            credentials = service_account.Credentials.from_service_account_info(
+                service_account_key
+            )
+            return storage.Client(credentials=credentials)
+        except Exception as e:
+            print(f"Failed to initialize GCS client: {e}")
+            raise
 
 def download_db_from_gcs():
     client = get_gcs_client()
