@@ -52,10 +52,13 @@ engine = set_engine()
 
 def ensure_db_directory_exists():
     """Ensure the database directory exists."""
+    # Get the directory path without the filename
     db_path = Path(settings.SQLITE_DB_PATH)
-    if not db_path.exists():
-        print(f"Creating database directory at {db_path}")
-        db_path.mkdir(parents=True, exist_ok=True)
+    db_dir = db_path.parent
+    
+    if not db_dir.exists():
+        print(f"Creating database directory at {db_dir}")
+        db_dir.mkdir(parents=True, exist_ok=True)
 
 def init_db():
     print("Initializing database...")
@@ -261,10 +264,14 @@ def get_service_account_key():
         raise
 
 def get_gcs_client():
-    print("Initializing GCS client...")
+    print("\nInitializing GCS client...")
     try:
         if settings.ENVIRONMENT.is_prod:
             print("Production environment detected, using Workload Identity...")
+            # Debug directory structure
+            print("Current working directory:", os.getcwd())
+            print("Directory contents:", os.listdir("/app/data"))
+
             # Explicitly unset GOOGLE_APPLICATION_CREDENTIALS to force Workload Identity
             if 'GOOGLE_APPLICATION_CREDENTIALS' in os.environ:
                 del os.environ['GOOGLE_APPLICATION_CREDENTIALS']
@@ -282,27 +289,40 @@ def get_gcs_client():
         raise
 
 def download_db_from_gcs():
-    client = get_gcs_client()
-    if not client:
-        print("Failed to create GCS client.")
-        return
-    
-    bucket = client.bucket(settings.GCS_BUCKET_NAME)
-    blob = bucket.blob(settings.GCS_DB_PATH)
+    try:
+        client = get_gcs_client()
+        if not client:
+            print("Failed to create GCS client.")
+            return
+        
+        bucket = client.bucket(settings.GCS_BUCKET_NAME)
+        blob = bucket.blob(settings.GCS_DB_PATH)
 
-    # Download the database file
-    db_path = Path(settings.SQLITE_DB_PATH)
-    ensure_db_directory_exists() 
+        # Download the database file
+        db_path = Path(settings.SQLITE_DB_PATH)
+        
+        # Ensure only the directory exists, not the full path
+        ensure_db_directory_exists()
 
-    if not blob.exists():
-        print(f"Database file not found in GCS: {settings.GCS_DB_PATH}")
-        print("Initializing a new database...")
-        init_db()
-        return
+        # If the file exists and is a directory, remove it
+        if db_path.exists() and db_path.is_dir():
+            print(f"Removing incorrectly created directory at {db_path}")
+            db_path.rmdir()
 
-    print(f"Downloading database from GCS: {settings.GCS_DB_PATH}")
-    blob.download_to_filename(db_path)
-    print(f"Database downloaded from GCS to {db_path}")
+        if not blob.exists():
+            print(f"Database file not found in GCS: {settings.GCS_DB_PATH}")
+            print("Initializing a new database...")
+            init_db()
+            return
+
+        print(f"Downloading database from GCS: {settings.GCS_DB_PATH}")
+        blob.download_to_filename(str(db_path))
+        print(f"Database downloaded from GCS to {db_path}")
+    except Exception as e:
+        print(f"Failed to download database: {e}")
+        print(f"Current directory structure:")
+        os.system(f"ls -la {db_path.parent}")
+        raise
 
 def upload_db_to_gcs():
     client = get_gcs_client()
