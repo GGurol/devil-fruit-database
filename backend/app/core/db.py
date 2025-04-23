@@ -9,9 +9,7 @@ from datetime import datetime
 from sqlmodel import create_engine, SQLModel, Session, select
 
 from google.cloud import storage, secretmanager
-from google.auth import default, exceptions, impersonated_credentials, load_credentials_from_file
-from google.auth.transport.requests import Request
-from google.auth.credentials import Credentials
+from google.auth import default
 from google.oauth2 import service_account
 
 from app.core.config import settings
@@ -289,6 +287,11 @@ def get_gcs_client():
         raise
 
 def download_db_from_gcs():
+    if not settings.USE_GCP:
+        print("GCP services disabled, using local database")
+        init_db()
+        return
+
     try:
         client = get_gcs_client()
         if not client:
@@ -325,6 +328,10 @@ def download_db_from_gcs():
         raise
 
 def upload_db_to_gcs():
+    if not settings.USE_GCP:
+        print("GCP services disabled, skipping upload")
+        return
+
     client = get_gcs_client()
     if not client:
         print("Failed to create GCS client.")

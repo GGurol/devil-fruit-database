@@ -34,6 +34,7 @@ env:
   REGION: us-east1
   SQLITE_DB_PATH: /app/data/db/devil_fruits.db
   ENVIRONMENT: prod
+  VITE_API_URL: https://devil-fruit-database-crs-qehiib5lra-ue.a.run.app
 
 jobs:
   build-and-deploy:
@@ -49,9 +50,12 @@ jobs:
 
       - name: Install dependencies & build frontend
         working-directory: ./frontend
+        env:
+          VITE_ENVIRONMENT: ${{env.ENVIRONMENT}}
+          VITE_API_URL: ${{env.VITE_API_URL}}
         run: |
           bun install
-          bun run build
+          bun run build:prod
 
       # Frontend deployment
       - name: Upload frontend build artifacts

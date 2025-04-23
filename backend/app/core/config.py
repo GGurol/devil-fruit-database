@@ -1,3 +1,4 @@
+import os
 from typing import Optional
 from pydantic import computed_field
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -34,6 +35,12 @@ class Settings(BaseSettings):
 
     GCS_BUCKET_NAME: str = "devil-fruit-database-id-db"
     GCS_DB_PATH: str = "db/devil_fruits.db"
+
+    @computed_field
+    @property
+    def USE_GCP(self) -> bool:
+        """Determine if GCP services should be used"""
+        return self.ENVIRONMENT.is_prod or (self.ENVIRONMENT.is_dev and os.getenv('USE_GCP', 'false').lower() == 'true')
 
     @computed_field
     @property

@@ -1,0 +1,24 @@
+services:
+  backend:
+    build: 
+      context: .
+      target: dev
+    restart: no
+    container_name: devil-fruit-backend
+    volumes:
+      - ./app:/app
+      - sqlite-db-data:/app/data/db
+      - ./app/data/backups:/app/data/backups
+    env_file:
+      - .env
+    environment:
+      - DOMAIN=${DOMAIN}
+      - ENVIRONMENT=${ENVIRONMENT}
+      - PYTHONPATH=../
+    ports:
+      - 8000:8000
+  
+volumes:
+  sqlite-db-data:
+    name: devil-fruit-sqlite-data
+    driver: local

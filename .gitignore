@@ -9,8 +9,14 @@
 *.sln
 *.sw?
 
+# Dotenvs
+.env
+
 # Ignore SQLite database files
 *.db
+
+# Local development
+docker-compose.gcp.yml
 
 db/
 

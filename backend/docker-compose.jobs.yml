@@ -1,0 +1,35 @@
+# Extend the base configuration
+x-backend: &backend
+  extends:
+    file: docker-compose.base.yml
+    service: backend
+  environment:
+    - USE_GCP=false
+
+services:
+  db-populate:
+    build: 
+      context: .
+      target: dev
+    command: python -m app.core.db_management force-reset --env ${ENVIRONMENT}
+    volumes:
+      - ./app:/app
+      - sqlite-db-data:/app/data/db:rw
+      - ./app/data/backups:/app/data/backups
+    env_file:
+      - .env
+    environment:
+      - ENVIRONMENT=${ENVIRONMENT}
+      - USE_GCP=false
+      - PYTHONPATH=../
+    profiles:
+      - populate
+
+  backend:
+    <<: *backend
+
+volumes:
+  sqlite-db-data:
+    name: devil-fruit-sqlite-data
+    driver: local
+
