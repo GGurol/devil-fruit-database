@@ -14,11 +14,15 @@
 │   │   │   ├── db.py
 │   │   │   └── __init__.py
 │   │   ├── data
+│   │   │   ├── db
 │   │   │   ├── dfa-devil_fruits.json
 │   │   │   └── simple_data.json
 │   │   ├── __init__.py
 │   │   ├── main.py
 │   │   └── models.py
+│   ├── data
+│   │   └── db
+│   │       └── devil_fruits.db
 │   ├── docker-compose.base.yml
 │   ├── Dockerfile
 │   └── requirements.txt
@@ -190,4 +194,4 @@
 ├── README.md
 └── tree.txt
 
-42 directories, 149 files
+45 directories, 150 files
