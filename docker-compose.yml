@@ -6,11 +6,11 @@ services:
     env_file:
       - ./backend/.env
     volumes:
-      # This links your local backend code to the container
+      # This links your backend source code for hot-reloading
       - ./backend/app:/app
-      # CORRECTED: This now links your local ./backend/data folder to the container's /app/data
-      # The SQLite DB will be created inside ./backend/data on your machine.
-      - ./backend/data:/app/data
+      # CORRECTED: We now only mount the 'db' sub-directory.
+      # This leaves the /app/data directory (with your JSON files) from the image intact.
+      - ./backend/data/db:/app/data/db
     ports:
       - "8000:8000"
 
@@ -27,3 +27,5 @@ services:
       - VITE_API_URL=http://localhost:8000
     depends_on:
       - api
+
+# We are not using named volumes, so this key is not needed.
