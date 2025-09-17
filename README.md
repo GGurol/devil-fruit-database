@@ -33,7 +33,12 @@ https://github.com/GGurol/devil-fruit-database.git
 cd devil-fruit-database
 ```
 
-3. Create and populate database:
+3. Build the Docker:
+```bash
+docker compose up --build -d
+```
+
+4. Create and populate database:
 ```bash
 docker compose exec api python -m core.db_management force-reset
 ```
