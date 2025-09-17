@@ -1,8 +1,7 @@
 import typer
 from typing import Optional
-from sqlmodel import Session, select
+from sqlmodel import Session, select, SQLModel
 
-# CORRECTED: Imports are now direct from the top-level modules inside /app
 from core.constants import DATA_FILES, Environment
 from core.db import init_db, drop_db, populate_db, engine
 from models import DevilFruit
@@ -43,7 +42,6 @@ class DatabaseManager:
         file_path = data_file or DATA_FILES.get(env)
         if not file_path:
             raise ValueError(f"No data file specified for {env} environment.")
-
         return file_path
 
     @classmethod
@@ -79,7 +77,6 @@ class DatabaseManager:
     @classmethod
     def backup(cls) -> None:
         """Backup the database"""
-        # TODO: implement backup functionality
         typer.echo("Backup functionality not yet implemented")
 
     @classmethod
@@ -87,7 +84,6 @@ class DatabaseManager:
         """Drop the database"""
         cls.require_production_confirmation(env)
         cls.backup()
-
         drop_db()
 
     @classmethod
@@ -95,7 +91,6 @@ class DatabaseManager:
         """Reset the database"""
         cls.require_production_confirmation(env)
         cls.backup()
-
         drop_db()
         init_db()
 
@@ -108,10 +103,15 @@ class DatabaseManager:
                 err=True,
             )
 
-        # Skip all confirmations and force drop everything
+        # 1. Drop the old database file
         drop_db()
 
-        # Initialize and populate with fresh data
+        # 2. CORRECTED: Explicitly create all tables HERE, where we know models are imported
+        print("Initializing database and creating tables...")
+        SQLModel.metadata.create_all(engine)
+        print("Tables created successfully.")
+        
+        # 3. Now populate the newly created tables
         file_path = cls.get_data_file(env, data_file)
         populate_db(file_path, upload)
 

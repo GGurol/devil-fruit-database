@@ -6,8 +6,11 @@ services:
     env_file:
       - ./backend/.env
     volumes:
+      # This links your backend source code for hot-reloading
       - ./backend/app:/app
-      - sqlite_data:/app/data  # This uses a named volume for persistence
+      # CORRECTED: We now only mount the 'db' sub-directory.
+      # This leaves the /app/data directory (with your JSON files) from the image intact.
+      - ./backend/data/db:/app/data/db
     ports:
       - "8000:8000"
 
@@ -25,4 +28,4 @@ services:
     depends_on:
       - api
 
-volumes:
+# We are not using named volumes, so this key is not needed.
