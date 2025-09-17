@@ -26,5 +26,3 @@ services:
       - api
 
 volumes:
-  # This defines the named volume that Docker will manage
-  sqlite_data:
