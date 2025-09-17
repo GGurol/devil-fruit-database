@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   api:
     build: ./backend
@@ -6,11 +8,8 @@ services:
     env_file:
       - ./backend/.env
     volumes:
-      # This links your backend source code for hot-reloading
       - ./backend/app:/app
-      # CORRECTED: We now only mount the 'db' sub-directory.
-      # This leaves the /app/data directory (with your JSON files) from the image intact.
-      - ./backend/data/db:/app/data/db
+      - sqlite_data:/app/data  # This uses a named volume for persistence
     ports:
       - "8000:8000"
 
@@ -28,4 +27,6 @@ services:
     depends_on:
       - api
 
-# We are not using named volumes, so this key is not needed.
+volumes:
+  # This defines the named volume that Docker will manage
+  sqlite_data:
