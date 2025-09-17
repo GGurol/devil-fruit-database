@@ -10,7 +10,7 @@
 *.sw?
 
 # Dotenvs
-.env
+#.env
 
 # Ignore SQLite database files
 *.db

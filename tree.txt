@@ -1,0 +1,193 @@
+.
+├── backend
+│   ├── app
+│   │   ├── api
+│   │   │   ├── endpoints
+│   │   │   │   ├── devil_fruits.py
+│   │   │   │   └── users.py
+│   │   │   ├── __init__.py
+│   │   │   └── router.py
+│   │   ├── core
+│   │   │   ├── config.py
+│   │   │   ├── constants.py
+│   │   │   ├── db_management.py
+│   │   │   ├── db.py
+│   │   │   └── __init__.py
+│   │   ├── data
+│   │   │   ├── dfa-devil_fruits.json
+│   │   │   └── simple_data.json
+│   │   ├── __init__.py
+│   │   ├── main.py
+│   │   └── models.py
+│   ├── docker-compose.base.yml
+│   ├── Dockerfile
+│   └── requirements.txt
+├── docker-compose.yml
+├── frontend
+│   ├── bun.lockb
+│   ├── Dockerfile
+│   ├── index.html
+│   ├── node_modules
+│   ├── package.json
+│   ├── public
+│   │   ├── one-piece-favicon-256x256.png
+│   │   └── vite.svg
+│   ├── README.md
+│   ├── src
+│   │   ├── App.config.ts
+│   │   ├── App.constants.ts
+│   │   ├── App.tsx
+│   │   ├── assets
+│   │   │   ├── icons
+│   │   │   │   ├── Arrow down.svg
+│   │   │   │   ├── Arrow left.svg
+│   │   │   │   ├── Arrow right.svg
+│   │   │   │   ├── Arrow up.svg
+│   │   │   │   ├── Caret down.svg
+│   │   │   │   ├── Caret left.svg
+│   │   │   │   ├── Caret right.svg
+│   │   │   │   ├── Caret up.svg
+│   │   │   │   ├── CheckCircle.svg
+│   │   │   │   ├── Check.svg
+│   │   │   │   ├── Collapse.svg
+│   │   │   │   ├── Copy.svg
+│   │   │   │   ├── Cross.svg
+│   │   │   │   ├── Desktop.svg
+│   │   │   │   ├── Download.svg
+│   │   │   │   ├── Expand.svg
+│   │   │   │   ├── Filter.svg
+│   │   │   │   ├── Grid.svg
+│   │   │   │   ├── Hamburger.svg
+│   │   │   │   ├── Kebab.svg
+│   │   │   │   ├── List.svg
+│   │   │   │   ├── Meatball.svg
+│   │   │   │   ├── Moon.svg
+│   │   │   │   ├── Plus.svg
+│   │   │   │   ├── Refresh.svg
+│   │   │   │   ├── Search.svg
+│   │   │   │   ├── Settings-adjust.svg
+│   │   │   │   └── Sun.svg
+│   │   │   ├── Luffy+Zoro.png
+│   │   │   ├── one-piece.png
+│   │   │   └── react.svg
+│   │   ├── components
+│   │   │   ├── Button
+│   │   │   │   ├── Button.styled.ts
+│   │   │   │   ├── Button.tsx
+│   │   │   │   ├── Button.types.ts
+│   │   │   │   └── Button.variants.ts
+│   │   │   ├── Checkbox
+│   │   │   │   ├── Checkbox.styled.ts
+│   │   │   │   ├── Checkbox.tsx
+│   │   │   │   ├── Checkbox.types.ts
+│   │   │   │   └── Checkbox.variants.ts
+│   │   │   ├── Divider
+│   │   │   │   └── Divider.styled.ts
+│   │   │   ├── Dropdown
+│   │   │   │   ├── Dropdown.styled.ts
+│   │   │   │   ├── Dropdown.tsx
+│   │   │   │   └── Dropdown.types.ts
+│   │   │   ├── Export
+│   │   │   │   ├── Export.styled.ts
+│   │   │   │   └── Export.tsx
+│   │   │   ├── Filters
+│   │   │   │   ├── Filters.styled.ts
+│   │   │   │   ├── Filters.tsx
+│   │   │   │   └── Filters.types.ts
+│   │   │   ├── Header
+│   │   │   │   └── Header.styled.ts
+│   │   │   ├── Icon
+│   │   │   │   ├── Icon.styled.ts
+│   │   │   │   ├── Icon.tsx
+│   │   │   │   ├── Icon.types.ts
+│   │   │   │   └── src
+│   │   │   │       ├── Adjust.tsx
+│   │   │   │       ├── CaretDown.tsx
+│   │   │   │       ├── CaretLeft.tsx
+│   │   │   │       ├── CaretRight.tsx
+│   │   │   │       ├── CaretUp.tsx
+│   │   │   │       ├── CheckCircle.tsx
+│   │   │   │       ├── Check.tsx
+│   │   │   │       ├── Copy.tsx
+│   │   │   │       ├── Cross.tsx
+│   │   │   │       ├── Download.tsx
+│   │   │   │       ├── index.ts
+│   │   │   │       ├── Moon.tsx
+│   │   │   │       ├── Search.tsx
+│   │   │   │       └── Sun.tsx
+│   │   │   ├── Legend
+│   │   │   │   ├── Legend.styles.ts
+│   │   │   │   ├── Legend.tsx
+│   │   │   │   └── src
+│   │   │   │       ├── LegendItem.styled.ts
+│   │   │   │       ├── LegendItem.tsx
+│   │   │   │       └── LegendItem.types.ts
+│   │   │   ├── Logo
+│   │   │   │   └── Logo.ts
+│   │   │   ├── Modal
+│   │   │   │   ├── Modal.styled.ts
+│   │   │   │   └── Modal.tsx
+│   │   │   ├── Pagination
+│   │   │   │   ├── Pagination.styled.ts
+│   │   │   │   ├── Pagination.tsx
+│   │   │   │   └── Pagination.types.ts
+│   │   │   ├── SearchBar
+│   │   │   │   └── SearchBar.tsx
+│   │   │   ├── Spinner
+│   │   │   │   ├── Spinner.styled.ts
+│   │   │   │   └── Spinner.tsx
+│   │   │   ├── Sticker
+│   │   │   │   └── Sticker.ts
+│   │   │   ├── Table
+│   │   │   │   ├── Table.styled.ts
+│   │   │   │   ├── Table.styles.ts
+│   │   │   │   ├── Table.tsx
+│   │   │   │   └── Table.types.ts
+│   │   │   ├── Textfield
+│   │   │   │   ├── Textfield.styled.ts
+│   │   │   │   ├── Textfield.tsx
+│   │   │   │   └── Textfield.types.ts
+│   │   │   ├── Tooltip
+│   │   │   │   └── Tooltip.styled.ts
+│   │   │   └── Wrappers
+│   │   │       ├── ActionsWrapper.ts
+│   │   │       ├── BodyActionsWrapper.ts
+│   │   │       ├── BodyContentWrapper.ts
+│   │   │       ├── BodyWrapper.ts
+│   │   │       ├── ContentWrapper.ts
+│   │   │       ├── FooterWrapper.ts
+│   │   │       ├── HeaderWrapper.ts
+│   │   │       ├── PageWrapper.ts
+│   │   │       ├── SearchActionsWrapper.ts
+│   │   │       └── ToggleWrapper.ts
+│   │   ├── hooks
+│   │   │   └── useCopy
+│   │   │       ├── useCopy.ts
+│   │   │       └── useCopy.types.ts
+│   │   ├── main.tsx
+│   │   ├── providers
+│   │   │   ├── Data
+│   │   │   │   ├── Data.context.ts
+│   │   │   │   ├── DataProvider.tsx
+│   │   │   │   └── Data.types.ts
+│   │   │   ├── Modal
+│   │   │   │   ├── Modal.context.ts
+│   │   │   │   ├── ModalProvider.tsx
+│   │   │   │   └── Modal.types.ts
+│   │   │   └── Theme
+│   │   │       ├── Theme.context.ts
+│   │   │       ├── Theme.globals.ts
+│   │   │       ├── ThemeProvider.tsx
+│   │   │       ├── Theme.ts
+│   │   │       └── Theme.types.ts
+│   │   ├── types
+│   │   │   └── common.types.ts
+│   │   └── vite-env.d.ts
+│   ├── tsconfig.app.json
+│   ├── tsconfig.json
+│   ├── tsconfig.node.json
+│   └── vite.config.ts
+├── README.md
+└── tree.txt
+
+42 directories, 149 files

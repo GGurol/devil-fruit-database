@@ -1,0 +1,29 @@
+services:
+  api:
+    build: ./backend
+    container_name: devilfruit_api
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+    env_file:
+      - ./backend/.env
+    volumes:
+      # This links your local backend code to the container
+      - ./backend/app:/app
+      # CORRECTED: This now links your local ./backend/data folder to the container's /app/data
+      # The SQLite DB will be created inside ./backend/data on your machine.
+      - ./backend/data:/app/data
+    ports:
+      - "8000:8000"
+
+  web:
+    build: ./frontend
+    container_name: devilfruit_web
+    command: bun run dev --host
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_API_URL=http://localhost:8000
+    depends_on:
+      - api

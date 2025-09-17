@@ -1,12 +1,11 @@
 import typer
-
 from typing import Optional
 from sqlmodel import Session, select
 
-from app.core.constants import DATA_FILES, Environment
-from app.core.db import init_db, drop_db, populate_db, engine
-
-from app.models import DevilFruit
+# CORRECTED: Imports are now direct from the top-level modules inside /app
+from core.constants import DATA_FILES, Environment
+from core.db import init_db, drop_db, populate_db, engine
+from models import DevilFruit
 
 app = typer.Typer()
 
@@ -18,7 +17,7 @@ class DatabaseManager:
             try:
                 result = session.exec(select(DevilFruit).limit(1)).first()
                 return result is None
-            except:
+            except Exception:
                 return True
 
     @staticmethod
@@ -31,7 +30,7 @@ class DatabaseManager:
             )
 
     @staticmethod
-    def require_data_drop_confirmation(env: Environment) -> None:
+    def require_data_drop_confirmation() -> None:
         """Require confirmation when dropping exisiting data"""
         typer.confirm(
             "⚠️  WARNING: You are about to drop a database containing data. Are you sure?",
@@ -80,10 +79,8 @@ class DatabaseManager:
     @classmethod
     def backup(cls) -> None:
         """Backup the database"""
-
         # TODO: implement backup functionality
-
-        type.echo("Backup functionality not yet implemented")
+        typer.echo("Backup functionality not yet implemented")
 
     @classmethod
     def drop(cls, env: Environment) -> None:

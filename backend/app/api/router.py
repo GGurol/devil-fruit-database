@@ -1,6 +1,7 @@
 from fastapi import APIRouter
 
-from app.api.endpoints import devil_fruits, users
+# CORRECTED: Changed to a relative import
+from .endpoints import devil_fruits, users
 
 api_router = APIRouter()
 
